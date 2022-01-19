@@ -33,6 +33,7 @@ def main():
    
    # The offset of the window into the world
    offset = Vector2(0,0)
+
    
    gameClock = pygame.time.Clock()
    
@@ -43,8 +44,8 @@ def main():
    while RUNNING:
       
       # Draw everything, adjust by offset
-      screen.blit(background, (0,0))
-      screen.blit(star, list(position))
+      screen.blit(background, (-offset.x, -offset.y))
+      screen.blit(star, list(position - offset))
       
       # Flip the display to the monitor
       pygame.display.flip()
@@ -86,7 +87,16 @@ def main():
       # Update everything
       position += velocity * ticks
       
-      
+
+      offset = Vector2(max(0,
+                           min(position.x + (star.get_width() // 2) - \
+                               (SCREEN_SIZE[0] // 2),
+                               WORLD_SIZE[0] - SCREEN_SIZE[0])),
+                       max(0,
+                           min(position.y + (star.get_height() // 2) - \
+                               (SCREEN_SIZE[1] // 2),
+                               WORLD_SIZE[1] - SCREEN_SIZE[1])))
+
 
    pygame.quit()
    

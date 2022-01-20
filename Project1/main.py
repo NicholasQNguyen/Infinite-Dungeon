@@ -25,27 +25,38 @@ class Orb:
         self._velocity = Vector2(randint(1,10), randint(1,10))
 
     def draw(self, surface, offset):
+        """Blits the orb onto a specifed surface with an offset"""
         surface.blit(self._image, list(self._position - offset))
 
     def getPosition(self):
+        """Returns the Vector2 of the position"""
         return self._position
 
     def getX(self):
+        """Returns the X position which is an int"""
         return self._position[0]
  
     def getY(self):
+        """Returns the X position which is an int"""
         return self._position[1]
     
     def getSize(self):
+        """Returns the size of the surface the orb is on"""
         return self._image.get_size()
 
     def getWidth(self):
+        """Returns the width of the surface as an int"""
         return self._image.get_width()
 
     def getHeight(self):
+        """Returns the width of the surface as an int"""
+
         return self._image.get_height()
    
     def update(self, worldInfo, seconds):
+        """Either just updates the posiiton of the orb based on
+           the velocity or switches the velocity and adds some 
+           randomness to the the trajectory if it hits the edge"""
         newPosition = self._position + self._velocity
         # We've gone beyond the borders
         if newPosition[0] < 0 or (newPosition[0] + self.getWidth()) > worldInfo[0] or \
@@ -65,7 +76,6 @@ class Orb:
 
 
 def main():
-   
    # initialize the pygame module
    pygame.init()
    # load and set the logo
@@ -130,5 +140,4 @@ def main():
    
    
 if __name__ == "__main__":
-   print(randint(0,5))
    main()

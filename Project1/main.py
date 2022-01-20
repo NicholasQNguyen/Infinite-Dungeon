@@ -1,4 +1,8 @@
-
+"""
+Author: Nicholas Nguyen
+Project 1
+File: Main.py
+"""
 import pygame
 import os
 from vector2D import Vector2
@@ -12,16 +16,13 @@ WORLD_SIZE = Vector2(1200, 1200)
 
 class Orb:
     _image = pygame.image.load(os.path.join("orb.png"))
-
     _position = Vector2(0, 0)
-
     _velocity = Vector2(0, 0)
 
     def __init__(self):
         # Set position to center of the world view
         self._position = Vector2(WORLD_SIZE[0]/2, WORLD_SIZE[1]/2)
-        # _position = Vector2(0,0)
-        # Set velocity to some random tuple
+        # Set velocity to some random Vector2 to start with
         self._velocity = Vector2(randint(1, 10), randint(1, 10))
 
     def draw(self, surface, offset):
@@ -50,7 +51,6 @@ class Orb:
 
     def getHeight(self):
         """Returns the width of the surface as an int"""
-
         return self._image.get_height()
 
     def update(self, worldInfo, seconds):
@@ -66,7 +66,7 @@ class Orb:
 
             # Add some random noise to change the angle at which it bounces
             # and a bound from (-10,10) so that the orb doesn't
-            # go flying all over the place
+            # go flying really fast all over the place
             newXVelocity = max(min(self._velocity[0] * -1 +
                                    randint(-5, 5), 10), -10)
             newYVelocity = max(min(self._velocity[1] * -1 +
@@ -77,6 +77,8 @@ class Orb:
 
             newPosition = self._position + self._velocity
 
+        # Whatever the case may be, set the position
+        # to the new calculated position
         self._position = newPosition
 
 
@@ -85,7 +87,7 @@ def main():
     pygame.init()
 
     # load and set the logo
-    pygame.display.set_caption("Project 1")
+    pygame.display.set_caption("Nicholas Nguyen Project 1")
 
     screen = pygame.display.set_mode(list(SCREEN_SIZE))
 

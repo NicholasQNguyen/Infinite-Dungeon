@@ -9,19 +9,20 @@ from random import randint
 SCREEN_SIZE = Vector2(800, 800)
 WORLD_SIZE = Vector2(1200, 1200)
 
+
 class Orb:
     _image = pygame.image.load(os.path.join("orb.png"))
-    _image.set_colorkey(_image.get_at((0,0)))
-
+    
     _position = Vector2(0,0)
 
     _velocity = Vector2(0,0)
 
     def __init__(self):
         # Set position to center of the world view
-        _position = Vector2(WORLD_SIZE[0], WORLD_SIZE[1])
+        self._position = Vector2(WORLD_SIZE[0]/2, WORLD_SIZE[1]/2)
+        # _position = Vector2(0,0)
         # Set velocity to some random tuple
-        _velocity = Vector2(randint(0,5), randint(0,5))
+        self._velocity = Vector2(randint(1,10), randint(1,10))
 
     def draw(self, surface, offset):
         surface.blit(self._image, list(self._position - offset))
@@ -45,7 +46,22 @@ class Orb:
         return self._image.get_height()
    
     def update(self, worldInfo, seconds):
-        _position = Vector(0,0)
+        newPosition = self._position + self._velocity
+        # We've gone beyond the borders
+        if newPosition[0] < 0 or (newPosition[0] + self.getWidth()) > worldInfo[0] or \
+           newPosition[1] < 0 or (newPosition[1] + self.getHeight()) > worldInfo[0] :
+
+            # Add some random noise to change the angle at which it bounces
+            # and a bound from (-10,10) so that the orb doesn't go flying all over the place
+            newXVelocity = max(min(self._velocity[0] * -1 + randint(-5,5), 10), -10)
+            newYVelocity = max(min(self._velocity[1] * -1 + randint(-5,5), 10), -10)
+
+            self._velocity[0] = newXVelocity
+            self._velocity[1] = newYVelocity
+
+            newPosition = self._position + self._velocity
+
+        self._position = newPosition
 
 
 def main():
@@ -61,19 +77,14 @@ def main():
    # Let's make a background so we can see if we're moving
    background = pygame.image.load(os.path.join("background.png")).convert()
    
-   # Arrow images
+   # Orb images
    orb = Orb()
    orb._image.convert()
-
-   
-   position = Vector2(0,0)
-   velocity = Vector2(0,0)
-   speed = 500
+   orb._image.set_colorkey(orb._image.get_at((0,0)))
    
    # The offset of the window into the world
    offset = Vector2(0,0)
 
-   
    gameClock = pygame.time.Clock()
    
    # define a variable to control the main loop
@@ -95,44 +106,22 @@ def main():
          if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             # change the value to False, to exit the main loop
             RUNNING = False
-            
-         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_DOWN:
-               velocity.y = speed  
-               
-            elif event.key == pygame.K_UP:
-               velocity.y = -speed      
-               
-            elif event.key == pygame.K_LEFT:
-               velocity.x = -speed        
-               
-            elif event.key == pygame.K_RIGHT:
-               velocity.x = speed       
-         
-         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-               velocity.y = 0
-               
-            elif event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-               velocity.x = 0
-         
-            
-            
+      
       gameClock.tick(60)
       
       ticks = gameClock.get_time() / 1000
             
       
       # Update everything
-      orb._position += velocity * ticks
+      orb.update(WORLD_SIZE, ticks)
       
 
       offset = Vector2(max(0,
-                           min(position.x + (orb.getWidth() // 2) - \
+                           min(orb.getX() + (orb.getWidth() // 2) - \
                                (SCREEN_SIZE[0] // 2),
                                WORLD_SIZE[0] - SCREEN_SIZE[0])),
                        max(0,
-                           min(position.y + (orb.getHeight() // 2) - \
+                           min(orb.getY() + (orb.getHeight() // 2) - \
                                (SCREEN_SIZE[1] // 2),
                                WORLD_SIZE[1] - SCREEN_SIZE[1])))
 
@@ -141,4 +130,5 @@ def main():
    
    
 if __name__ == "__main__":
+   print(randint(0,5))
    main()

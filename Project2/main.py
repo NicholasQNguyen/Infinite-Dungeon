@@ -1,7 +1,7 @@
 """
 Author: Nicholas Nguyen
 Project 1
-File: Main.py
+File: main.py
 """
 import pygame
 import os
@@ -64,8 +64,10 @@ def main():
                 RUNNING = False
 
             elif event.type == pygame.KEYDOWN:
+                star.handleEvent(event)
+                """
                 if event.key == pygame.K_DOWN:
-                    velocity.y = speed
+                    star.handleEvent(event) 
 
                 elif event.key == pygame.K_UP:
                     velocity.y = -speed
@@ -75,13 +77,9 @@ def main():
 
                 elif event.key == pygame.K_RIGHT:
                     velocity.x = speed
-
+                """
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                    velocity.y = 0
-
-                elif event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                    velocity.x = 0
+                star.handleEvent(event)            
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # Generate an orb

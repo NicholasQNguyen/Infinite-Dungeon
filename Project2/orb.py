@@ -15,6 +15,8 @@ WORLD_SIZE = Vector2(1200, 1200)
 
 
 class Orb(Drawable):
+    _dead = False
+
     def __init__(self):
         self._imageName = "orbs.png"
         spriteSheet = pygame.image.load(os.path.join(self._imageName))
@@ -54,3 +56,11 @@ class Orb(Drawable):
         # Whatever the case may be, set the position
         # to the new calculated position
         self._position = newPosition
+
+    def kill(self):
+        """sets _dead variable to True to indicate it's dead"""
+        self._dead = True
+
+    def isDead(self):
+        """Returns a boolean of if it's dead"""
+        return self._dead

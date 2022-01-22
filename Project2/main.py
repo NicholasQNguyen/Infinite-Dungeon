@@ -33,6 +33,7 @@ def main():
     star._image.convert()
     star._image.set_colorkey(star._image.get_at((0, 0)))
 
+
     # List of orbs
     orbs = []
 
@@ -40,6 +41,8 @@ def main():
     offset = Vector2(0, 0)
 
     gameClock = pygame.time.Clock()
+
+
 
     # define a variable to control the main loop
     RUNNING = True
@@ -50,7 +53,9 @@ def main():
         # Draw everything, adjust by offset
         screen.blit(background, (-offset.x, -offset.y))
         star.draw(screen, offset)
-
+    
+        for orb in orbs:
+            orb.draw(screen, offset)
         # Flip the display to the monitor
         pygame.display.flip()
 
@@ -65,6 +70,7 @@ def main():
 
             elif event.type == pygame.KEYDOWN:
                 star.handleEvent(event)
+
                 """
                 if event.key == pygame.K_DOWN:
                     star.handleEvent(event) 
@@ -86,6 +92,7 @@ def main():
                 orb = Orb()
                 star._image.convert()
                 star._image.set_colorkey(star._image.get_at((0, 0)))
+                print(star._image.get_colorkey())
 
                 # Append the generated orb to the list
                 orbs.append(orb)
@@ -96,6 +103,8 @@ def main():
 
         # Update everything
         star.update(WORLD_SIZE, ticks)
+        for orb in orbs:
+            orb.update(WORLD_SIZE, ticks)
 
         # Recalculate the offest based on the new position
         offset = Vector2(max(0,

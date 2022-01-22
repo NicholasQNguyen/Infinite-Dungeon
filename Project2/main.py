@@ -33,6 +33,9 @@ def main():
     star._image.convert()
     star._image.set_colorkey(star._image.get_at((0, 0)))
 
+    # List of orbs
+    orbs = []
+
     # The offset of the window into the world
     offset = Vector2(0, 0)
 
@@ -61,24 +64,33 @@ def main():
                 RUNNING = False
 
             elif event.type == pygame.KEYDOWN:
-                 if event.key == pygame.K_DOWN:
-                     velocity.y = speed  
-               
-                 elif event.key == pygame.K_UP:
-                     velocity.y = -speed      
-               
-                 elif event.key == pygame.K_LEFT:
-                     velocity.x = -speed        
-               
-                 elif event.key == pygame.K_RIGHT:
-                     velocity.x = speed       
-         
+                if event.key == pygame.K_DOWN:
+                    velocity.y = speed
+
+                elif event.key == pygame.K_UP:
+                    velocity.y = -speed
+
+                elif event.key == pygame.K_LEFT:
+                    velocity.x = -speed
+
+                elif event.key == pygame.K_RIGHT:
+                    velocity.x = speed
+
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                     velocity.y = 0
-               
+
                 elif event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     velocity.x = 0
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Generate an orb
+                orb = Orb()
+                star._image.convert()
+                star._image.set_colorkey(star._image.get_at((0, 0)))
+
+                # Append the generated orb to the list
+                orbs.append(orb)
 
         gameClock.tick(60)
 

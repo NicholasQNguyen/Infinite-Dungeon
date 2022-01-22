@@ -20,6 +20,7 @@ class Orb(Drawable):
     def __init__(self):
         self._imageName = "orbs.png"
         spriteSheet = pygame.image.load(os.path.join(self._imageName))
+        # use a grabberRectangle with a randint to grab a random color
         grabberRectangle = pygame.Rect(((32 * randint(0, 9)), 0, 32, 32))
         self._image = pygame.Surface((32, 32))
         self._image.blit(spriteSheet, (0, 0), grabberRectangle)

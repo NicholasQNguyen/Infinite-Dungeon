@@ -6,7 +6,6 @@ File: main.py
 import pygame
 import os
 from vector2D import Vector2
-from random import randint
 from orb import Orb
 from star import Star
 from highScore import HighScore
@@ -34,13 +33,11 @@ def main():
     star._image.convert()
     star._image.set_colorkey(star._image.get_at((0, 0)))
 
-
-    # List of orbs and a list for the collision of the orbs
+    # List of orbs
     orbs = []
-    collisionList = []
     # The offset of the window into the world
     offset = Vector2(0, 0)
-    
+
     # Message stuff to handle score tracking
     scoreMessage = HighScore()
 
@@ -75,7 +72,7 @@ def main():
                 star.handleEvent(event)
 
             elif event.type == pygame.KEYUP:
-                star.handleEvent(event)            
+                star.handleEvent(event)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # Generate an orb
@@ -95,20 +92,28 @@ def main():
         for orb in orbs:
             orb.update(WORLD_SIZE, ticks)
 
+        # Set up a collision rectangle for the star and
+        # move it to where the star currently is
         starCollisionRect = star.getCollideRect()
         starCollisionRect.move_ip(star.getX(), star.getY())
 
-        # check for collision
+        # Iterate through the orbs, generate a collision rectangle
+        # for each orb and move the collision rectangle to where each orb it
         for orb in orbs:
             orbCollisionRect = orb.getCollideRect()
             orbCollisionRect.move_ip(orb.getX(), orb.getY())
+
+            # If the star and an orb's collisions hit, kill the orb
             if orbCollisionRect.colliderect(starCollisionRect):
                 orb.kill()
+                # Increase the score by 1 for each orb hit
                 scoreMessage.iterateScore()
+                # Fill the surface the score is on to hide the old score
                 scoreMessage.getImage().fill((0, 0, 0))
+                # Update the score with the new score
                 scoreMessage.updateMessage()
-                print("SCORE:", scoreMessage.getScore())
 
+        # Clear out orbs that are dead
         for orb in orbs:
             if orb.isDead():
                 orbs.remove(orb)

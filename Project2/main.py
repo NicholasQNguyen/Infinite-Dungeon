@@ -9,6 +9,7 @@ from vector2D import Vector2
 from random import randint
 from orb import Orb
 from star import Star
+from highScore import HighScore
 
 # Two different sizes now! Screen size is the amount we show the player,
 #  and world size is the size of the interactable world
@@ -39,10 +40,11 @@ def main():
     collisionList = []
     # The offset of the window into the world
     offset = Vector2(0, 0)
+    
+    # Message stuff to handle score tracking
+    scoreMessage = HighScore()
 
     gameClock = pygame.time.Clock()
-
-
 
     # define a variable to control the main loop
     RUNNING = True
@@ -53,7 +55,8 @@ def main():
         # Draw everything, adjust by offset
         screen.blit(background, (-offset.x, -offset.y))
         star.draw(screen, offset)
-    
+        scoreMessage.draw(screen, offset)
+
         for orb in orbs:
             orb.draw(screen, offset)
         # Flip the display to the monitor
@@ -71,19 +74,6 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 star.handleEvent(event)
 
-                """
-                if event.key == pygame.K_DOWN:
-                    star.handleEvent(event) 
-
-                elif event.key == pygame.K_UP:
-                    velocity.y = -speed
-
-                elif event.key == pygame.K_LEFT:
-                    velocity.x = -speed
-
-                elif event.key == pygame.K_RIGHT:
-                    velocity.x = speed
-                """
             elif event.type == pygame.KEYUP:
                 star.handleEvent(event)            
 
@@ -114,6 +104,10 @@ def main():
             orbCollisionRect.move_ip(orb.getX(), orb.getY())
             if orbCollisionRect.colliderect(starCollisionRect):
                 orb.kill()
+                scoreMessage.iterateScore()
+                scoreMessage.getImage().fill((0, 0, 0))
+                scoreMessage.updateMessage()
+                print("SCORE:", scoreMessage.getScore())
 
         for orb in orbs:
             if orb.isDead():

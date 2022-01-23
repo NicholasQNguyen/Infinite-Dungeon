@@ -9,6 +9,7 @@ from vector2D import Vector2
 from orb import Orb
 from star import Star
 from highScore import HighScore
+from copy import deepcopy
 
 # Two different sizes now! Screen size is the amount we show the player,
 #  and world size is the size of the interactable world
@@ -40,6 +41,7 @@ def main():
 
     # Message stuff to handle score tracking
     scoreMessage = HighScore()
+    screenWidth = Vector2(0, 0)
 
     gameClock = pygame.time.Clock()
 
@@ -52,7 +54,10 @@ def main():
         # Draw everything, adjust by offset
         screen.blit(background, (-offset.x, -offset.y))
         star.draw(screen, offset)
-        scoreMessage.draw(screen, offset)
+
+        # Put the score in the top right following the camera
+        screenWidth[0] = screen.get_width() - scoreMessage.getImage().get_width()
+        screen.blit(scoreMessage.getImage(), list(screenWidth))
 
         for orb in orbs:
             orb.draw(screen, offset)

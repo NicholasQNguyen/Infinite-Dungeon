@@ -28,8 +28,8 @@ class HighScore(Drawable):
         self._pygameFont = pygame.font.SysFont(self._font, self._fontSize)
         renderedMessage = self._pygameFont.render(
                           self._message, False,  (255, 0, 255))
-        # 300 is arbitrary
-        self._image = pygame.Surface((300, self._fontSize))
+        # 100 is arbitrary
+        self._image = pygame.Surface((100, self._fontSize))
         self._image.blit(renderedMessage, (0, 0))
 
     def getScore(self):

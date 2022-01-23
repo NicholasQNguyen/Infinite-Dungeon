@@ -34,9 +34,9 @@ def main():
     star._image.set_colorkey(star._image.get_at((0, 0)))
 
 
-    # List of orbs
+    # List of orbs and a list for the collision of the orbs
     orbs = []
-
+    collisionList = []
     # The offset of the window into the world
     offset = Vector2(0, 0)
 
@@ -90,9 +90,8 @@ def main():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # Generate an orb
                 orb = Orb()
-                star._image.convert()
-                star._image.set_colorkey(star._image.get_at((0, 0)))
-                print(star._image.get_colorkey())
+                orb._image.convert()
+                orb._image.set_colorkey(orb._image.get_at((0, 0)))
 
                 # Append the generated orb to the list
                 orbs.append(orb)
@@ -105,6 +104,20 @@ def main():
         star.update(WORLD_SIZE, ticks)
         for orb in orbs:
             orb.update(WORLD_SIZE, ticks)
+
+        starCollisionRect = star.getCollideRect()
+        starCollisionRect.move_ip(star.getX(), star.getY())
+
+        # check for collision
+        for orb in orbs:
+            orbCollisionRect = orb.getCollideRect()
+            orbCollisionRect.move_ip(orb.getX(), orb.getY())
+            if orbCollisionRect.colliderect(starCollisionRect):
+                orb.kill()
+
+        for orb in orbs:
+            if orb.isDead():
+                orbs.remove(orb)
 
         # Recalculate the offest based on the new position
         offset = Vector2(max(0,

@@ -56,7 +56,7 @@ class Orb(Drawable):
 
         # Whatever the case may be, set the position
         # to the new calculated position
-        self._position = newPosition
+        self.setPosition(newPosition)
 
     def kill(self):
         """sets _dead variable to True to indicate it's dead"""

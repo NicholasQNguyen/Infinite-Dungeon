@@ -3,11 +3,10 @@ Author: Nicholas Nguyen
 Project 2
 File: highScore.py
 """
-from drawable import Drawable
 import pygame
 
 
-class HighScore(Drawable):
+class HighScore():
     # variable for the font string name
     _font = None
     _fontSize = 0

@@ -61,6 +61,7 @@ def main():
 
         for orb in orbs:
             orb.draw(screen, offset)
+
         # Flip the display to the monitor
         pygame.display.flip()
 
@@ -80,8 +81,11 @@ def main():
                 star.handleEvent(event)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                adjustedPos = list(event.pos)
+                adjustedPos[0] += offset[0]
+                adjustedPos[1] += offset[1]
                 # Generate an orb
-                orb = Orb()
+                orb = Orb(adjustedPos)
                 orb._image.convert()
                 orb._image.set_colorkey(orb._image.get_at((0, 0)))
 

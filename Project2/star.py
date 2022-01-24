@@ -16,7 +16,7 @@ WORLD_SIZE = Vector2(1200, 1200)
 
 class Star(Drawable):
 
-    _maxVelocity = 1.1
+    _maxVelocity = 10.1
     _acceleration = 0.1
     _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}

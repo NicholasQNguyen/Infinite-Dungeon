@@ -17,7 +17,7 @@ WORLD_SIZE = Vector2(1200, 1200)
 class Orb(Drawable):
     _dead = False
 
-    def __init__(self):
+    def __init__(self, position):
         self._imageName = "orbs.png"
         spriteSheet = pygame.image.load(os.path.join(self._imageName))
         # use a grabberRectangle with a randint to grab a random color
@@ -25,16 +25,16 @@ class Orb(Drawable):
         self._image = pygame.Surface((32, 32))
         self._image.blit(spriteSheet, (0, 0), grabberRectangle)
 
-        # Set position to center of the world view
-        self._position = Vector2(WORLD_SIZE[0]/2, WORLD_SIZE[1]/2)
+        # Set position to where the mouse cursor is
+        self._position = Vector2(*position)
         # Set velocity to some random Vector2 to start with
-        self._velocity = Vector2(randint(1, 10), randint(1, 10))
+        self._velocity = Vector2(randint(-10, 10), randint(-10, 10))
 
     def update(self, worldInfo, seconds):
         """Either just updates the posiiton of the orb based on
            the velocity or switches the velocity and adds some
            randomness to the the trajectory if it hits the edge"""
-        newPosition = self._position + self._velocity
+        newPosition = self._velocity + self._position 
         # We've gone beyond the borders
         if newPosition[0] < 0 or \
            (newPosition[0] + self.getWidth()) > worldInfo[0] or \

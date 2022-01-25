@@ -43,11 +43,12 @@ class Orb(Drawable):
 
             # Add some random noise to change the angle at which it bounces
             # and a bound from (-10,10) so that the orb doesn't
-            # go flying really fast all over the place
+            #  go flying really fast all over the place
             newXVelocity = max(min(self._velocity[0] * -1 +
                                    randint(-5, 5), 10), -10)
             newYVelocity = max(min(self._velocity[1] * -1 +
                                    randint(-5, 5), 10), -10)
+            
 
             self._velocity[0] = newXVelocity
             self._velocity[1] = newYVelocity

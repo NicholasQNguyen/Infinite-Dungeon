@@ -6,6 +6,7 @@ from arrow import Arrow
 from copy import deepcopy
 
 
+WORLD_SIZE = Vector2(1000, 1000)
 SCREEN_SIZE = Vector2(294, 600)
 SCALE_FACTOR = 1.5
 UPSCALED = SCREEN_SIZE * SCALE_FACTOR
@@ -30,6 +31,10 @@ def main():
     # List of arrows to keep track of them
     arrows = []
 
+    spawned = False
+
+    offset = Vector2(0, 0)
+    
     gameClock = pygame.time.Clock()
 
     RUNNING = True
@@ -37,12 +42,16 @@ def main():
     while RUNNING:
         
         drawSurface.blit(background2, (0, 0))
-        archer.draw(drawSurface, BEGINNING)
-        for arrow in arrows:
-            arrow.draw(drawSurface, BEGINNING)
-        pygame.transform.scale(drawSurface, list(UPSCALED), screen)
+        # for the initial spawn, spawn at the beginning
+        if spawned:
+            archer.draw(drawSurface, offset)
+        else:
+            archer.draw(drawSurface, BEGINNING)
 
-#         screen.blit(background2, (0, 0))
+        for arrow in arrows:
+            arrow.draw(drawSurface, offset)
+
+        pygame.transform.scale(drawSurface, list(UPSCALED), screen)
 
         pygame.display.flip()
 
@@ -57,7 +66,7 @@ def main():
                 # If the key in an arrow, apply it to projectile
                 if event.key in ARROW_KEYS:
                     # Append a new arrow object to the list
-                    arrow = Arrow(deepcopy(archer.getWorldPosition()), archer)
+                    arrow = Arrow(archer)
                     arrow.changeDirection(event)
                     arrows.append(arrow)
 
@@ -75,6 +84,15 @@ def main():
             arrow.update()
         
         archer.update()
+
+        offset = Vector2(max(0,
+                             min(archer.getX() + (archer.getWidth() // 2) -
+                                 (SCREEN_SIZE[0] // 2),
+                                 WORLD_SIZE[0] - SCREEN_SIZE[0])),
+                         max(0,
+                             min(archer.getY() + (archer.getHeight() // 2) -
+                                 (SCREEN_SIZE[1] // 2),
+                                 WORLD_SIZE[1] - SCREEN_SIZE[1]))) 
 
     pygame.quit()
 

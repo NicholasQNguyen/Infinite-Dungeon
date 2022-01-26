@@ -26,7 +26,7 @@ class Archer(Drawable):
         tempSurface.blit(spriteSheet, (0, 0), grabberRectangle)
         self._image = tempSurface
 
-        self._worldPosition = worldPosition
+        self._worldPosition = worldPosition * -1
 
     def handleEvent(self, event):
         """Given an event, change the appropriate value in
@@ -64,16 +64,16 @@ class Archer(Drawable):
             if self._movement[key]:
                 if key == pygame.K_DOWN:
                     self._position[1] += self._velocity
-#                     self._worldPosition[1] += self._velocity
+                    self._worldPosition[1] += self._velocity
 
                 elif key == pygame.K_UP:
                     self._position[1] -= self._velocity
-#                     self._worldPosition[1] -= self._velocity
+                    self._worldPosition[1] -= self._velocity
 
                 elif key == pygame.K_LEFT:
                     self._position[0] -= self._velocity
-#                     self._worldPosition[0] -= self._velocity
+                    self._worldPosition[0] -= self._velocity
 
                 elif key == pygame.K_RIGHT:
                     self._position[0] += self._velocity
-#                     self._worldPosition[0] += self._velocity
+                    self._worldPosition[0] += self._velocity

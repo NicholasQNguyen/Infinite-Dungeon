@@ -13,7 +13,7 @@ from drawable import Drawable
 class Projectile():
 
     _position = Vector2(0, 0)
-    _velocity = 1 
+    _velocity = 5 
 
     def __init__(self):
         None

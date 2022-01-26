@@ -58,7 +58,7 @@ def main():
             archer.draw(drawSurface, BEGINNING)
 
         for arrow in arrows:
-            arrow.draw(drawSurface, offset)
+            arrow.draw(drawSurface)
 
         pygame.transform.scale(drawSurface, list(UPSCALED), screen)
 

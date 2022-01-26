@@ -48,9 +48,24 @@ class Arrow(Projectile):
             self._direction = 0
             self._posOrNeg = 1
 
-    def draw(self, surface, offset):
+    def draw(self, surface):
         # Start it on the archer
-        surface.blit(self._image, list(self._position))
+        # surface.blit(self._image, list(self._position))
+        # Shooting down
+        if self._direction == 1 and self._posOrNeg == 1:
+            surface.blit(self._image, list(self._position))
+        # Shooting up
+        elif self._direction == 1 and self._posOrNeg == -1:
+            surface.blit(pygame.transform.rotate(self._image, 180),
+                                                 list(self._position))
+        # Shooting left
+        elif self._direction == 0 and self._posOrNeg == -1:
+            surface.blit(pygame.transform.rotate(self._image, 270), list(self._position))
+
+        # Shooting right
+        elif self._direction == 0 and self._posOrNeg == 1:
+            surface.blit(pygame.transform.rotate(self._image, 90), list(self._position))
+
 
     def update(self):
         self._position[self._direction] += self._velocity * self._posOrNeg

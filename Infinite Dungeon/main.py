@@ -92,7 +92,7 @@ def main():
                 # If the key in an arrow, apply it to the player's arrows 
                 if event.key in ARROW_KEYS:
                     print(archer.getPosition())
-                    arrow = Arrow(deepcopy(archer.getPosition()), 5)
+                    arrow = Arrow(deepcopy(archer.getPosition()), 5, "arrow.png")
                     # Set the direction based on what arrow was hit
                     arrow.changeDirection(event)
                     arrows.append(arrow)

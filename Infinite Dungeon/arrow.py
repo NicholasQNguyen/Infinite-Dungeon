@@ -11,8 +11,8 @@ from projectile import Projectile
 
 class Arrow(Projectile):
 
-    def __init__(self, initialPosition, velocity):
-        super().__init__(initialPosition, velocity)
+    def __init__(self, initialPosition, velocity, imageName):
+        super().__init__(initialPosition, velocity, imageName)
         # All code to get the image and set it
         sprite = pygame.image.load(os.path.join
                                    ("images", "arrow.png")).convert()

@@ -10,8 +10,8 @@ from mobile import Mobile
 
 class Projectile(Mobile):
 
-    def __init__(self, position, velocity):
-        super().__init__(position, velocity)
+    def __init__(self, position, velocity, imageName):
+        super().__init__(position, velocity, imageName)
 
     def fire(self, direction):
         None

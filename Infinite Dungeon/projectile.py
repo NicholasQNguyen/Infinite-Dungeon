@@ -5,10 +5,10 @@ File: projectile.py
 """
 
 from vector2D import Vector2
-from mobile import Mobile
+from alive import Alive
 
 
-class Projectile(Mobile):
+class Projectile(Alive):
 
     def __init__(self, position, velocity, imageName):
         super().__init__(position, velocity, imageName)

@@ -11,7 +11,6 @@ import pygame
 class Drawable(object):
 
     def __init__(self, imageName):
-        self._isDead = False
         self._imageName = imageName
         self._image = None
 
@@ -34,8 +33,4 @@ class Drawable(object):
         """Returns the colleision area of the object"""
         return self._position + pygame.Rect(self._image.get_rect())
 
-    def kill(self):
-        self._isDead = True
 
-    def isDead(self):
-        return self._isDead

@@ -8,18 +8,17 @@ import pygame
 import os
 from vector2D import Vector2
 from drawable import Drawable
-from mobile import Mobile
+from alive import Alive
 
-
-class Archer(Mobile):
-
+class Archer(Alive):
     _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}
     _position = Vector2(0, 0)
     _velocity = 4
     _image = pygame.Surface((25, 30))
 
-    def __init__(self):
+    def __init__(self, position, velocity, imageName):
+        super().__init__(position, velocity, imageName)
         tempSurface = pygame.Surface((25, 30))
         spriteSheet = pygame.image.load(os.path.join(
                                                 "images",

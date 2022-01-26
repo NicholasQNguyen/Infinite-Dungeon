@@ -42,7 +42,7 @@ def main():
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Stuff for the hero character
-    archer = Archer()
+    archer = Archer((Vector2(0, 0)), 4, "archer.png")
     # List of arrows to keep track of them
     arrows = []
 

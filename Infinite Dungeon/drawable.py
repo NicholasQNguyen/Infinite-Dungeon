@@ -13,7 +13,7 @@ class Drawable(object):
 
     def __init__(self, imageName, position):
         self._imageName = imageName
-        self._image = pygame.image.load(os.path.join("images", self._imageName)).convert()
+        self._image = pygame.image.load(os.path.join("images", self._imageName)).convert_alpha()
 
         self._position = position
 

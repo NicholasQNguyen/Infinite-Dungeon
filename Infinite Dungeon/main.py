@@ -32,18 +32,15 @@ def main():
     screen = pygame.display.set_mode(list(UPSCALED))
 
     # background background
-#     background = pygame.image.load(os.path.join("images", "water1.png"))
-    background = Drawable("water1.png", Vector2(0, 0))
+#     background = Drawable("water1.png", Vector2(0, 0))
 
     # Let's make a background so we can see if we're moving
-    dungeonFloor = pygame.image.load(os.path.join
-                                     ("images",
-                                      "basicDungeonCropped.png")) \
-                               .convert_alpha()
+    dungeonFloor = Drawable("basicDungeonCropped.png", Vector2(0, 0))
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Stuff for the hero character
     archer = Archer((Vector2(0, 0)), 4, "archer.png")
+
     # List of arrows to keep track of them
     arrows = []
 
@@ -62,11 +59,11 @@ def main():
     while RUNNING:
 
         # Blit the background
-#         drawSurface.blit(background, list(offset))
-        background.draw(drawSurface, offset)
+#         background.draw(drawSurface, offset)
+        drawSurface.fill((255, 255, 255))
     
         # Blit the dungeon floor
-        drawSurface.blit(dungeonFloor, list(offset * -1))
+        dungeonFloor.draw(drawSurface, offset)
 
         archer.draw(drawSurface, offset)
 

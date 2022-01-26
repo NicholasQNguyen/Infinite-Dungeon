@@ -22,8 +22,11 @@ def main():
     # Get the screen
     screen = pygame.display.set_mode(list(UPSCALED))
 
+    # background background
+    background = pygame.image.load(os.path.join("images", "water1.png"))
+
     # Let's make a background so we can see if we're moving
-    background2 = pygame.image.load(os.path.join("images", "basicDungeonCropped.png")).convert_alpha()
+    dungeonFloor = pygame.image.load(os.path.join("images", "basicDungeonCropped.png")).convert_alpha()
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Stuff for the hero character
@@ -41,7 +44,9 @@ def main():
 
     while RUNNING:
         
-        drawSurface.blit(background2, (0, 0))
+        drawSurface.blit(background, (0, 0))
+ 
+        drawSurface.blit(dungeonFloor, (0, 0))
         # for the initial spawn, spawn at the beginning
         if spawned:
             archer.draw(drawSurface, offset)
@@ -66,7 +71,7 @@ def main():
                 # If the key in an arrow, apply it to projectile
                 if event.key in ARROW_KEYS:
                     # Append a new arrow object to the list
-                    arrow = Arrow(archer)
+                    arrow = Arrow(deepcopy(archer.getWorldPosition()))
                     arrow.changeDirection(event)
                     arrows.append(arrow)
 

@@ -17,18 +17,15 @@ class Arrow(Projectile):
     _direction = 0
     _archer = None
 
-    def __init__(self, archer):
+    def __init__(self, initialPosition):
         # All code to get the image and set it
         sprite = pygame.image.load(os.path.join("images", "arrow.png")).convert()
         grabberRectangle = pygame.Rect(12, 9, 8, 23)
         self._image = pygame.Surface((8, 23))
         self._image.blit(sprite, (0, 0), grabberRectangle)
 
-        # keep a copy of the archer to track it's position
-        self._archer = archer
- 
         # The initial position is the location of the archer
-        self._position = deepcopy(archer.getWorldPosition())
+        self._position = initialPosition 
    
         # Variable used to track direction arrows fly
         self._posOrNeg = 1
@@ -39,22 +36,18 @@ class Arrow(Projectile):
         if event.key == pygame.K_DOWN:
             self._direction = 1
             self._posOrNeg = 1
-            print("DOWN")
     
         elif event.key == pygame.K_UP:
             self._direction = 1
             self._posOrNeg = -1
-            print("UP")
    
         if event.key == pygame.K_LEFT:
             self._direction = 0
             self._posOrNeg = -1
-            print("LEFT")   
 
         if event.key == pygame.K_RIGHT:
             self._direction = 0
             self._posOrNeg = 1
-            print("RIGHT")   
 
     def draw(self, surface, offset):
         # Start it on the archer

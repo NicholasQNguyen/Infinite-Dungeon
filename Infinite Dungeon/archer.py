@@ -18,7 +18,7 @@ class Archer(Drawable):
     _velocity = 1
     _image = pygame.Surface((25, 30))
 
-    def __init__(self):
+    def __init__(self, worldPosition):
         tempSurface = pygame.Surface((25, 30))
         spriteSheet = pygame.image.load(os.path.join("images", "archer.png")).convert_alpha()
          # Rectangle specifically for the germanic archer png
@@ -26,33 +26,35 @@ class Archer(Drawable):
         tempSurface.blit(spriteSheet, (0, 0), grabberRectangle)
         self._image = tempSurface
 
+        self._worldPosition = worldPosition
+
     def handleEvent(self, event):
         """Given an event, change the appropriate value in
            self._movement, if necessary."""
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_DOWN or event.key == ord("s"):
+            if event.key == event.key == ord("s"):
                 self._movement[pygame.K_DOWN] = True
 
-            elif event.key == pygame.K_UP or event.key == ord("w"):
+            elif event.key == event.key == ord("w"):
                 self._movement[pygame.K_UP] = True
 
-            elif event.key == pygame.K_LEFT or event.key == ord("a"):
+            elif event.key == event.key == ord("a"):
                 self._movement[pygame.K_LEFT] = True
 
-            elif event.key == pygame.K_RIGHT or event.key == ord("d"):
+            elif event.key == event.key == ord("d"):
                 self._movement[pygame.K_RIGHT] = True
 
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_DOWN or event.key == ord("s"):
+            if event.key == event.key == ord("s"):
                 self._movement[pygame.K_DOWN] = False
 
-            elif event.key == pygame.K_UP or event.key == ord("w"):
+            elif event.key == event.key == ord("w"):
                 self._movement[pygame.K_UP] = False
 
-            elif event.key == pygame.K_LEFT or event.key == ord("a"):
+            elif event.key == event.key == ord("a"):
                 self._movement[pygame.K_LEFT] = False
 
-            elif event.key == pygame.K_RIGHT or event.key == ord("d"):
+            elif event.key == event.key == ord("d"):
                 self._movement[pygame.K_RIGHT] = False
 
     def update(self):
@@ -62,12 +64,16 @@ class Archer(Drawable):
             if self._movement[key]:
                 if key == pygame.K_DOWN:
                     self._position[1] += self._velocity
+#                     self._worldPosition[1] += self._velocity
 
                 elif key == pygame.K_UP:
                     self._position[1] -= self._velocity
+#                     self._worldPosition[1] -= self._velocity
 
                 elif key == pygame.K_LEFT:
                     self._position[0] -= self._velocity
+#                     self._worldPosition[0] -= self._velocity
 
                 elif key == pygame.K_RIGHT:
                     self._position[0] += self._velocity
+#                     self._worldPosition[0] += self._velocity

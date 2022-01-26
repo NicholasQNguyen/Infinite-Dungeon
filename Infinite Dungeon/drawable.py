@@ -10,12 +10,19 @@ from vector2D import Vector2
 class Drawable:
     _imageName = ""
     _image = None
+    _worldPosition = Vector2(0, 0)
     _position = Vector2(0, 0)
     _velocity = Vector2(0, 0)
 
     def draw(self, surface, offset):
         """Blits the orb onto a specifed surface with an offset"""
         surface.blit(self._image, list(self._position - offset))
+
+    def getWorldPosition(self):
+        return self._worldPosition
+
+    def setWorldPosition(self, newPosition):
+        self._worldPosition = newPosition
 
     def getPosition(self):
         """Returns the Vector2 of the position"""

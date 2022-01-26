@@ -3,6 +3,7 @@ import os
 from vector2D import Vector2
 from  archer import Archer
 from arrow import Arrow
+from copy import deepcopy
 
 
 SCREEN_SIZE = Vector2(294, 600)
@@ -25,7 +26,7 @@ def main():
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Stuff for the hero character
-    archer = Archer()
+    archer = Archer(BEGINNING)
     # List of arrows to keep track of them
     arrows = []
 
@@ -37,6 +38,8 @@ def main():
         
         drawSurface.blit(background2, (0, 0))
         archer.draw(drawSurface, BEGINNING)
+        for arrow in arrows:
+            arrow.draw(drawSurface, BEGINNING)
         pygame.transform.scale(drawSurface, list(UPSCALED), screen)
 
 #         screen.blit(background2, (0, 0))
@@ -54,21 +57,23 @@ def main():
                 # If the key in an arrow, apply it to projectile
                 if event.key in ARROW_KEYS:
                     # Append a new arrow object to the list
-                    arrows.append(Arrow(archer.getPosition()))
-                    arrow.shoot(event, archer.getPosition(), drawSurface)
+                    arrow = Arrow(deepcopy(archer.getWorldPosition()), archer)
+                    arrow.changeDirection(event)
+                    arrows.append(arrow)
+
                 elif event.key in WASD_KEYS:
                     archer.handleEvent(event)
 
             elif event.type == pygame.KEYUP:
-                if event.key in ARROW_KEYS:
-                    arrows.append(Arrow(archer.getPosition()))
-                    arrow.shoot(event, archer.getPosition(), drawSurface)
-                elif event.key in WASD_KEYS:
+                if event.key in WASD_KEYS:
                     archer.handleEvent(event)
 
         gameClock.tick(60)
         seconds = gameClock.get_time() / 1000
-
+        
+        for arrow in arrows:
+            arrow.update()
+        
         archer.update()
 
     pygame.quit()

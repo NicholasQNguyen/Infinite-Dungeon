@@ -94,6 +94,16 @@ def main():
 
         archer.update()
 
+        # Check if arrows are beyond the border and delete them if they are
+        for arrow in arrows:
+            if arrow.getX() > WORLD_SIZE[0] or arrow.getX() < 0 or \
+               arrow.getY() > WORLD_SIZE[1] or arrow.getY() < 0:
+                arrow.isDead()
+
+        for arrow in arrows:
+            if arrow.isDead():
+                arrows.remove(arrow)
+
         offset = Vector2(max(0,
                              min(archer.getX() + (archer.getWidth() // 2) -
                                  (SCREEN_SIZE[0] // 2),

@@ -10,6 +10,7 @@ from drawable import Drawable
 
 class Projectile(Drawable):
 
+    _isDead = False
     _position = Vector2(0, 0)
     _velocity = 5
 
@@ -18,3 +19,9 @@ class Projectile(Drawable):
 
     def fire(self, direction):
         None
+
+    def kill(self):
+        self._isDead = True
+
+    def isDead(self):
+        return self._isDead

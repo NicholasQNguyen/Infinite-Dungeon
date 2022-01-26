@@ -12,7 +12,6 @@ class Drawable:
     _isDead = False
     _imageName = ""
     _image = None
-    _worldPosition = Vector2(0, 0)
     _position = Vector2(0, 0)
     _velocity = Vector2(0, 0)
 

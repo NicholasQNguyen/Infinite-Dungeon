@@ -13,11 +13,11 @@ from copy import deepcopy
 from target import Target
 
 
-WORLD_SIZE = Vector2(1000, 1000)
-SCREEN_SIZE = Vector2(294, 600)
-SCALE_FACTOR = 1.5
+WORLD_SIZE = Vector2(1200, 1200)
+SCREEN_SIZE = Vector2(800, 800)
+SCALE_FACTOR = 1 
 UPSCALED = SCREEN_SIZE * SCALE_FACTOR
-BEGINNING = Vector2(-125, -550)
+BEGINNING = Vector2(-600, -600)
 ARROW_KEYS = [pygame.K_DOWN, pygame.K_UP,
               pygame.K_LEFT, pygame.K_RIGHT]
 WASD_KEYS = [ord("s"), ord("w"), ord("a"), ord("d")]
@@ -41,13 +41,14 @@ def main():
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Stuff for the hero character
-    archer = Archer(BEGINNING)
+    archer = Archer()
     # List of arrows to keep track of them
     arrows = []
 
     # List of the targets
     targets = []
     targets.append(Target(Vector2(100, 100)))
+    targets.append(Target(Vector2(700,700)))
 
     spawned = False
 
@@ -60,19 +61,15 @@ def main():
     while RUNNING:
 
         # Blit the background
-        drawSurface.blit(background, (0, 0))
+        drawSurface.blit(background, list(offset))
 
         # Blit the dungeon floor
-        drawSurface.blit(dungeonFloor, (0, 0))
+        drawSurface.blit(dungeonFloor, list(offset * -1))
 
-        # for the initial spawn, spawn at the beginning
-        if spawned:
-            archer.draw(drawSurface, offset)
-        else:
-            archer.draw(drawSurface, BEGINNING)
+        archer.draw(drawSurface, offset)
 
         for arrow in arrows:
-            arrow.draw(drawSurface)
+            arrow.draw(drawSurface, offset)
 
         for target in targets:
             target.draw(drawSurface, offset)
@@ -92,7 +89,8 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 # If the key in an arrow, apply it to the player's arrows 
                 if event.key in ARROW_KEYS:
-                    arrow = Arrow(deepcopy(archer.getWorldPosition()))
+                    print(archer.getPosition())
+                    arrow = Arrow(deepcopy(archer.getPosition()))
                     # Set the direction based on what arrow was hit
                     arrow.changeDirection(event)
                     arrows.append(arrow)

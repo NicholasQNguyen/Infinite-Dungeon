@@ -11,19 +11,21 @@ from projectile import Projectile
 
 class Arrow(Projectile):
 
-    # 0 means horizontal, 1 means vertical
-    _direction = 0
 
     def __init__(self, initialPosition):
         # All code to get the image and set it
         sprite = pygame.image.load(os.path.join
                                    ("images", "arrow.png")).convert()
+
         grabberRectangle = pygame.Rect(12, 9, 8, 23)
         self._image = pygame.Surface((8, 23))
         self._image.blit(sprite, (0, 0), grabberRectangle)
 
         # The initial position is the location of the archer
         self._position = initialPosition
+
+        # 0 means horizontal, 1 means vertical
+        self._direction = 0
 
         # Variable used to track direction arrows fly
         self._posOrNeg = 1
@@ -47,25 +49,25 @@ class Arrow(Projectile):
             self._direction = 0
             self._posOrNeg = 1
 
-    def draw(self, surface):
+    def draw(self, surface, offset):
         # Shooting down
         if self._direction == 1 and self._posOrNeg == 1:
             # Start it on the archer
-            surface.blit(self._image, list(self._position))
+            surface.blit(self._image, list(self._position - offset))
 
         # Shooting up
         elif self._direction == 1 and self._posOrNeg == -1:
             surface.blit(pygame.transform.rotate(self._image, 180),
-                         list(self._position))
+                         list(self._position - offset))
         # Shooting left
         elif self._direction == 0 and self._posOrNeg == -1:
             surface.blit(pygame.transform.rotate(self._image, 270),
-                         list(self._position))
+                         list(self._position - offset))
 
         # Shooting right
         elif self._direction == 0 and self._posOrNeg == 1:
             surface.blit(pygame.transform.rotate(self._image, 90),
-                         list(self._position))
+                         list(self._position - offset))
 
     def update(self):
         # Update the position based on the velocity and direction

@@ -8,9 +8,10 @@ import pygame
 import os
 from vector2D import Vector2
 from drawable import Drawable
+from mobile import Mobile
 
 
-class Archer(Drawable):
+class Archer(Mobile):
 
     _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}

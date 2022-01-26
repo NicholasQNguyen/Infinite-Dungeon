@@ -5,16 +5,13 @@ File: projectile.py
 """
 
 from vector2D import Vector2
-from drawable import Drawable
+from mobile import Mobile
 
 
-class Projectile(Drawable):
+class Projectile(Mobile):
 
-    _position = Vector2(0, 0)
-    _velocity = 5
-
-    def __init__(self):
-        None
+    def __init__(self, position, velocity):
+        super().__init__(position, velocity)
 
     def fire(self, direction):
         None

@@ -11,8 +11,8 @@ from projectile import Projectile
 
 class Arrow(Projectile):
 
-
-    def __init__(self, initialPosition):
+    def __init__(self, initialPosition, velocity):
+        super().__init__(initialPosition, velocity)
         # All code to get the image and set it
         sprite = pygame.image.load(os.path.join
                                    ("images", "arrow.png")).convert()
@@ -20,9 +20,6 @@ class Arrow(Projectile):
         grabberRectangle = pygame.Rect(12, 9, 8, 23)
         self._image = pygame.Surface((8, 23))
         self._image.blit(sprite, (0, 0), grabberRectangle)
-
-        # The initial position is the location of the archer
-        self._position = initialPosition
 
         # 0 means horizontal, 1 means vertical
         self._direction = 0

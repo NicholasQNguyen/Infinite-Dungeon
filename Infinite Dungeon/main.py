@@ -11,6 +11,7 @@ from archer import Archer
 from arrow import Arrow
 from copy import deepcopy
 from target import Target
+from random import randint
 
 
 WORLD_SIZE = Vector2(1200, 1200)
@@ -47,8 +48,9 @@ def main():
 
     # List of the targets
     targets = []
-    targets.append(Target(Vector2(100, 100)))
-    targets.append(Target(Vector2(700,700)))
+    # put 5 targets in 5 random positions
+    for i in range(5):
+        targets.append(Target(Vector2(randint(0, 1200), randint(0, 1200))))
 
     spawned = False
 
@@ -90,7 +92,7 @@ def main():
                 # If the key in an arrow, apply it to the player's arrows 
                 if event.key in ARROW_KEYS:
                     print(archer.getPosition())
-                    arrow = Arrow(deepcopy(archer.getPosition()))
+                    arrow = Arrow(deepcopy(archer.getPosition()), 5)
                     # Set the direction based on what arrow was hit
                     arrow.changeDirection(event)
                     arrows.append(arrow)

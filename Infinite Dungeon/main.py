@@ -1,7 +1,7 @@
 import pygame
 import os
 from vector2D import Vector2
-from  archer import Archer
+from archer import Archer
 from arrow import Arrow
 from copy import deepcopy
 
@@ -15,6 +15,7 @@ ARROW_KEYS = [pygame.K_DOWN, pygame.K_UP,
               pygame.K_LEFT, pygame.K_RIGHT]
 WASD_KEYS = [ord("s"), ord("w"), ord("a"), ord("d")]
 
+
 def main():
     # Initialize the module
     pygame.init()
@@ -26,7 +27,10 @@ def main():
     background = pygame.image.load(os.path.join("images", "water1.png"))
 
     # Let's make a background so we can see if we're moving
-    dungeonFloor = pygame.image.load(os.path.join("images", "basicDungeonCropped.png")).convert_alpha()
+    dungeonFloor = pygame.image.load(os.path.join
+                                     ("images",
+                                      "basicDungeonCropped.png")) \
+                               .convert_alpha()
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Stuff for the hero character
@@ -37,15 +41,15 @@ def main():
     spawned = False
 
     offset = Vector2(0, 0)
-    
+
     gameClock = pygame.time.Clock()
 
     RUNNING = True
 
     while RUNNING:
-        
+
         drawSurface.blit(background, (0, 0))
- 
+
         drawSurface.blit(dungeonFloor, (0, 0))
         # for the initial spawn, spawn at the beginning
         if spawned:
@@ -84,10 +88,10 @@ def main():
 
         gameClock.tick(60)
         seconds = gameClock.get_time() / 1000
-        
+
         for arrow in arrows:
             arrow.update()
-        
+
         archer.update()
 
         offset = Vector2(max(0,
@@ -97,7 +101,7 @@ def main():
                          max(0,
                              min(archer.getY() + (archer.getHeight() // 2) -
                                  (SCREEN_SIZE[1] // 2),
-                                 WORLD_SIZE[1] - SCREEN_SIZE[1]))) 
+                                 WORLD_SIZE[1] - SCREEN_SIZE[1])))
 
     pygame.quit()
 

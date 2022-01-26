@@ -6,9 +6,7 @@ File: arrow.py
 
 import pygame
 import os
-from vector2D import Vector2
 from projectile import Projectile
-from copy import deepcopy
 
 
 class Arrow(Projectile):
@@ -19,28 +17,29 @@ class Arrow(Projectile):
 
     def __init__(self, initialPosition):
         # All code to get the image and set it
-        sprite = pygame.image.load(os.path.join("images", "arrow.png")).convert()
+        sprite = pygame.image.load(os.path.join
+                                   ("images", "arrow.png")).convert()
         grabberRectangle = pygame.Rect(12, 9, 8, 23)
         self._image = pygame.Surface((8, 23))
         self._image.blit(sprite, (0, 0), grabberRectangle)
 
         # The initial position is the location of the archer
-        self._position = initialPosition 
-   
+        self._position = initialPosition
+
         # Variable used to track direction arrows fly
         self._posOrNeg = 1
 
     def changeDirection(self, event):
-        """Function to change if the arrow is vertical or 
+        """Function to change if the arrow is vertical or
            horizontal based on the arrow key inputted"""
         if event.key == pygame.K_DOWN:
             self._direction = 1
             self._posOrNeg = 1
-    
+
         elif event.key == pygame.K_UP:
             self._direction = 1
             self._posOrNeg = -1
-   
+
         if event.key == pygame.K_LEFT:
             self._direction = 0
             self._posOrNeg = -1
@@ -55,4 +54,3 @@ class Arrow(Projectile):
 
     def update(self):
         self._position[self._direction] += self._velocity * self._posOrNeg
-        

@@ -1,7 +1,7 @@
 """
 Author: Nicholas Nguyen
-Project 2
-File: star.py
+Infinite Dungeon
+File: archer.py
 """
 
 import pygame
@@ -20,8 +20,10 @@ class Archer(Drawable):
 
     def __init__(self, worldPosition):
         tempSurface = pygame.Surface((25, 30))
-        spriteSheet = pygame.image.load(os.path.join("images", "archer.png")).convert_alpha()
-         # Rectangle specifically for the germanic archer png
+        spriteSheet = pygame.image.load(os.path.join(
+                                                "images",
+                                                "archer.png")).convert_alpha()
+        # Rectangle specifically for the germanic archer png
         grabberRectangle = pygame.Rect(24, 20, 50, 50)
         tempSurface.blit(spriteSheet, (0, 0), grabberRectangle)
         self._image = tempSurface

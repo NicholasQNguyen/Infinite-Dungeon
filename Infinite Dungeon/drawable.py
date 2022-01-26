@@ -5,9 +5,11 @@ File: drawable.py
 """
 
 from vector2D import Vector2
+import pygame
 
 
 class Drawable:
+    _isDead = False
     _imageName = ""
     _image = None
     _worldPosition = Vector2(0, 0)
@@ -54,4 +56,10 @@ class Drawable:
 
     def getCollideRect(self):
         """Returns the colleision area of the object"""
-        return self._image.get_rect()
+        return self._position + pygame.Rect(self._image.get_rect())
+
+    def kill(self):
+        self._isDead = True
+
+    def isDead(self):
+        return self._isDead

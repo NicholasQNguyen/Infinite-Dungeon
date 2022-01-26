@@ -1,9 +1,16 @@
+"""
+Author: Nicholas Nguyen
+Infinite Dungeon
+File: main.py
+"""
+
 import pygame
 import os
 from vector2D import Vector2
 from archer import Archer
 from arrow import Arrow
 from copy import deepcopy
+from target import Target
 
 
 WORLD_SIZE = Vector2(1000, 1000)
@@ -38,6 +45,10 @@ def main():
     # List of arrows to keep track of them
     arrows = []
 
+    # List of the targets
+    targets = []
+    targets.append(Target(Vector2(100, 100)))
+
     spawned = False
 
     offset = Vector2(0, 0)
@@ -48,9 +59,12 @@ def main():
 
     while RUNNING:
 
+        # Blit the background
         drawSurface.blit(background, (0, 0))
 
+        # Blit the dungeon floor
         drawSurface.blit(dungeonFloor, (0, 0))
+
         # for the initial spawn, spawn at the beginning
         if spawned:
             archer.draw(drawSurface, offset)
@@ -59,6 +73,9 @@ def main():
 
         for arrow in arrows:
             arrow.draw(drawSurface)
+
+        for target in targets:
+            target.draw(drawSurface, offset)
 
         pygame.transform.scale(drawSurface, list(UPSCALED), screen)
 
@@ -71,11 +88,12 @@ def main():
                (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 # change the value to False, to exit the main loop
                 RUNNING = False
+
             elif event.type == pygame.KEYDOWN:
-                # If the key in an arrow, apply it to projectile
+                # If the key in an arrow, apply it to the player's arrows 
                 if event.key in ARROW_KEYS:
-                    # Append a new arrow object to the list
                     arrow = Arrow(deepcopy(archer.getWorldPosition()))
+                    # Set the direction based on what arrow was hit
                     arrow.changeDirection(event)
                     arrows.append(arrow)
 
@@ -83,6 +101,7 @@ def main():
                     archer.handleEvent(event)
 
             elif event.type == pygame.KEYUP:
+
                 if event.key in WASD_KEYS:
                     archer.handleEvent(event)
 
@@ -91,6 +110,7 @@ def main():
 
         for arrow in arrows:
             arrow.update()
+            arrowCollisionRect = arrow.getCollideRect()
 
         archer.update()
 
@@ -100,9 +120,22 @@ def main():
                arrow.getY() > WORLD_SIZE[1] or arrow.getY() < 0:
                 arrow.isDead()
 
+        # Collision Checking
+        for target in targets:
+            targetCollisionRect = target.getCollideRect()
+            if arrows != []:
+                if targetCollisionRect.colliderect(arrowCollisionRect):
+                    target.kill()
+                    arrow.kill()
+            
         for arrow in arrows:
             if arrow.isDead():
                 arrows.remove(arrow)
+
+        for target in targets:
+            if target.isDead():
+                targets.remove(target)
+
 
         offset = Vector2(max(0,
                              min(archer.getX() + (archer.getWidth() // 2) -

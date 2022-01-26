@@ -56,16 +56,16 @@ class Arrow(Projectile):
         # Shooting up
         elif self._direction == 1 and self._posOrNeg == -1:
             surface.blit(pygame.transform.rotate(self._image, 180),
-                                                 list(self._position))
+                         list(self._position))
         # Shooting left
         elif self._direction == 0 and self._posOrNeg == -1:
             surface.blit(pygame.transform.rotate(self._image, 270),
-                                                 list(self._position))
+                         list(self._position))
 
         # Shooting right
         elif self._direction == 0 and self._posOrNeg == 1:
             surface.blit(pygame.transform.rotate(self._image, 90),
-                                                 list(self._position))
+                         list(self._position))
 
     def update(self):
         # Update the position based on the velocity and direction

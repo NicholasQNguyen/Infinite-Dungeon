@@ -14,12 +14,10 @@ class Arrow(Projectile):
     def __init__(self, initialPosition, velocity, imageName):
         super().__init__(initialPosition, velocity, imageName)
         # All code to get the image and set it
-        sprite = pygame.image.load(os.path.join
-                                   ("images", "arrow.png")).convert()
-
         grabberRectangle = pygame.Rect(12, 9, 8, 23)
-        self._image = pygame.Surface((8, 23))
-        self._image.blit(sprite, (0, 0), grabberRectangle)
+        tempSurface = pygame.Surface((8, 23))
+        tempSurface.blit(self._image, (0, 0), grabberRectangle)
+        self._image = tempSurface
 
         # 0 means horizontal, 1 means vertical
         self._direction = 0

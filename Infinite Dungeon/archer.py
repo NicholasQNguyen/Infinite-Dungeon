@@ -15,17 +15,13 @@ class Archer(Alive):
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}
     _position = Vector2(0, 0)
     _velocity = 4
-    _image = pygame.Surface((25, 30))
 
     def __init__(self, position, velocity, imageName):
         super().__init__(position, velocity, imageName)
         tempSurface = pygame.Surface((25, 30))
-        spriteSheet = pygame.image.load(os.path.join(
-                                                "images",
-                                                "archer.png")).convert_alpha()
         # Rectangle specifically for the germanic archer png
         grabberRectangle = pygame.Rect(24, 20, 50, 50)
-        tempSurface.blit(spriteSheet, (0, 0), grabberRectangle)
+        tempSurface.blit(self._image, (0, 0), grabberRectangle)
         self._image = tempSurface
 
     def handleEvent(self, event):

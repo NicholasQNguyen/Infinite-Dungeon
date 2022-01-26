@@ -6,19 +6,23 @@ File: drawable.py
 
 from vector2D import Vector2
 import pygame
+import os
 
 
 class Drawable(object):
 
-    def __init__(self, imageName):
+    def __init__(self, imageName, position):
         self._imageName = imageName
-        self._image = None
+        self._image = pygame.image.load(os.path.join("images", self._imageName)).convert()
+
+        self._position = position
 
     def draw(self, surface, offset):
         """Blits the orb onto a specifed surface with an offset"""
         surface.blit(self._image, list(self._position - offset))
+
     def getSize(self):
-        """Returns the size of the surface the orb is on"""
+        """Returns the size of the surface"""
         return self._image.get_size()
 
     def getWidth(self):
@@ -30,7 +34,7 @@ class Drawable(object):
         return self._image.get_height()
 
     def getCollideRect(self):
-        """Returns the colleision area of the object"""
+        """Returns the collision area of the object"""
         return self._position + pygame.Rect(self._image.get_rect())
 
 

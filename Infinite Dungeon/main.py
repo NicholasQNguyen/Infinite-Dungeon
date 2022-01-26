@@ -12,7 +12,7 @@ from arrow import Arrow
 from copy import deepcopy
 from target import Target
 from random import randint
-
+from drawable import Drawable
 
 WORLD_SIZE = Vector2(1200, 1200)
 SCREEN_SIZE = Vector2(800, 800)
@@ -32,7 +32,8 @@ def main():
     screen = pygame.display.set_mode(list(UPSCALED))
 
     # background background
-    background = pygame.image.load(os.path.join("images", "water1.png"))
+#     background = pygame.image.load(os.path.join("images", "water1.png"))
+    background = Drawable("water1.png", Vector2(0, 0))
 
     # Let's make a background so we can see if we're moving
     dungeonFloor = pygame.image.load(os.path.join
@@ -52,8 +53,6 @@ def main():
     for i in range(5):
         targets.append(Target(Vector2(randint(0, 1200), randint(0, 1200))))
 
-    spawned = False
-
     offset = Vector2(0, 0)
 
     gameClock = pygame.time.Clock()
@@ -63,8 +62,9 @@ def main():
     while RUNNING:
 
         # Blit the background
-        drawSurface.blit(background, list(offset))
-
+#         drawSurface.blit(background, list(offset))
+        background.draw(drawSurface, offset)
+    
         # Blit the dungeon floor
         drawSurface.blit(dungeonFloor, list(offset * -1))
 
@@ -91,7 +91,6 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 # If the key in an arrow, apply it to the player's arrows 
                 if event.key in ARROW_KEYS:
-                    print(archer.getPosition())
                     arrow = Arrow(deepcopy(archer.getPosition()), 5, "arrow.png")
                     # Set the direction based on what arrow was hit
                     arrow.changeDirection(event)

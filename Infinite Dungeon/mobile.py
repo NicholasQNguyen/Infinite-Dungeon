@@ -9,8 +9,7 @@ from drawable import Drawable
 class Mobile(Drawable):
 
     def __init__(self, position, velocity, imageName):
-        super().__init__(imageName)
-        self._position = position
+        super().__init__(imageName, position)
         self._velocity = velocity
 
     def getPosition(self):

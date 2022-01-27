@@ -122,7 +122,6 @@ def main():
         # seconds = gameClock.get_time() / 1000
         seconds = pygame.time.get_ticks() / 1000
 
-        print(seconds)
     
         # Stuff for object movement
 

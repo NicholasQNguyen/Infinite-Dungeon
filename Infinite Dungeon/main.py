@@ -13,6 +13,8 @@ from copy import deepcopy
 from target import Target
 from random import randint
 from drawable import Drawable
+from slime import Slime
+
 
 WORLD_SIZE = Vector2(1200, 1200)
 SCREEN_SIZE = Vector2(800, 800)
@@ -39,7 +41,7 @@ def main():
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Stuff for the hero character
-    archer = Archer((Vector2(0, 0)), 4, "archer.png")
+    archer = Archer((Vector2(500, 500)), 4, "archer.png")
 
     # List of arrows to keep track of them
     arrows = []
@@ -50,9 +52,16 @@ def main():
     for i in range(5):
         targets.append(Target(Vector2(randint(0, 1200), randint(0, 1200))))
 
+    # List for the slimes
+    slimes = []
+    slimes.append(Slime(Vector2(randint(300, 600), randint(300, 600)), 2))
+
     offset = Vector2(0, 0)
 
     gameClock = pygame.time.Clock()
+    seconds = 0
+
+    pygame.time.set_timer(pygame.USEREVENT, 5000)
 
     RUNNING = True
 
@@ -72,6 +81,9 @@ def main():
 
         for target in targets:
             target.draw(drawSurface, offset)
+
+        for slime in slimes:
+            slime.draw(drawSurface, offset)
 
         pygame.transform.scale(drawSurface, list(UPSCALED), screen)
 
@@ -101,12 +113,23 @@ def main():
                 if event.key in WASD_KEYS:
                     archer.handleEvent(event)
 
+            elif event.type == pygame.USEREVENT:
+                slime.changeDirection()
+
         gameClock.tick(60)
-        seconds = gameClock.get_time() / 1000
+        # seconds = gameClock.get_time() / 1000
+        seconds = pygame.time.get_ticks() / 1000
+
+        print(seconds)
+    
+        # Stuff for object movement
 
         for arrow in arrows:
             arrow.update()
             arrowCollisionRect = arrow.getCollideRect()
+
+        for slime in slimes:
+            slime.move(seconds)
 
         archer.update()
 

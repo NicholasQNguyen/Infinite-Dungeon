@@ -13,8 +13,6 @@ from alive import Alive
 class Archer(Alive):
     _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}
-    _position = Vector2(0, 0)
-    _velocity = 4
 
     def __init__(self, position, velocity, imageName):
         super().__init__(position, velocity, imageName)

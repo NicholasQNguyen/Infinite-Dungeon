@@ -54,7 +54,8 @@ def main():
 
     # List for the slimes
     slimes = []
-    slimes.append(Slime(Vector2(randint(300, 600), randint(300, 600)), 2))
+    for i in range(3):
+        slimes.append(Slime(Vector2(randint(300, 600), randint(300, 600)), 2))
 
     offset = Vector2(0, 0)
 
@@ -114,7 +115,8 @@ def main():
                     archer.handleEvent(event)
 
             elif event.type == pygame.USEREVENT:
-                slime.changeDirection()
+                for slime in slimes:
+                    slime.changeDirection()
 
         gameClock.tick(60)
         # seconds = gameClock.get_time() / 1000
@@ -146,6 +148,13 @@ def main():
                 if targetCollisionRect.colliderect(arrowCollisionRect):
                     target.kill()
                     arrow.kill()
+
+        for slime in slimes:
+            slimeCollisionRect = slime.getCollideRect()
+            if arrows != []:
+                if slimeCollisionRect.colliderect(arrowCollisionRect):
+                    slime.kill()
+                    arrow.kill()
             
         for arrow in arrows:
             if arrow.isDead():
@@ -155,6 +164,9 @@ def main():
             if target.isDead():
                 targets.remove(target)
 
+        for slime in slimes:
+            if slime.isDead():
+                slimes.remove(slime)
 
         offset = Vector2(max(0,
                              min(archer.getX() + (archer.getWidth() // 2) -

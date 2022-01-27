@@ -39,12 +39,9 @@ def main():
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Basic Room Drawing
-    basicRoom = Room("basicRoom.png", Vector2(0, 0))
-    doors = []
-    doors.append(Door("North"))
-    doors.append(Door("East"))
-    doors.append(Door("South"))
-    doors.append(Door("West"))
+    rooms = []
+    startingRoom = Room("basicRoom.png", 0, "East" )
+    rooms.append(startingRoom)
 
     # Stuff for the hero character
     archer = Archer((Vector2(500, 500)), 4, "archer.png")
@@ -76,15 +73,14 @@ def main():
     while RUNNING:
 
         # Blit the background
-#         background.draw(drawSurface, offset)
         drawSurface.fill((255, 255, 255))
     
-        # Blit the dungeon floor
-#         dungeonFloor.draw(drawSurface, offset)
 
-        basicRoom.draw(drawSurface, offset)
-        for door in doors:
-            door.draw(drawSurface, offset)
+        for room in rooms:
+            room.draw(drawSurface, offset)
+            for door in room.doors:
+                door.draw(drawSurface, offset)
+
 
         archer.draw(drawSurface, offset)
 
@@ -168,7 +164,7 @@ def main():
                     slime.kill()
                     arrow.kill()
 
-        for door in doors:
+        for door in room.doors:
             doorCollisionRect = door.getCollideRect()
             if doorCollisionRect.colliderect(archerCollisionRect):
                 print("Moving")           

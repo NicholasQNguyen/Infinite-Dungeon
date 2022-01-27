@@ -14,9 +14,10 @@ from target import Target
 from random import randint
 from drawable import Drawable
 from slime import Slime
+from room import Room, Door
 
 
-WORLD_SIZE = Vector2(1200, 1200)
+WORLD_SIZE = Vector2(1008, 1008)
 SCREEN_SIZE = Vector2(800, 800)
 SCALE_FACTOR = 1 
 UPSCALED = SCREEN_SIZE * SCALE_FACTOR
@@ -33,12 +34,13 @@ def main():
     # Get the screen
     screen = pygame.display.set_mode(list(UPSCALED))
 
-    # background background
-#     background = Drawable("water1.png", Vector2(0, 0))
-
     # Let's make a background so we can see if we're moving
-    dungeonFloor = Drawable("basicDungeonCropped.png", Vector2(0, 0))
+    # dungeonFloor = Drawable("basicDungeonCropped.png", Vector2(0, 0))
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
+
+    # Basic Room Drawing
+    basicRoom = Room("basicRoom.png", Vector2(0, 0))
+    door = Door("North")
 
     # Stuff for the hero character
     archer = Archer((Vector2(500, 500)), 4, "archer.png")
@@ -64,6 +66,7 @@ def main():
 
     pygame.time.set_timer(pygame.USEREVENT, 5000)
 
+
     RUNNING = True
 
     while RUNNING:
@@ -73,7 +76,10 @@ def main():
         drawSurface.fill((255, 255, 255))
     
         # Blit the dungeon floor
-        dungeonFloor.draw(drawSurface, offset)
+#         dungeonFloor.draw(drawSurface, offset)
+
+        basicRoom.draw(drawSurface, offset)
+        door.draw(drawSurface, offset)
 
         archer.draw(drawSurface, offset)
 

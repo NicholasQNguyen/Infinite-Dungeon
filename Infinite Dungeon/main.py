@@ -40,7 +40,11 @@ def main():
 
     # Basic Room Drawing
     basicRoom = Room("basicRoom.png", Vector2(0, 0))
-    door = Door("North")
+    doors = []
+    doors.append(Door("North"))
+    doors.append(Door("East"))
+    doors.append(Door("South"))
+    doors.append(Door("West"))
 
     # Stuff for the hero character
     archer = Archer((Vector2(500, 500)), 4, "archer.png")
@@ -79,7 +83,8 @@ def main():
 #         dungeonFloor.draw(drawSurface, offset)
 
         basicRoom.draw(drawSurface, offset)
-        door.draw(drawSurface, offset)
+        for door in doors:
+            door.draw(drawSurface, offset)
 
         archer.draw(drawSurface, offset)
 
@@ -146,6 +151,8 @@ def main():
                arrow.getY() > WORLD_SIZE[1] or arrow.getY() < 0:
                 arrow.isDead()
 
+        archerCollisionRect = archer.getCollideRect()
+
         # Collision Checking
         for target in targets:
             targetCollisionRect = target.getCollideRect()
@@ -160,7 +167,12 @@ def main():
                 if slimeCollisionRect.colliderect(arrowCollisionRect):
                     slime.kill()
                     arrow.kill()
-            
+
+        for door in doors:
+            doorCollisionRect = door.getCollideRect()
+            if doorCollisionRect.colliderect(archerCollisionRect):
+                print("Moving")           
+ 
         for arrow in arrows:
             if arrow.isDead():
                 arrows.remove(arrow)

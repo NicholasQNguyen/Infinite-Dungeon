@@ -8,28 +8,28 @@ A class tohold onto and manage rooms
 """
 
 from vector2D import Vector2
-import pygame
 from random import randint
 from room import Room
 
 
 class Atlas(object):
-   
-    atlas = [[],[],[]]
+
+    atlas = [[], [], []]
 
     def __init__(self):
-        # Make a 9x9 grid to represent the map 
+        # Make a 9x9 grid to represent the map
         for lyst in self.atlas:
             for i in range(3):
                 # 1's means theres a room, 0's means there's not
-                lyst.append(randint(0,1))
+                lyst.append(randint(0, 1))
 
         for lyst in self.atlas:
-            for i in range (3):
+            for i in range(3):
                 # Add rooms where there are 1's
                 if lyst[i] == 1:
-                    lyst[i] = Room("basicRoom.png", Vector2(0, 0), Room.currentRoomNumber)
-            
+                    lyst[i] = Room("basicRoom.png",
+                                   Vector2(0, 0), Room.currentRoomNumber)
+
             for i in range(3):
                 if lyst[i] != 0:
                     if lyst[i].hasNorth:
@@ -43,13 +43,16 @@ class Atlas(object):
 
                     if lyst[i].hasWest:
                         lyst[i].setWestDoor()
+
+
 """
             The map looks like this:
             [0, 0, 0]
             [0, 0, 0]
             [0, 0, 0]
 
-            These methods check for 1's above, to the right, below, and to the left
+            These methods check for 1's above,
+            to the right, below, and to the left
             of the inputted index
 
     def hasNorth(self, indeces):

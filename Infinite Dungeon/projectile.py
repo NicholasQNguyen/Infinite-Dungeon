@@ -3,8 +3,6 @@ Author: Nicholas Nguyen
 Final Project
 File: projectile.py
 """
-
-from vector2D import Vector2
 from alive import Alive
 
 
@@ -15,4 +13,3 @@ class Projectile(Alive):
 
     def fire(self, direction):
         None
-

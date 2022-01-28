@@ -5,7 +5,6 @@ File: door.py
 """
 
 from vector2D import Vector2
-import pygame
 from drawable import Drawable
 
 
@@ -34,4 +33,4 @@ class Door(Drawable):
         return self._destination
 
     def getPosition(self):
-        return self._position 
+        return self._position

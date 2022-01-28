@@ -5,7 +5,6 @@ File: arrow.py
 """
 
 import pygame
-import os
 from projectile import Projectile
 
 

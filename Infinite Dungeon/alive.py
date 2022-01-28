@@ -16,4 +16,4 @@ class Alive(Mobile):
         self._isDead = True
 
     def isDead(self):
-        return self._isDead       
+        return self._isDead

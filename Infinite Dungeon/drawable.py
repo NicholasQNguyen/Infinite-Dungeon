@@ -4,7 +4,6 @@ Project 2
 File: drawable.py
 """
 
-from vector2D import Vector2
 import pygame
 import os
 
@@ -13,7 +12,8 @@ class Drawable(object):
 
     def __init__(self, imageName, position):
         self._imageName = imageName
-        self._image = pygame.image.load(os.path.join("images", self._imageName)).convert_alpha()
+        self._image = pygame.image.load(
+                      os.path.join("images", self._imageName)).convert_alpha()
 
         self._position = position
 
@@ -36,5 +36,3 @@ class Drawable(object):
     def getCollideRect(self):
         """Returns the collision area of the object"""
         return self._position + pygame.Rect(self._image.get_rect())
-
-

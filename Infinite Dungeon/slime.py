@@ -7,7 +7,6 @@ Basic monster that moves back and forth.
 """
 import pygame
 from alive import Alive
-import os
 
 
 class Slime(Alive):

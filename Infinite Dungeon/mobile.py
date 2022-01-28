@@ -27,5 +27,3 @@ class Mobile(Drawable):
     def getY(self):
         """Returns the X position which is an int"""
         return self._position[1]
-
-

@@ -5,30 +5,30 @@ File: room.py
 """
 
 from vector2D import Vector2
-import pygame
 from drawable import Drawable
 from door import Door
-import random
+
 
 class Room(Drawable):
-
     currentRoomNumber = 1
     _rooms = []
 
-    def __init__(self, imageName, roomNumber, north=False, east=False, south=False, west=False):
+    def __init__(self, imageName, roomNumber,
+                 north=False, east=False, south=False, west=False):
         super().__init__(imageName, Vector2(0, 0))
         # Dictionary to hold where there are paths
-        self._doorLocations = {"North":north, "East":east, "South":south, "West":west}
+        self._doorLocations = {"North": north, "East": east,
+                               "South": south, "West": west}
         self.doors = []
 
         # room ID number to allow for blitting of the right one
         self._roomNumber = roomNumber
-        
+
         for key in self._doorLocations:
             if self._doorLocations[key]:
                 self.doors.append(Door(key, self.currentRoomNumber))
                 self.currentRoomNumber += 1
-    
+
     def setNorthDoor(self):
         self._doorLocations["North"] = True
 
@@ -64,13 +64,16 @@ class Room(Drawable):
             return bool(self.atlas[indeces[0]+1][indeces[1]])
         except IndexError:
             return False
+
+
 """
             The map looks like this:
             [0, 0, 0]
             [0, 0, 0]
             [0, 0, 0]
 
-            These methods check for 1's above, to the right, below, and to the left
+            These methods check for 1's above,
+            to the right, below, and to the left
             of the inputted index
 """
 
@@ -89,4 +92,3 @@ class Room(Drawable):
                 self.doors.append(Door(key, self._currentRoomNumber))
                 self._currentRoomNumber += 1
 """
-

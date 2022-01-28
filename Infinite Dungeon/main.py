@@ -5,22 +5,20 @@ File: main.py
 """
 
 import pygame
-import os
 from vector2D import Vector2
 from archer import Archer
 from arrow import Arrow
 from copy import deepcopy
 from target import Target
 from random import randint
-from drawable import Drawable
 from slime import Slime
-from room import Room, Door
+from room import Room
 from atlas import Atlas
 
 
 WORLD_SIZE = Vector2(1008, 1008)
 SCREEN_SIZE = Vector2(800, 800)
-SCALE_FACTOR = 1 
+SCALE_FACTOR = 1
 UPSCALED = SCREEN_SIZE * SCALE_FACTOR
 BEGINNING = Vector2(-600, -600)
 ARROW_KEYS = [pygame.K_DOWN, pygame.K_UP,
@@ -41,16 +39,14 @@ def main():
 
     # Basic Room Drawing
     rooms = []
-    startingRoom = Room("basicRoom.png", 0, east = True)
+    startingRoom = Room("basicRoom.png", 0, east=True)
     rooms.append(startingRoom)
-    secondRoom = Room("basicRoom.png", 1, west = True)
+    secondRoom = Room("basicRoom.png", 1, west=True)
     rooms.append(secondRoom)
 
     atlas = Atlas()
 
     currentRoom = 0
-
-    currentlyCollidingWithDoor = False
 
     # Stuff for the hero character
     archer = Archer((Vector2(500, 500)), 4, "archer.png")
@@ -76,20 +72,18 @@ def main():
 
     pygame.time.set_timer(pygame.USEREVENT, 5000)
 
-
     RUNNING = True
 
     while RUNNING:
 
         # Blit the background
         drawSurface.fill((255, 255, 255))
-    
+
         # start by drawing the starting room
         rooms[currentRoom].draw(drawSurface, offset)
 
         for door in rooms[currentRoom].doors:
             door.draw(drawSurface, offset)
-
 
         archer.draw(drawSurface, offset)
 
@@ -115,9 +109,10 @@ def main():
                 RUNNING = False
 
             elif event.type == pygame.KEYDOWN:
-                # If the key in an arrow, apply it to the player's arrows 
+                # If the key in an arrow, apply it to the player's arrows
                 if event.key in ARROW_KEYS:
-                    arrow = Arrow(deepcopy(archer.getPosition()), 5, "arrow.png")
+                    arrow = Arrow(deepcopy(archer.getPosition()),
+                                  5, "arrow.png")
                     # Set the direction based on what arrow was hit
                     arrow.changeDirection(event)
                     arrows.append(arrow)
@@ -138,7 +133,6 @@ def main():
         # seconds = gameClock.get_time() / 1000
         seconds = pygame.time.get_ticks() / 1000
 
-    
         # Stuff for object movement
 
         for arrow in arrows:
@@ -181,11 +175,14 @@ def main():
                     break
                 else:
                     archer.setLastTouchedDoor(door)
-                    print("Moving") 
+                    print("Moving")
                     # Change the index to change what room is drawn
                     currentRoom = door.getDestination()
-                    archer.setPosition(deepcopy(rooms[currentRoom].doors[0].getPosition()))
- 
+                    # Move the archer to the corresponding
+                    # door in the other room
+                    archer.setPosition(deepcopy(rooms[currentRoom]
+                                                .doors[0].getPosition()))
+
         for arrow in arrows:
             if arrow.isDead():
                 arrows.remove(arrow)

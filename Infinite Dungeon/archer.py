@@ -3,12 +3,9 @@ Author: Nicholas Nguyen
 Infinite Dungeon
 File: archer.py
 """
-
 import pygame
-import os
-from vector2D import Vector2
-from drawable import Drawable
 from alive import Alive
+
 
 class Archer(Alive):
     _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
@@ -75,4 +72,3 @@ class Archer(Alive):
 
     def setLastTouchedDoor(self, door):
         self._lastTouchedDoor = door
-    

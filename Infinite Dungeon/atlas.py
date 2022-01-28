@@ -12,8 +12,8 @@ from random import randint, choice
 from room import Room
 
 
-DIMENSION = 3
-
+DIMENSION = 6
+ROOM_TYPES = ["basicRoom.png", "bridgeRoom.png", "torchRoom.png"]
 
 class Atlas(object):
 
@@ -21,6 +21,8 @@ class Atlas(object):
         self.atlas = []
         for i in range(DIMENSION):
             self.atlas.append([])
+
+        self.roomAssignment = 1
 
         # Make a DIMENSIONxDIMENSION grid to represent the map
         for lyst in self.atlas:
@@ -32,12 +34,14 @@ class Atlas(object):
             for j in range(DIMENSION):
                 # Add rooms where there are 1's
                 if self.atlas[i][j] == 1:
-                    self.atlas[i][j] = Room("basicRoom.png",
-                                            Room.currentRoomNumber,
+                    self.atlas[i][j] = Room(choice(ROOM_TYPES),
+                                            self.roomAssignment,
                                             north = choice((True, False)),
                                             east = choice((True, False)),
                                             south = choice((True, False)),
                                             west = choice((True, False)))
+                    self.roomAssignment += 1
+    
 
             for j in range(DIMENSION):
                 if self.atlas[i][j] != 0:

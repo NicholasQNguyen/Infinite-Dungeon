@@ -77,6 +77,8 @@ def main():
     gameClock = pygame.time.Clock()
     seconds = 0
 
+    arrowCollisionRects = []
+
     pygame.time.set_timer(pygame.USEREVENT, 5000)
 
     RUNNING = True
@@ -144,7 +146,7 @@ def main():
 
         for arrow in arrows:
             arrow.update()
-            arrowCollisionRect = arrow.getCollideRect()
+            arrowCollisionRects.append(arrow.getCollideRect())
 
         for slime in slimes:
             slime.move(seconds)
@@ -163,16 +165,18 @@ def main():
         for target in targets:
             targetCollisionRect = target.getCollideRect()
             if arrows != []:
-                if targetCollisionRect.colliderect(arrowCollisionRect):
-                    target.kill()
-                    arrow.kill()
+                for collisionBox in arrowCollisionRects:
+                    if targetCollisionRect.colliderect(collisionBox):
+                        target.kill()
+                        arrow.kill()
 
         for slime in slimes:
             slimeCollisionRect = slime.getCollideRect()
             if arrows != []:
-                if slimeCollisionRect.colliderect(arrowCollisionRect):
-                    slime.kill()
-                    arrow.kill()
+                for collisionBox in arrowCollisionRects:
+                    if slimeCollisionRect.colliderect(collisionBox):
+                        slime.kill()
+                        arrow.kill()
 
         for door in rooms[currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
@@ -180,6 +184,11 @@ def main():
                 # Conditional so we only activate the door once
                 if door == archer.getLastTouchedDoor():
                     break
+                elif door == archer.getNewDoor():
+                    if archer.getNewDoor().getCollideRect().colliderect(archerCollisionRect):
+                        archer.setLastTouchedDoor(None)
+                        break
+
                 else:
                     archer.setLastTouchedDoor(door)
                     print("Moving")
@@ -187,8 +196,12 @@ def main():
                     currentRoom = door.getDestination()
                     # Move the archer to the corresponding
                     # door in the other room
+                    print(currentRoom)
                     archer.setPosition(deepcopy(rooms[currentRoom]
                                                 .doors[0].getPosition()))
+                    archer.setNewDoor(rooms[currentRoom].doors[0])
+            else:
+                archer.setNewDoor(None)
 
         for arrow in arrows:
             if arrow.isDead():

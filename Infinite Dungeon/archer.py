@@ -22,6 +22,7 @@ class Archer(Alive):
         self._image = tempSurface
 
         self._lastTouchedDoor = None
+        self._newDoor = None
 
     def handleEvent(self, event):
         """Given an event, change the appropriate value in
@@ -74,3 +75,9 @@ class Archer(Alive):
 
     def setLastTouchedDoor(self, door):
         self._lastTouchedDoor = door
+
+    def getNewDoor(self):
+        return self._newDoor
+
+    def setNewDoor(self, door):
+        self._newDoor = door

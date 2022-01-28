@@ -15,6 +15,7 @@ from random import randint
 from drawable import Drawable
 from slime import Slime
 from room import Room, Door
+from atlas import Atlas
 
 
 WORLD_SIZE = Vector2(1008, 1008)
@@ -40,8 +41,14 @@ def main():
 
     # Basic Room Drawing
     rooms = []
-    startingRoom = Room("basicRoom.png", 0, "East" )
+    startingRoom = Room("basicRoom.png", 0, east = True )
     rooms.append(startingRoom)
+
+    atlas = Atlas()
+
+    currentRoom = 0
+
+    currentlyCollidingWithDoor = False
 
     # Stuff for the hero character
     archer = Archer((Vector2(500, 500)), 4, "archer.png")
@@ -75,11 +82,11 @@ def main():
         # Blit the background
         drawSurface.fill((255, 255, 255))
     
+        # start by drawing the starting room
+        rooms[currentRoom].draw(drawSurface, offset)
 
-        for room in rooms:
-            room.draw(drawSurface, offset)
-            for door in room.doors:
-                door.draw(drawSurface, offset)
+        for door in rooms[currentRoom].doors:
+            door.draw(drawSurface, offset)
 
 
         archer.draw(drawSurface, offset)
@@ -164,10 +171,18 @@ def main():
                     slime.kill()
                     arrow.kill()
 
-        for door in room.doors:
+        for door in rooms[currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
+            # print(currentRoom)
             if doorCollisionRect.colliderect(archerCollisionRect):
-                print("Moving")           
+                currentlyCollidingWithDoor = True
+                if currentlyCollidingWithDoor:
+                    print("Moving") 
+                    # currentRoom = door.getDestination()
+                else:
+                    None
+            else:
+                currentlyCollidingWithDoor = False
  
         for arrow in arrows:
             if arrow.isDead():

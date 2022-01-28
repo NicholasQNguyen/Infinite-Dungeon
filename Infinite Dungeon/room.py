@@ -2,6 +2,8 @@
 Author: Nicholas Nguyen
 Final Project
 File: room.py
+
+Class for handling the dungeons the player walks around on
 """
 
 from vector2D import Vector2

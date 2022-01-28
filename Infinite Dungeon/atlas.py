@@ -4,7 +4,7 @@ Final Porject
 File: atlas.py
 
 
-A class tohold onto and manage rooms
+A class to hold onto and manage rooms
 """
 
 from vector2D import Vector2

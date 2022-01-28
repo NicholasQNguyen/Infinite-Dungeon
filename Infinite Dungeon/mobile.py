@@ -2,6 +2,8 @@
 Author: Nicholas Nguyen
 Project 2
 File: mobile.py
+
+Class for thing that can move and have a position and velocity
 """
 from drawable import Drawable
 

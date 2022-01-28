@@ -2,6 +2,8 @@
 Author: Nicholas Nguyen
 Infinite Dungeon
 File: archer.py
+
+Class for the player character
 """
 import pygame
 from alive import Alive

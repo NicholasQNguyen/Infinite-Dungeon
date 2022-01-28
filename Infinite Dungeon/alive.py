@@ -2,6 +2,8 @@
 Author: Nicholas Nguyen
 Project 2
 File: alive.py
+
+Class for things that can be dead.
 """
 from mobile import Mobile
 

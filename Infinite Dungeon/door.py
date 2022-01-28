@@ -2,6 +2,8 @@
 Author: Nicholas Nguyen
 Final Project
 File: door.py
+
+Class to handle doors and room transitions
 """
 
 from vector2D import Vector2

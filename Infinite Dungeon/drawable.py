@@ -2,6 +2,8 @@
 Author: Nicholas Nguyen
 Project 2
 File: drawable.py
+
+Class to handle things that can be drawn (characters, UI, etc.)
 """
 
 import pygame

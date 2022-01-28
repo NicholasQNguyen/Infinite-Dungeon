@@ -2,6 +2,8 @@
 Author: Nicholas Nguyen
 Final Project
 File: projectile.py
+
+Class for all projectiles with a hitbox enemy or friendly
 """
 from alive import Alive
 

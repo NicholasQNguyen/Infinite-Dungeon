@@ -2,6 +2,8 @@
 Author: Nicholas Nguyen
 Final Project
 File: arrow.py
+
+Class for the player's projectiles
 """
 
 import pygame

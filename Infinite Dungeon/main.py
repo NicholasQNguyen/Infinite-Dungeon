@@ -41,8 +41,10 @@ def main():
 
     # Basic Room Drawing
     rooms = []
-    startingRoom = Room("basicRoom.png", 0, east = True )
+    startingRoom = Room("basicRoom.png", 0, east = True)
     rooms.append(startingRoom)
+    secondRoom = Room("basicRoom.png", 1, west = True)
+    rooms.append(secondRoom)
 
     atlas = Atlas()
 
@@ -173,16 +175,16 @@ def main():
 
         for door in rooms[currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
-            # print(currentRoom)
             if doorCollisionRect.colliderect(archerCollisionRect):
-                currentlyCollidingWithDoor = True
-                if currentlyCollidingWithDoor:
-                    print("Moving") 
-                    # currentRoom = door.getDestination()
+                # Conditional so we only activate the door once
+                if door == archer.getLastTouchedDoor():
+                    break
                 else:
-                    None
-            else:
-                currentlyCollidingWithDoor = False
+                    archer.setLastTouchedDoor(door)
+                    print("Moving") 
+                    # Change the index to change what room is drawn
+                    currentRoom = door.getDestination()
+                    archer.setPosition(deepcopy(rooms[currentRoom].doors[0].getPosition()))
  
         for arrow in arrows:
             if arrow.isDead():

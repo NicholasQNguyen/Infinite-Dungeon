@@ -22,6 +22,8 @@ class Archer(Alive):
         tempSurface.blit(self._image, (0, 0), grabberRectangle)
         self._image = tempSurface
 
+        self._lastTouchedDoor = None
+
     def handleEvent(self, event):
         """Given an event, change the appropriate value in
            self._movement, if necessary."""
@@ -67,3 +69,10 @@ class Archer(Alive):
 
                 elif key == pygame.K_RIGHT:
                     self._position[0] += self._velocity
+
+    def getLastTouchedDoor(self):
+        return self._lastTouchedDoor
+
+    def setLastTouchedDoor(self, door):
+        self._lastTouchedDoor = door
+    

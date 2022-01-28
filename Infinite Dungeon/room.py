@@ -43,6 +43,7 @@ class Room(Drawable):
     def setWestDoor(self):
         self._doorLocations["West"] = True
 
+"""
     def hasNorth(self, indeces):
         try:
             return bool(self.atlas[indeces[0]-1][indeces[1]])
@@ -68,7 +69,7 @@ class Room(Drawable):
             return False
 
 
-"""
+
             The map looks like this:
             [0, 0, 0]
             [0, 0, 0]

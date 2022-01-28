@@ -38,13 +38,20 @@ def main():
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Basic Room Drawing
-    rooms = []
-    startingRoom = Room("basicRoom.png", 0, east=True)
-    rooms.append(startingRoom)
-    secondRoom = Room("basicRoom.png", 1, west=True)
-    rooms.append(secondRoom)
-
     atlas = Atlas()
+    for lyst in atlas.atlas:
+        for element in lyst:
+            if element == 0:
+                print(0)
+            else:
+                print(element._roomNumber)
+
+    rooms = atlas.getRooms()
+#     startingRoom = Room("basicRoom.png", 0, east=True)
+#     rooms.append(startingRoom)
+#     secondRoom = Room("basicRoom.png", 1, west=True, north=True)
+#     rooms.append(secondRoom)
+#     thirdRoom = Room("basicRoom.png", 2, south=True)
 
     currentRoom = 0
 

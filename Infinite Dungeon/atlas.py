@@ -24,9 +24,10 @@ class Atlas(object):
             self.atlas.append([])
             for j in range(DIMENSION):
                 self.atlas[i].append(0)
-        
-        roomAssignment = 1
+
         prevRoom = 0
+        roomAssignment = 1
+        nextRoom = 2
 
         right = False
         up = False
@@ -34,20 +35,15 @@ class Atlas(object):
         placerIndex1 = DIMENSION - 1
         placerIndex2 = 0
 
-        firstRoom = Room(choice(ROOM_TYPES), 0, 1, east=True)
+        firstRoom = Room(choice(ROOM_TYPES), 0, 1)
         lastRoom = Room(choice(ROOM_TYPES), 99)
 
         # Put a room in the bottom left and top right of the grid
-        print(placerIndex1)
-        print(placerIndex2)
         self.atlas[placerIndex1][placerIndex2] = firstRoom
         self.atlas[placerIndex2][placerIndex1] = lastRoom 
 
-        print("North:", self.getNorth((placerIndex1, placerIndex2)))
-        print("East:", self.getEast((placerIndex1, placerIndex2)))
-
         # Keep adding rooms until we see the last room
-        while isinstance(self.getNorth((placerIndex1, placerIndex2)), int) or \
+        while isinstance(self.getNorth((placerIndex1, placerIndex2)), int) and \
               isinstance(self.getEast((placerIndex1, placerIndex2)), int):
             # From the bottom left room, go randomly right or up and put a room
             rightOrUp = randint(0,1)
@@ -58,35 +54,47 @@ class Atlas(object):
 
             if up:
                 placerIndex1 -= 1
+                # Account for if we're on the top edge of the map
                 try:
-                    newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom)
+                    newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom, nextRoom)
                     newRoom.setSouthDoor((roomAssignment - 1))
                     print("1:", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
+                    up = False
+                    # Go to the previous room and add a door to link to the new room we just made
+                    self.atlas[placerIndex1 + 1][placerIndex2].setNorthDoor(roomAssignment)
                 # If we just get a bunch of up, then go right
                 except IndexError:
                     placerIndex1 += 1
                     placerIndex2 += 1
-                    newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom)
+                    newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom, nextRoom)
                     newRoom.setWestDoor(roomAssignment - 1)
                     print("1: ", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
+                    # In the previous room, add a door to the east to match up with this room
+                    self.atlas[placerIndex1][placerIndex2 - 1].setEastDoor(roomAssignment)
 
             else:
                 placerIndex2 += 1
+                # If we're on the right edge of the map
                 try:
-                    newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom)
+                    newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom, nextRoom)
                     newRoom.setWestDoor(roomAssignment - 1)
                     print("1: ", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
+                    right = False
+                    # In the previous room, add a door to the east to match up with this room
+                    self.atlas[placerIndex1][placerIndex2 - 1].setEastDoor(roomAssignment)
                 except IndexError:
                     placerIndex2 -= 1
                     placerIndex1 -= 1
-                    newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom)
+                    newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom, nextRoom)
                     newRoom.setWestDoor(roomAssignment - 1)
                     print("1: ", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
-
+                    # Go to the previous room and add a door to link to the new room we just made
+                    self.atlas[placerIndex1 + 1][placerIndex2].setNorthDoor(roomAssignment)
+ 
             roomAssignment += 1
             prevRoom += 1
             print("North:", self.getNorth((placerIndex1, placerIndex2)))
@@ -94,24 +102,26 @@ class Atlas(object):
 
 
         # if we're one below the final room, add a door pointing up
-        if self.atlas[placerIndex1][placerIndex2] == lastRoom:
-            self.atlas[placerIndex1 - 1][placerIndex2].setNorthDoor(99)
+        if self.getNorth((placerIndex1, placerIndex2)) == lastRoom:
+            self.atlas[placerIndex1][placerIndex2].setNorthDoor(99)
             # add a door pointing back to the second to last room
             lastRoom.setSouthDoor(roomAssignment - 1)
 
         #If we're one to the left of the final room, add a door pointing right
-        elif self.atlas[placerIndex1][placerIndex2] == lastRoom:
-            self.atlas[placerIndex1][placerIndex2 - 1].setEastDoor(99)
+        elif self.getEast((placerIndex1, placerIndex2)) == lastRoom:
+            self.atlas[placerIndex1][placerIndex2].setEastDoor(99)
             lastRoom.setSouthDoor(roomAssignment - 1)
 
     def getRooms(self):
-        """Get a list of the rooms"""
+        """Get a list of the rooms in order.
+           IE. [Room 0, Room 1, Room 2 etc.]"""
         listOfRooms = []
         for i in range(DIMENSION):
             for j in range(DIMENSION):
                 if self.atlas[i][j] != 0:
                     listOfRooms.append(self.atlas[i][j])
-        return listOfRooms
+        # We want a sorted list so that when we index in main, we get the right room
+        return sorted(listOfRooms)
 
     def hasNorth(self, indeces):
         try:
@@ -148,6 +158,12 @@ class Atlas(object):
             return self.atlas[indeces[0]][indeces[1] + 1]
         except IndexError:
             return None
+
+    def __str__(self):
+        # https://stackoverflow.com/questions/50731788/str-to-give-a-visual-representation-of-the-2d-table-in-python
+        return ('\n'.join(['|'.join([str(cell) for cell in row]) for row in self.atlas]))
+
+
 
 """
             The map looks like this:

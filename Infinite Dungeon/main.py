@@ -39,12 +39,8 @@ def main():
 
     # Basic Room Drawing
     atlas = Atlas()
-    for lyst in atlas.atlas:
-        for element in lyst:
-            if element == 0:
-                print(0)
-            else:
-                print(element._roomNumber)
+
+    print(atlas)
 
     rooms = atlas.getRooms()
 #     startingRoom = Room("basicRoom.png", 0, east=True)

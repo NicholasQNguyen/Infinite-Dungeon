@@ -52,6 +52,18 @@ class Room(Drawable):
         else:
             return False
 
+    def __str__(self):
+        """Print out the room number so that the printed atlas looks good"""
+        return str(self._roomNumber)
+
+    def __lt__(self, other):
+        if isinstance(other, Room):
+            return self._roomNumber < other._roomNumber
+
+    def __gt__(self, other):
+        if isinstance(other, Room):
+            return self._roomNumber > other._roomNumber
+
 """
     def hasNorth(self, indeces):
         try:

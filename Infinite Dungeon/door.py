@@ -16,7 +16,7 @@ class Door(Drawable):
         # Place it on the North wall
         if cardinalDirection == "North":        # Half the width of the room
             super().__init__("door.png", Vector2(504, 0))
-            self._position = Vector2(504, 0)
+            self.type = cardinalDirection
         elif cardinalDirection == "East":
             super().__init__("door.png", Vector2((1008 - 64), 504))
             self._position = Vector2((1008 - 64), 504)
@@ -29,7 +29,7 @@ class Door(Drawable):
 
         # Room id number of where it leads
         self._destination = destination
-
+        self.type = cardinalDirection
     def getDestination(self):
         """Transition from one room to another"""
         return self._destination

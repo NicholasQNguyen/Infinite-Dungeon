@@ -25,6 +25,11 @@ ARROW_KEYS = [pygame.K_DOWN, pygame.K_UP,
               pygame.K_LEFT, pygame.K_RIGHT]
 WASD_KEYS = [ord("s"), ord("w"), ord("a"), ord("d")]
 
+NORTH_POSITION = Vector2(504, 0)
+EAST_POSITION = Vector2(1008, 504)
+SOUTH_POSITION = Vector2(504, 1008)
+WEST_POSITION = Vector2(0, 504)
+CENTER_OF_ROOM = Vector2(504, 504)
 
 def main():
     # Initialize the module
@@ -54,7 +59,12 @@ def main():
     # Stuff for the hero character
     archer = Archer((Vector2(500, 500)), 4, "archer.png")
 
-    # List of arrows to keep track of them
+    # List of arrows to keep tp
+    NORTH_POSITION = Vector2(504, 0)
+    EAST_POSITION = Vector2(1008, 504)
+    SOUTH_POSITION = Vector2(504, 1008)
+    WEST_POSITION = Vector2(0, 504)
+
     arrows = []
 
     # List of the targets
@@ -177,24 +187,20 @@ def main():
         for door in rooms[currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
             if doorCollisionRect.colliderect(archerCollisionRect):
-                # Conditional so we only activate the door once
-                if door == archer.getLastTouchedDoor():
-                    break
-                elif door == archer.getNewDoor():
-                    if archer.getNewDoor().getCollideRect().colliderect(archerCollisionRect):
-                        archer.setLastTouchedDoor(None)
-                        break
-
-                else:
-                    archer.setLastTouchedDoor(door)
-                    print("Moving")
+                print("Moving")
                     # Change the index to change what room is drawn
-                    currentRoom = door.getDestination()
+                currentRoom = door.getDestination()
                     # Move the archer to the corresponding
                     # door in the other room
-                    print(currentRoom)
-                    archer.setPosition(deepcopy(rooms[currentRoom]
-                                                .doors[0].getPosition()))
+                print(currentRoom)
+#                     archer.setPosition(deepcopy(rooms[currentRoom]
+#                                                 .door[0].getPosition()))
+                    # Depending on the door entered, move the archer to the appropriate location
+                archer.setPosition(deepcopy(CENTER_OF_ROOM))
+
+                if currentRoom == 99:
+                    currentRoom = -1
+                if rooms[currentRoom].doors != []:
                     archer.setNewDoor(rooms[currentRoom].doors[0])
             else:
                 archer.setNewDoor(None)

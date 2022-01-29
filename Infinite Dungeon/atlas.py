@@ -12,7 +12,7 @@ from random import randint, choice
 from room import Room
 
 
-DIMENSION = 3
+DIMENSION = 5
 ROOM_TYPES = ["basicRoom.png", "bridgeRoom.png", "torchRoom.png"]
 
 class Atlas(object):
@@ -69,7 +69,7 @@ class Atlas(object):
                     placerIndex2 += 1
                     newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom, nextRoom)
                     newRoom.setWestDoor(roomAssignment - 1)
-                    print("1: ", placerIndex1, "2:", placerIndex2)
+                    print("1:", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
                     # In the previous room, add a door to the east to match up with this room
                     self.atlas[placerIndex1][placerIndex2 - 1].setEastDoor(roomAssignment)
@@ -80,7 +80,7 @@ class Atlas(object):
                 try:
                     newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom, nextRoom)
                     newRoom.setWestDoor(roomAssignment - 1)
-                    print("1: ", placerIndex1, "2:", placerIndex2)
+                    print("1:", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
                     right = False
                     # In the previous room, add a door to the east to match up with this room
@@ -89,18 +89,16 @@ class Atlas(object):
                     placerIndex2 -= 1
                     placerIndex1 -= 1
                     newRoom = Room(choice(ROOM_TYPES), roomAssignment, prevRoom, nextRoom)
-                    newRoom.setWestDoor(roomAssignment - 1)
-                    print("1: ", placerIndex1, "2:", placerIndex2)
+                    newRoom.setSouthDoor(roomAssignment - 1)
+                    print("1:", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
                     # Go to the previous room and add a door to link to the new room we just made
                     self.atlas[placerIndex1 + 1][placerIndex2].setNorthDoor(roomAssignment)
  
             roomAssignment += 1
             prevRoom += 1
-            print("North:", self.getNorth((placerIndex1, placerIndex2)))
-            print("East:", self.getEast((placerIndex1, placerIndex2)))
 
-
+        print("DONE LOOPING")
         # if we're one below the final room, add a door pointing up
         if self.getNorth((placerIndex1, placerIndex2)) == lastRoom:
             self.atlas[placerIndex1][placerIndex2].setNorthDoor(99)

@@ -12,10 +12,9 @@ from door import Door
 
 
 class Room(Drawable):
-    currentRoomNumber = 1
     _rooms = []
 
-    def __init__(self, imageName, roomNumber,
+    def __init__(self, imageName, roomNumber, connectingRoom=None,
                  north=False, east=False, south=False, west=False):
         super().__init__(imageName, Vector2(0, 0))
         # Dictionary to hold where there are paths
@@ -28,20 +27,30 @@ class Room(Drawable):
 
         for key in self._doorLocations:
             if self._doorLocations[key]:
-                self.doors.append(Door(key, self.currentRoomNumber))
-                self.currentRoomNumber += 1
+                self.doors.append(Door(key, connectingRoom))
 
-    def setNorthDoor(self):
+    def setNorthDoor(self, connectingRoom):
         self._doorLocations["North"] = True
+        self.doors.append(Door("North", connectingRoom))
 
-    def setEastDoor(self):
+    def setEastDoor(self, connectingRoom):
         self._doorLocations["East"] = True
+        self.doors.append(Door("East", connectingRoom))
 
-    def setSouthDoor(self):
+    def setSouthDoor(self, connectingRoom):
         self._doorLocations["South"] = True
+        self.doors.append(Door("South", connectingRoom))
 
-    def setWestDoor(self):
+    def setWestDoor(self, connectingRoom):
         self._doorLocations["West"] = True
+        self.doors.append(Door("West", connectingRoom))
+
+    def __eq__(self, other):
+        # https://www.pythontutorial.net/python-oop/python-__eq__/
+        if isinstance(other, Room):
+            return self._roomNumber == other._roomNumber
+        else:
+            return False
 
 """
     def hasNorth(self, indeces):

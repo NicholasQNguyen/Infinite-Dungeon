@@ -64,43 +64,6 @@ class Room(Drawable):
         if isinstance(other, Room):
             return self._roomNumber > other._roomNumber
 
-"""
-    def hasNorth(self, indeces):
-        try:
-            return bool(self.atlas[indeces[0]-1][indeces[1]])
-        except IndexError:
-            return False
-
-    def hasEast(self, indeces):
-        try:
-            return bool(self.atlas[indeces[0]][indeces[1]+1])
-        except IndexError:
-            return False
-
-    def hasWest(self, indeces):
-        try:
-            return bool(self.atlas[indeces[0]][indeces[1]-1])
-        except IndexError:
-            return False
-
-    def hasSouth(self, indeces):
-        try:
-            return bool(self.atlas[indeces[0]+1][indeces[1]])
-        except IndexError:
-            return False
-
-
-
-            The map looks like this:
-            [0, 0, 0]
-            [0, 0, 0]
-            [0, 0, 0]
-
-            These methods check for 1's above,
-            to the right, below, and to the left
-            of the inputted index
-"""
-
 
 """
         for key in self._doorLocations:

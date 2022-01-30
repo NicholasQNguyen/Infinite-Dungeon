@@ -12,7 +12,6 @@ from copy import deepcopy
 from target import Target
 from random import randint
 from slime import Slime
-from room import Room
 from atlas import Atlas
 
 
@@ -25,11 +24,8 @@ ARROW_KEYS = [pygame.K_DOWN, pygame.K_UP,
               pygame.K_LEFT, pygame.K_RIGHT]
 WASD_KEYS = [ord("s"), ord("w"), ord("a"), ord("d")]
 
-NORTH_POSITION = Vector2(504, 0)
-EAST_POSITION = Vector2(1008, 504)
-SOUTH_POSITION = Vector2(504, 1008)
-WEST_POSITION = Vector2(0, 504)
 CENTER_OF_ROOM = Vector2(504, 504)
+
 
 def main():
     # Initialize the module
@@ -58,12 +54,6 @@ def main():
 
     # Stuff for the hero character
     archer = Archer((Vector2(500, 500)), 4, "archer.png")
-
-    # List of arrows to keep tp
-    NORTH_POSITION = Vector2(504, 0)
-    EAST_POSITION = Vector2(1008, 504)
-    SOUTH_POSITION = Vector2(504, 1008)
-    WEST_POSITION = Vector2(0, 504)
 
     arrows = []
 
@@ -188,14 +178,10 @@ def main():
             doorCollisionRect = door.getCollideRect()
             if doorCollisionRect.colliderect(archerCollisionRect):
                 print("Moving")
-                    # Change the index to change what room is drawn
+                # Change the index to change what room is drawn
                 currentRoom = door.getDestination()
-                    # Move the archer to the corresponding
-                    # door in the other room
+                # Move the archer to the center of the room when moving rooms
                 print(currentRoom)
-#                     archer.setPosition(deepcopy(rooms[currentRoom]
-#                                                 .door[0].getPosition()))
-                    # Depending on the door entered, move the archer to the appropriate location
                 archer.setPosition(deepcopy(CENTER_OF_ROOM))
 
                 if currentRoom == 99:

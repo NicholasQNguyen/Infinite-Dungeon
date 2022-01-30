@@ -30,6 +30,7 @@ class Door(Drawable):
         # Room id number of where it leads
         self._destination = destination
         self.type = cardinalDirection
+
     def getDestination(self):
         """Transition from one room to another"""
         return self._destination

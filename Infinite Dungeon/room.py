@@ -12,7 +12,6 @@ from door import Door
 
 
 class Room(Drawable):
-    _rooms = []
 
     def __init__(self, imageName, roomNumber, connectingRoom=None,
                  north=False, east=False, south=False, west=False):
@@ -30,19 +29,15 @@ class Room(Drawable):
                 self.doors.append(Door(key, connectingRoom))
 
     def setNorthDoor(self, connectingRoom):
-        self._doorLocations["North"] = True
         self.doors.append(Door("North", connectingRoom))
 
     def setEastDoor(self, connectingRoom):
-        self._doorLocations["East"] = True
         self.doors.append(Door("East", connectingRoom))
 
     def setSouthDoor(self, connectingRoom):
-        self._doorLocations["South"] = True
         self.doors.append(Door("South", connectingRoom))
 
     def setWestDoor(self, connectingRoom):
-        self._doorLocations["West"] = True
         self.doors.append(Door("West", connectingRoom))
 
     def __eq__(self, other):

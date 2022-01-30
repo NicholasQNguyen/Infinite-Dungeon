@@ -54,7 +54,7 @@ class Atlas(object):
             if up:
                 placerIndex1 -= 1
                 # Account for if we're on the top edge of the map
-                try:
+                if placerIndex1 != 0:
                     newRoom = Room(choice(ROOM_TYPES), roomAssignment,
                                    prevRoom, nextRoom)
                     newRoom.setSouthDoor((prevRoom))
@@ -66,7 +66,8 @@ class Atlas(object):
                     self.atlas[placerIndex1 + 1][placerIndex2] \
                         .setNorthDoor(roomAssignment)
                 # If we just get a bunch of up, then go right
-                except IndexError:
+                else:
+                    print("TOP EDGE")
                     up = False
                     placerIndex1 += 1
                     placerIndex2 += 1

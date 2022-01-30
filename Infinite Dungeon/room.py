@@ -18,7 +18,7 @@ class Room(Drawable):
                  north=False, east=False, south=False, west=False):
         super().__init__(imageName, Vector2(0, 0))
         # Dictionary to hold where there are paths
-        self._doorLocations = {"North": north, "East": east,
+        self._doorLocations = {"North": False, "East": east,
                                "South": south, "West": west}
         self.doors = []
 

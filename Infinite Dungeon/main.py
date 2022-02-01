@@ -146,6 +146,8 @@ def main():
         for slime in slimes:
             slime.move()
 
+        golem.move(deepcopy(archer.getPosition()))
+
         archer.update()
 
         # Check if arrows are beyond the border and delete them if they are

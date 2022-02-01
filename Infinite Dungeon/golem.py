@@ -19,4 +19,16 @@ class Golem(Alive):
         self._image = tempSurface
 
     def move(self, archerPosition):
-        if self._position 
+        # Move the golem left or right to chase the archer
+        if archerPosition[0] > self._position[0]:
+            self._position[0] += self._velocity
+        elif archerPosition[0] < self._position[0]:
+            self._position[0] -= self._velocity
+
+        # Move the golem up or down to chase the archer
+        if archerPosition[1] > self._position[1]:
+            self._position[1] += self._velocity
+        elif archerPosition[1] < self._position[1]:
+            self._position[1] -= self._velocity
+
+       

@@ -13,6 +13,7 @@ from target import Target
 from random import randint
 from slime import Slime
 from atlas import Atlas
+from golem import Golem
 
 
 WORLD_SIZE = Vector2(1008, 1008)
@@ -35,7 +36,6 @@ def main():
     screen = pygame.display.set_mode(list(UPSCALED))
 
     # Let's make a background so we can see if we're moving
-    # dungeonFloor = Drawable("basicDungeonCropped.png", Vector2(0, 0))
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Basic Room Drawing
@@ -44,11 +44,6 @@ def main():
     print(atlas)
 
     rooms = atlas.getRooms()
-#     startingRoom = Room("basicRoom.png", 0, east=True)
-#     rooms.append(startingRoom)
-#     secondRoom = Room("basicRoom.png", 1, west=True, north=True)
-#     rooms.append(secondRoom)
-#     thirdRoom = Room("basicRoom.png", 2, south=True)
 
     currentRoom = 0
 
@@ -67,6 +62,8 @@ def main():
     slimes = []
     for i in range(3):
         slimes.append(Slime(Vector2(randint(300, 600), randint(300, 600)), 2))
+
+    golem = Golem(Vector2(600, 600), 2)
 
     offset = Vector2(0, 0)
 
@@ -101,6 +98,8 @@ def main():
         for slime in slimes:
             slime.draw(drawSurface, offset)
 
+        golem.draw(drawSurface, offset)
+
         pygame.transform.scale(drawSurface, list(UPSCALED), screen)
 
         pygame.display.flip()
@@ -130,13 +129,13 @@ def main():
                 if event.key in WASD_KEYS:
                     archer.handleEvent(event)
 
+            # Change slime movement direciton after 5 secs
             elif event.type == pygame.USEREVENT:
                 for slime in slimes:
                     slime.changeDirection()
 
         gameClock.tick(60)
-        # seconds = gameClock.get_time() / 1000
-        seconds = pygame.time.get_ticks() / 1000
+        seconds = gameClock.get_time() / 1000
 
         # Stuff for object movement
 
@@ -145,7 +144,7 @@ def main():
             arrowCollisionRects.append(arrow.getCollideRect())
 
         for slime in slimes:
-            slime.move(seconds)
+            slime.move()
 
         archer.update()
 

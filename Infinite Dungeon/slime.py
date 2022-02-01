@@ -21,6 +21,6 @@ class Slime(Alive):
     def changeDirection(self):
         self._direction *= -1
 
-    def move(self, seconds):
+    def move(self):
         """Move right for 5 seconds then left for 5 seconds"""
         self._position[0] += self._velocity * self._direction

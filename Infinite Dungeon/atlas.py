@@ -9,7 +9,8 @@ A class to hold onto and manage rooms
 
 from random import randint, choice
 from room import Room
-from squads import SlimeOverload
+from squads import SlimeOverload, GolemAttack
+from copy import copy, deepcopy
 
 
 DIMENSION = 5
@@ -20,7 +21,7 @@ class Atlas(object):
 
     def __init__(self):
         # Initialize the enemy squad types
-        squads = [SlimeOverload()]
+        squads = [SlimeOverload(), GolemAttack()]
 
         self.atlas = []
         # Make a DIMENSIONxDIMENSION grid to represent the map
@@ -129,8 +130,8 @@ class Atlas(object):
 
         # Assign an enemy squad to a specific room
         for room in self.getRooms():
-            print(room)
-            room.enemies = choice(squads).enemies 
+            enemyList = choice(squads).enemies
+            room.enemies = copy(enemyList)
 
     def getRooms(self):
         """Get a list of the rooms in order.

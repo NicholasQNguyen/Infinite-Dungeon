@@ -8,11 +8,13 @@ Basic monster that moves back and forth.
 import pygame
 from alive import Alive
 
+GOLEM_HP = 20
+
 
 class Golem(Alive):
 
-    def __init__(self, position, velocity, hp):
-        super().__init__(position, velocity, "golem-walk.png", hp)
+    def __init__(self, position, velocity):
+        super().__init__(position, velocity, "golem-walk.png", GOLEM_HP)
         grabberRectangle = pygame.Rect(11, 0, 44, 60)
         tempSurface = pygame.Surface((44, 60))
         tempSurface.blit(self._image, (0, 0), grabberRectangle)

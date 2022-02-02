@@ -9,11 +9,13 @@ Class for the player's projectiles
 import pygame
 from projectile import Projectile
 
+DAMAGE = 5
+
 
 class Arrow(Projectile):
 
     def __init__(self, initialPosition, velocity, imageName):
-        super().__init__(initialPosition, velocity, imageName)
+        super().__init__(initialPosition, velocity, imageName, DAMAGE)
         # All code to get the image and set it
         grabberRectangle = pygame.Rect(12, 9, 8, 23)
         tempSurface = pygame.Surface((8, 23))

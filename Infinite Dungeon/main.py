@@ -26,6 +26,7 @@ ARROW_KEYS = [pygame.K_DOWN, pygame.K_UP,
 WASD_KEYS = [ord("s"), ord("w"), ord("a"), ord("d")]
 
 CENTER_OF_ROOM = Vector2(504, 504)
+ARCHER_VELOCITY = 4
 
 
 def main():
@@ -48,22 +49,22 @@ def main():
     currentRoom = 0
 
     # Stuff for the hero character
-    archer = Archer((Vector2(500, 500)), 4, "archer.png")
+    archer = Archer((Vector2(500, 500)), ARCHER_VELOCITY, "archer.png")
 
     arrows = []
 
     # List of the targets
-    targets = []
-    # put 5 targets in 5 random positions
-    for i in range(5):
-        targets.append(Target(Vector2(randint(0, 1200), randint(0, 1200))))
+#     targets = []
+#     # put 5 targets in 5 random positions
+#     for i in range(5):
+#         targets.append(Target(Vector2(randint(0, 1200), randint(0, 1200))))
 
-    # List for the slimes
-    slimes = []
-    for i in range(3):
-        slimes.append(Slime(Vector2(randint(300, 600), randint(300, 600)), 2))
+#     # List for the slimes
+#     slimes = []
+#     for i in range(3):
+#         slimes.append(Slime(Vector2(randint(300, 600), randint(300, 600)), 2))
 
-    golem = Golem(Vector2(600, 600), 2)
+#     golem = Golem(Vector2(600, 600), 2, 10)
 
     offset = Vector2(0, 0)
 
@@ -77,6 +78,10 @@ def main():
     RUNNING = True
 
     while RUNNING:
+
+        for enemy in rooms[currentRoom].enemies:
+            print(enemy)
+            print("Hello World")
 
         # Blit the background
         drawSurface.fill((255, 255, 255))
@@ -92,13 +97,16 @@ def main():
         for arrow in arrows:
             arrow.draw(drawSurface, offset)
 
-        for target in targets:
-            target.draw(drawSurface, offset)
+        for enemy in rooms[currentRoom].enemies:
+            enemy.draw(drawSurface, offset)
 
-        for slime in slimes:
-            slime.draw(drawSurface, offset)
+#         for target in targets:
+#             target.draw(drawSurface, offset)
 
-        golem.draw(drawSurface, offset)
+#         for slime in slimes:
+#             slime.draw(drawSurface, offset)
+
+#         golem.draw(drawSurface, offset)
 
         pygame.transform.scale(drawSurface, list(UPSCALED), screen)
 
@@ -130,9 +138,9 @@ def main():
                     archer.handleEvent(event)
 
             # Change slime movement direciton after 5 secs
-            elif event.type == pygame.USEREVENT:
-                for slime in slimes:
-                    slime.changeDirection()
+#             elif event.type == pygame.USEREVENT:
+#                 for slime in slimes:
+#                     slime.changeDirection()
 
         gameClock.tick(60)
         seconds = gameClock.get_time() / 1000
@@ -143,10 +151,13 @@ def main():
             arrow.update()
             arrowCollisionRects.append(arrow.getCollideRect())
 
-        for slime in slimes:
-            slime.move()
+        for enemy in rooms[currentRoom].enemies:
+            enemy.move()
 
-        golem.move(deepcopy(archer.getPosition()))
+#         for slime in slimes:
+#             slime.move()
+
+#         golem.move(deepcopy(archer.getPosition()))
 
         archer.update()
 
@@ -159,21 +170,24 @@ def main():
         archerCollisionRect = archer.getCollideRect()
 
         # Collision Checking
-        for target in targets:
-            targetCollisionRect = target.getCollideRect()
-            if arrows != []:
-                for collisionBox in arrowCollisionRects:
-                    if targetCollisionRect.colliderect(collisionBox):
-                        target.kill()
-                        arrow.kill()
+#         for target in targets:
+#             targetCollisionRect = target.getCollideRect()
+#             if arrows != []:
+#                 for collisionBox in arrowCollisionRects:
+#                     if targetCollisionRect.colliderect(collisionBox):
+#                         target.kill()
+#                         arrow.kill()
 
-        for slime in slimes:
-            slimeCollisionRect = slime.getCollideRect()
-            if arrows != []:
-                for collisionBox in arrowCollisionRects:
-                    if slimeCollisionRect.colliderect(collisionBox):
-                        slime.kill()
-                        arrow.kill()
+#         for slime in slimes:
+#            slimeCollisionRect = slime.getCollideRect()
+#             if arrows != []:
+#                 for collisionBox in arrowCollisionRects:
+#                     if slimeCollisionRect.colliderect(collisionBox):
+#                         slime.kill()
+#                         arrow.kill()
+
+#         if golem.getCollideRect().colliderect(archerCollisionRect):
+#             print("Ouch")
 
         for door in rooms[currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
@@ -192,17 +206,17 @@ def main():
             else:
                 archer.setNewDoor(None)
 
-        for arrow in arrows:
-            if arrow.isDead():
-                arrows.remove(arrow)
+#         for arrow in arrows:
+#             if arrow.isDead():
+#                 arrows.remove(arrow)
 
-        for target in targets:
-            if target.isDead():
-                targets.remove(target)
+#         for target in targets:
+#             if target.isDead():
+#                 targets.remove(target)
 
-        for slime in slimes:
-            if slime.isDead():
-                slimes.remove(slime)
+#         for slime in slimes:
+#             if slime.isDead():
+#                 slimes.remove(slime)
 
         offset = Vector2(max(0,
                              min(archer.getX() + (archer.getWidth() // 2) -

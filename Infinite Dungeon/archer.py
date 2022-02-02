@@ -14,15 +14,13 @@ class Archer(Alive):
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}
 
     def __init__(self, position, velocity, imageName):
-        super().__init__(position, velocity, imageName)
+        super().__init__(position, velocity, imageName, 50)
         tempSurface = pygame.Surface((25, 30))
         # Rectangle specifically for the germanic archer png
         grabberRectangle = pygame.Rect(24, 20, 50, 50)
         tempSurface.blit(self._image, (0, 0), grabberRectangle)
         self._image = tempSurface
 
-        self._lastTouchedDoor = None
-        self._newDoor = None
 
     def handleEvent(self, event):
         """Given an event, change the appropriate value in

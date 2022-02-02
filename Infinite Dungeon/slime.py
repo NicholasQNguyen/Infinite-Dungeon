@@ -12,7 +12,7 @@ from alive import Alive
 class Slime(Alive):
 
     def __init__(self, position, velocity):
-        super().__init__(position, velocity, "slime_monster_spritesheet.png")
+        super().__init__(position, velocity, "slime_monster_spritesheet.png", 5)
         tempSurface = pygame.Surface((24, 24))
         tempSurface.blit(self._image, (0, 0))
         self._image = tempSurface

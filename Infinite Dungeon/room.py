@@ -17,16 +17,13 @@ class Room(Drawable):
                  north=False, east=False, south=False, west=False):
         super().__init__(imageName, Vector2(0, 0))
         # Dictionary to hold where there are paths
-        self._doorLocations = {"North": False, "East": east,
-                               "South": south, "West": west}
         self.doors = []
 
         # room ID number to allow for blitting of the right one
         self._roomNumber = roomNumber
 
-        for key in self._doorLocations:
-            if self._doorLocations[key]:
-                self.doors.append(Door(key, connectingRoom))
+        # A list of the enemies in a specific room
+        self.enemies = []
 
     def setNorthDoor(self, connectingRoom):
         self.doors.append(Door("North", connectingRoom))

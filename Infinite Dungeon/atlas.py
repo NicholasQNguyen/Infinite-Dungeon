@@ -9,7 +9,7 @@ A class to hold onto and manage rooms
 
 from random import randint, choice
 from room import Room
-from squads import SlimeOverload, GolemAttack
+from squads import SlimeOverload, GolemAttack, GolemAndSlimesOhNo
 from copy import copy, deepcopy
 
 
@@ -21,9 +21,10 @@ class Atlas(object):
 
     def __init__(self):
         # Initialize the enemy squad types
-        squads = [SlimeOverload(), GolemAttack()]
+        squads = [SlimeOverload(), GolemAttack(), GolemAndSlimesOhNo()]
 
         self.atlas = []
+        self.listOfRooms = []
         # Make a DIMENSIONxDIMENSION grid to represent the map
         for i in range(DIMENSION):
             self.atlas.append([])
@@ -128,22 +129,25 @@ class Atlas(object):
             self.atlas[placerIndex1][placerIndex2].setEastDoor(99)
             lastRoom.setSouthDoor(prevRoom)
 
+        # Set a list of the rooms in order
+        # IE [Room 0, Room 1, Room 2, etc.]
+        for i in range(DIMENSION):
+            for j in range(DIMENSION):
+                if self.atlas[i][j] != 0:
+                    self.listOfRooms.append(self.atlas[i][j])
+ 
         # Assign an enemy squad to a specific room
-        for room in self.getRooms():
+        # We want a sorted list so that when we index in main,
+        # we get the right room
+        self.listOfRooms.sort() 
+        for room in self.listOfRooms:
             enemyList = choice(squads).enemies
             room.enemies = copy(enemyList)
 
     def getRooms(self):
         """Get a list of the rooms in order.
            IE. [Room 0, Room 1, Room 2 etc.]"""
-        listOfRooms = []
-        for i in range(DIMENSION):
-            for j in range(DIMENSION):
-                if self.atlas[i][j] != 0:
-                    listOfRooms.append(self.atlas[i][j])
-        # We want a sorted list so that when we index in main,
-        # we get the right room
-        return sorted(listOfRooms)
+        return self.listOfRooms
 
     def hasNorth(self, indeces):
         try:

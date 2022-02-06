@@ -64,7 +64,6 @@ class Atlas(object):
                     newRoom = Room(choice(ROOM_TYPES), roomAssignment,
                                    prevRoom, nextRoom)
                     newRoom.setSouthDoor((prevRoom))
-                    print("1:", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
                     up = False
                     # Go to the previous room and add a door
@@ -73,14 +72,12 @@ class Atlas(object):
                         .setNorthDoor(roomAssignment)
                 # If we just get a bunch of up, then go right
                 else:
-                    print("TOP EDGE")
                     up = False
                     placerIndex1 += 1
                     placerIndex2 += 1
                     newRoom = Room(choice(ROOM_TYPES), roomAssignment,
                                    prevRoom, nextRoom)
                     newRoom.setWestDoor(prevRoom)
-                    print("1:", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
                     # In the previous room, add a door
                     # to the east to match up with this room
@@ -94,7 +91,6 @@ class Atlas(object):
                     newRoom = Room(choice(ROOM_TYPES), roomAssignment,
                                    prevRoom, nextRoom)
                     newRoom.setWestDoor(prevRoom)
-                    print("1:", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
                     # In the previous room, add a door
                     # to the east to match up with this room
@@ -106,7 +102,6 @@ class Atlas(object):
                     newRoom = Room(choice(ROOM_TYPES), roomAssignment,
                                    prevRoom, nextRoom)
                     newRoom.setSouthDoor(prevRoom)
-                    print("1:", placerIndex1, "2:", placerIndex2)
                     self.atlas[placerIndex1][placerIndex2] = newRoom
                     # Go to the previous room and add a door
                     # to link to the new room we just made

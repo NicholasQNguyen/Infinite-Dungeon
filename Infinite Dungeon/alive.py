@@ -14,6 +14,10 @@ class Alive(Mobile):
         super().__init__(position, velocity, imageName)
         self._isDead = False
         self.HP = hp
+        self.level = 1
+
+    def takeDamage(self, damage):
+        self.HP -= damage
 
     def kill(self):
         self._isDead = True

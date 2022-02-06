@@ -25,6 +25,9 @@ class Room(Drawable):
         # A list of the enemies in a specific room
         self.enemies = []
 
+        # A list of the player arrows in fired in that room
+        self.arrows = []
+
     def setNorthDoor(self, connectingRoom):
         self.doors.append(Door("North", connectingRoom))
 
@@ -36,6 +39,10 @@ class Room(Drawable):
 
     def setWestDoor(self, connectingRoom):
         self.doors.append(Door("West", connectingRoom))
+
+    def isClear(self):
+        """Method to check if a room has no enemies"""
+        return not bool(self.enemies)
 
     def __eq__(self, other):
         # https://www.pythontutorial.net/python-oop/python-__eq__/

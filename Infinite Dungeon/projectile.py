@@ -18,3 +18,6 @@ class Projectile(Alive):
 
     def fire(self, direction):
         None
+
+    def getDamage(self):
+        return self.damage

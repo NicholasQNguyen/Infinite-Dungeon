@@ -27,6 +27,7 @@ WASD_KEYS = [ord("s"), ord("w"), ord("a"), ord("d")]
 
 CENTER_OF_ROOM = Vector2(504, 504)
 ARCHER_VELOCITY = 4
+ARROW_VELOCITY = 5
 
 
 def main():
@@ -50,8 +51,6 @@ def main():
 
     # Stuff for the hero character
     archer = Archer((Vector2(500, 500)), ARCHER_VELOCITY, "archer.png")
-
-    arrows = []
 
     offset = Vector2(0, 0)
 
@@ -77,7 +76,7 @@ def main():
 
         archer.draw(drawSurface, offset)
 
-        for arrow in arrows:
+        for arrow in rooms[currentRoom].arrows:
             arrow.draw(drawSurface, offset)
 
         for enemy in rooms[currentRoom].enemies:
@@ -99,10 +98,10 @@ def main():
                 # If the key in an arrow, apply it to the player's arrows
                 if event.key in ARROW_KEYS:
                     arrow = Arrow(deepcopy(archer.getPosition()),
-                                  5, "arrow.png")
+                                  ARROW_VELOCITY)
                     # Set the direction based on what arrow was hit
                     arrow.changeDirection(event)
-                    arrows.append(arrow)
+                    rooms[currentRoom].arrows.append(arrow)
 
                 elif event.key in WASD_KEYS:
                     archer.handleEvent(event)
@@ -113,12 +112,11 @@ def main():
                     archer.handleEvent(event)
 
         gameClock.tick(60)
-        seconds = gameClock.get_time() / 1000
+        seconds = min(.5, gameClock.get_time() / 1000)
 
         timer -= seconds
 
-        # Stuff for object movement
-        for arrow in arrows:
+        for arrow in rooms[currentRoom].arrows:
             arrow.update()
             arrowCollisionRects.append(arrow.getCollideRect())
 
@@ -145,7 +143,7 @@ def main():
         archer.update()
 
         # Check if arrows are beyond the border and delete them if they are
-        for arrow in arrows:
+        for arrow in rooms[currentRoom].arrows:
             if arrow.getX() > WORLD_SIZE[0] or arrow.getX() < 0 or \
                arrow.getY() > WORLD_SIZE[1] or arrow.getY() < 0:
                 arrow.isDead()
@@ -155,12 +153,13 @@ def main():
         # Check for enemy arrow collisions
         for enemy in rooms[currentRoom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
-            if arrows != []:
-                for collisionBox in arrowCollisionRects:
-                    if enemyCollisionRect.colliderect(collisionBox):
-                        # TODO: Replace this with damage instead of just killing
-                        enemy.kill()
+            if rooms[currentRoom].arrows != []:
+                for arrow in rooms[currentRoom].arrows:
+                    arrowCollisionRect = arrow.getCollideRect()
+                    if enemyCollisionRect.colliderect(arrowCollisionRect):
                         arrow.kill()
+                        enemy.takeDamage(arrow.getDamage())
+                        print(enemy.HP)
 
         for door in rooms[currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
@@ -180,14 +179,15 @@ def main():
                 pygame.display.flip()
                 rooms[currentRoom].draw(drawSurface, offset)
                 pygame.display.flip()
+                arrowCollisionRects.clear()
 
         for enemy in rooms[currentRoom].enemies:
             if enemy.isDead():
                 rooms[currentRoom].enemies.remove(enemy)
 
-        for arrow in arrows:
+        for arrow in rooms[currentRoom].arrows:
             if arrow.isDead():
-                arrows.remove(arrow)
+                rooms[currentRoom].arrows.remove(arrow)
 
         offset = Vector2(max(0,
                              min(archer.getX() + (archer.getWidth() // 2) -

@@ -9,8 +9,6 @@ from vector2D import Vector2
 from archer import Archer
 from arrow import Arrow
 from copy import deepcopy
-from target import Target
-from random import randint
 from slime import Slime
 from atlas import Atlas
 from golem import Golem
@@ -133,13 +131,16 @@ def main():
                     enemy.changeDirection()
             timer = 5
 
-        # Check if the slimes are going beyond the borders and bounce them back if so
+        # Check if the slimes are going beyond the borders
+        # and bounce them back if so
         for enemy in rooms[currentRoom].enemies:
             if isinstance(enemy, Slime):
-                if enemy.getX() + enemy.getWidth() > WORLD_SIZE[0] or enemy.getX() < 0 or \
-                   enemy.getY() > WORLD_SIZE[1] or enemy.getY() < 0:
+                if enemy.getX() + enemy.getWidth() > WORLD_SIZE[0] or \
+                   enemy.getX() < 0 or \
+                   enemy.getY() > WORLD_SIZE[1] or \
+                   enemy.getY() < 0:
                     enemy.changeDirection()
- 
+
         archer.update()
 
         # Check if arrows are beyond the border and delete them if they are
@@ -174,7 +175,8 @@ def main():
                 if currentRoom == 99:
                     currentRoom = -1
 
-                # Redraw the room so that we get rid of the enemies from the last room
+                # Redraw the room so that we get
+                # rid of the enemies from the last room
                 drawSurface.fill((255, 255, 255))
                 pygame.display.flip()
                 rooms[currentRoom].draw(drawSurface, offset)
@@ -188,6 +190,10 @@ def main():
         for arrow in rooms[currentRoom].arrows:
             if arrow.isDead():
                 rooms[currentRoom].arrows.remove(arrow)
+
+        # If the room is empty, place an upgrade
+        if rooms[currentRoom].enemies == []:
+            print("UPGRADE!")
 
         offset = Vector2(max(0,
                              min(archer.getX() + (archer.getWidth() // 2) -

@@ -130,11 +130,11 @@ class Atlas(object):
             for j in range(DIMENSION):
                 if self.atlas[i][j] != 0:
                     self.listOfRooms.append(self.atlas[i][j])
- 
+
         # Assign an enemy squad to a specific room
         # We want a sorted list so that when we index in main,
         # we get the right room
-        self.listOfRooms.sort() 
+        self.listOfRooms.sort()
         for room in self.listOfRooms:
             enemyList = choice(squads).enemies
             room.enemies = copy(enemyList)

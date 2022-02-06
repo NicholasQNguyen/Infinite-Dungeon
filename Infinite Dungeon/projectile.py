@@ -14,7 +14,7 @@ class Projectile(Alive):
 
     def __init__(self, position, velocity, imageName, damage):
         super().__init__(position, velocity, imageName, HEALTH)
-        self.damage = damage
+        self.damage = damage * self.level
 
     def fire(self, direction):
         None

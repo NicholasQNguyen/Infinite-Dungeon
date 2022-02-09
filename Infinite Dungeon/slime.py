@@ -14,7 +14,9 @@ SLIME_HP = 5
 class Slime(Alive):
 
     def __init__(self, position, velocity):
-        super().__init__(position, velocity, "slime_monster_spritesheet.png", SLIME_HP)
+        super().__init__(position, velocity,
+                         "slime_monster_spritesheet.png",
+                         SLIME_HP)
         tempSurface = pygame.Surface((24, 24))
         tempSurface.blit(self._image, (0, 0))
         self._image = tempSurface

@@ -11,6 +11,7 @@ from alive import Alive
 ARCHER_HP = 50
 ARCHER_VELOCITY = 4
 
+
 class Archer(Alive):
     _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}

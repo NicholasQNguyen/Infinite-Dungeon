@@ -10,7 +10,6 @@ A class to hold onto and manage rooms
 from random import randint, choice
 from room import Room
 from squads import Squads
-from copy import copy, deepcopy
 
 
 DIMENSION = 5
@@ -21,8 +20,9 @@ class Atlas(object):
 
     def __init__(self):
         # Initialize the enemy squad types
-        squadsClass = Squads()
-        squads = [Squads.slimeOverload, Squads.golemAttack, Squads.golemAndSlimeOhNo]
+        squads = [Squads.slimeOverload,
+                  Squads.golemAttack,
+                  Squads.golemAndSlimeOhNo]
 
         self.atlas = []
         self.listOfRooms = []

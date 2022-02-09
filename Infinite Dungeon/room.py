@@ -11,6 +11,7 @@ from drawable import Drawable
 from door import Door
 # from upgrade import Upgrade
 
+
 class Room(Drawable):
 
     def __init__(self, imageName, roomNumber, connectingRoom=None,

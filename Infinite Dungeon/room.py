@@ -9,7 +9,7 @@ Class for handling the dungeons the player walks around on
 from vector2D import Vector2
 from drawable import Drawable
 from door import Door
-
+# from upgrade import Upgrade
 
 class Room(Drawable):
 
@@ -27,6 +27,8 @@ class Room(Drawable):
 
         # A list of the player arrows in fired in that room
         self.arrows = []
+
+        self.hasUpgrade = False
 
     def setNorthDoor(self, connectingRoom):
         self.doors.append(Door("North", connectingRoom))
@@ -62,19 +64,3 @@ class Room(Drawable):
     def __gt__(self, other):
         if isinstance(other, Room):
             return self._roomNumber > other._roomNumber
-
-
-"""
-        for key in self._doorLocations:
-            # given the previousRoom, make a corresponding door
-            if key == prevDirection:
-                self._doorLocations[key] = True
-            # otherwise randomize if there'll be a door or not
-            else:
-                self._doorLocations[key] = random.choice([True, False])
-
-        for key in self._doorLocations:
-            if self._doorLocations[key] == True:
-                self.doors.append(Door(key, self._currentRoomNumber))
-                self._currentRoomNumber += 1
-"""

@@ -9,14 +9,14 @@ import pygame
 from alive import Alive
 
 ARCHER_HP = 50
-
+ARCHER_VELOCITY = 4
 
 class Archer(Alive):
     _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}
 
-    def __init__(self, position, velocity, imageName):
-        super().__init__(position, velocity, imageName, ARCHER_HP)
+    def __init__(self, position, imageName):
+        super().__init__(position, ARCHER_VELOCITY, imageName, ARCHER_HP)
         tempSurface = pygame.Surface((25, 30))
         # Rectangle specifically for the germanic archer png
         grabberRectangle = pygame.Rect(24, 20, 50, 50)

@@ -24,7 +24,6 @@ ARROW_KEYS = [pygame.K_DOWN, pygame.K_UP,
 WASD_KEYS = [ord("s"), ord("w"), ord("a"), ord("d")]
 
 CENTER_OF_ROOM = Vector2(504, 504)
-ARCHER_VELOCITY = 4
 ARROW_VELOCITY = 5
 
 
@@ -48,7 +47,7 @@ def main():
     currentRoom = 0
 
     # Stuff for the hero character
-    archer = Archer((Vector2(500, 500)), ARCHER_VELOCITY, "archer.png")
+    archer = Archer((Vector2(500, 500)), "archer.png")
 
     offset = Vector2(0, 0)
 

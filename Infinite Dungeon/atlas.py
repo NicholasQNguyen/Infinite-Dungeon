@@ -9,7 +9,7 @@ A class to hold onto and manage rooms
 
 from random import randint, choice
 from room import Room
-from squads import SlimeOverload, GolemAttack, GolemAndSlimesOhNo
+from squads import Squads
 from copy import copy, deepcopy
 
 
@@ -21,7 +21,8 @@ class Atlas(object):
 
     def __init__(self):
         # Initialize the enemy squad types
-        squads = [SlimeOverload(), GolemAttack(), GolemAndSlimesOhNo()]
+        squadsClass = Squads()
+        squads = [Squads.slimeOverload, Squads.golemAttack, Squads.golemAndSlimeOhNo]
 
         self.atlas = []
         self.listOfRooms = []
@@ -124,20 +125,19 @@ class Atlas(object):
             self.atlas[placerIndex1][placerIndex2].setEastDoor(99)
             lastRoom.setSouthDoor(prevRoom)
 
-        # Set a list of the rooms in order
-        # IE [Room 0, Room 1, Room 2, etc.]
+        # a list of the rooms
         for i in range(DIMENSION):
             for j in range(DIMENSION):
                 if self.atlas[i][j] != 0:
                     self.listOfRooms.append(self.atlas[i][j])
 
-        # Assign an enemy squad to a specific room
         # We want a sorted list so that when we index in main,
         # we get the right room
         self.listOfRooms.sort()
+
+        # Assign an enemy squad to a specific room
         for room in self.listOfRooms:
-            enemyList = choice(squads).enemies
-            room.enemies = copy(enemyList)
+            room.enemies = choice(squads)()
 
     def getRooms(self):
         """Get a list of the rooms in order.

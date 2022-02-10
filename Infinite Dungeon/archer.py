@@ -24,6 +24,8 @@ class Archer(Alive):
         tempSurface.blit(self._image, (0, 0), grabberRectangle)
         self._image = tempSurface
 
+        self.speedLevel = 0
+
     def handleEvent(self, event):
         """Given an event, change the appropriate value in
            self._movement, if necessary."""
@@ -81,3 +83,6 @@ class Archer(Alive):
 
     def setNewDoor(self, door):
         self._newDoor = door
+
+    def updateVelocity(self):
+        self._velocity = self._velocity + self.speedLevel

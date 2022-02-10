@@ -9,7 +9,7 @@ Class for handling the dungeons the player walks around on
 from vector2D import Vector2
 from drawable import Drawable
 from door import Door
-from upgrade import Upgrade
+# from upgrade import Upgrade
 
 
 class Room(Drawable):
@@ -23,13 +23,12 @@ class Room(Drawable):
         # room ID number to allow for blitting of the right one
         self._roomNumber = roomNumber
 
-        # A list of the enemies in a specific room
-        self.enemies = []
+        # A list of the enemies in a specific room self.enemies = []
 
         # A list of the player arrows in fired in that room
         self.arrows = []
 
-        self.hasUpgrade = False
+        self._hasUpgrade = False
 
     def setNorthDoor(self, connectingRoom):
         self.doors.append(Door("North", connectingRoom))
@@ -47,8 +46,11 @@ class Room(Drawable):
         """Method to check if a room has no enemies"""
         return not bool(self.enemies)
 
-    def hasUpgrade(self):
-        return self.hasUpgrade
+    def getHasUpgrade(self):
+        return self._hasUpgrade
+
+    def setHasUpgrade(self):
+        self._hasUpgrade = True
 
     def __eq__(self, other):
         # https://www.pythontutorial.net/python-oop/python-__eq__/

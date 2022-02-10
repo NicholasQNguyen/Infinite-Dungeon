@@ -12,6 +12,7 @@ from copy import deepcopy
 from slime import Slime
 from atlas import Atlas
 from golem import Golem
+from upgrade import *
 
 
 WORLD_SIZE = Vector2(1008, 1008)
@@ -60,6 +61,8 @@ def main():
 
     RUNNING = True
 
+    damageUpgrade = DamageUpgrade()
+
     while RUNNING:
 
         # Blit the background
@@ -72,6 +75,9 @@ def main():
             door.draw(drawSurface, offset)
 
         archer.draw(drawSurface, offset)
+
+        if rooms[currentRoom].getHasUpgrade():
+            damageUpgrade.draw(drawSurface, offset)
 
         for arrow in rooms[currentRoom].arrows:
             arrow.draw(drawSurface, offset)
@@ -191,8 +197,10 @@ def main():
                 rooms[currentRoom].arrows.remove(arrow)
 
         # If the room is empty, place an upgrade
-        if rooms[currentRoom].isClear() and not rooms[currentRoom].hasUpgrade():
+        if rooms[currentRoom].isClear() and not rooms[currentRoom].getHasUpgrade():
+            rooms[currentRoom].setHasUpgrade()
             print("UPGRADE!")
+
 
         offset = Vector2(max(0,
                              min(archer.getX() + (archer.getWidth() // 2) -

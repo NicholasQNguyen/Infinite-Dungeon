@@ -23,7 +23,8 @@ class Room(Drawable):
         # room ID number to allow for blitting of the right one
         self._roomNumber = roomNumber
 
-        # A list of the enemies in a specific room self.enemies = []
+        # A list of the enemies in a specific room
+        self.enemies = []
 
         # A list of the player arrows in fired in that room
         self.arrows = []
@@ -49,8 +50,8 @@ class Room(Drawable):
     def getHasUpgrade(self):
         return self._hasUpgrade
 
-    def setHasUpgrade(self):
-        self._hasUpgrade = True
+    def setHasUpgrade(self, boolean):
+        self._hasUpgrade = boolean
 
     def __eq__(self, other):
         # https://www.pythontutorial.net/python-oop/python-__eq__/

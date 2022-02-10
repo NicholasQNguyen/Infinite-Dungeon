@@ -62,6 +62,7 @@ def main():
     RUNNING = True
 
     damageUpgrade = DamageUpgrade()
+    grabbed = False
 
     while RUNNING:
 
@@ -188,6 +189,13 @@ def main():
                 pygame.display.flip()
                 arrowCollisionRects.clear()
 
+        if rooms[currentRoom].getHasUpgrade():
+            if archerCollisionRect.colliderect(damageUpgrade.getCollideRect()):
+                rooms[currentRoom].setHasUpgrade(False)
+                grabbed = True
+                print("TOUCHING")
+
+        # Death checking
         for enemy in rooms[currentRoom].enemies:
             if enemy.isDead():
                 rooms[currentRoom].enemies.remove(enemy)
@@ -197,8 +205,8 @@ def main():
                 rooms[currentRoom].arrows.remove(arrow)
 
         # If the room is empty, place an upgrade
-        if rooms[currentRoom].isClear() and not rooms[currentRoom].getHasUpgrade():
-            rooms[currentRoom].setHasUpgrade()
+        if rooms[currentRoom].isClear() and not rooms[currentRoom].getHasUpgrade() and not grabbed:
+            rooms[currentRoom].setHasUpgrade(True)
             print("UPGRADE!")
 
 

@@ -9,13 +9,16 @@ Class for the player's projectiles
 import pygame
 from projectile import Projectile
 
-DAMAGE = 5
+BASE_DAMAGE = 5
 
 
 class Arrow(Projectile):
 
+    damageLevel = 0
+
     def __init__(self, initialPosition, velocity):
-        super().__init__(initialPosition, velocity, "arrow.png", DAMAGE)
+        actualDamage = BASE_DAMAGE + self.damageLevel
+        super().__init__(initialPosition, velocity, "arrow.png", actualDamage)
         # All code to get the image and set it
         grabberRectangle = pygame.Rect(12, 9, 8, 23)
         tempSurface = pygame.Surface((8, 23))
@@ -70,3 +73,6 @@ class Arrow(Projectile):
     def update(self):
         # Update the position based on the velocity and direction
         self._position[self._direction] += self._velocity * self._posOrNeg
+
+    def iterateDamageLevel(self):
+        self.damageLevel += 1

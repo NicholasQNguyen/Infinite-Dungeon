@@ -191,7 +191,7 @@ def main():
                 rooms[currentRoom].arrows.remove(arrow)
 
         # If the room is empty, place an upgrade
-        if rooms[currentRoom].isClear():
+        if rooms[currentRoom].isClear() and not rooms[currentRoom].hasUpgrade():
             print("UPGRADE!")
 
         offset = Vector2(max(0,

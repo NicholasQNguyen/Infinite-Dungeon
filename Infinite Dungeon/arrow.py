@@ -77,5 +77,10 @@ class Arrow(Projectile):
         # Update the position based on the velocity and direction
         self._position[self._direction] += self._velocity * self._posOrNeg
 
-    def iterateDamageLevel(self):
-        self.damageLevel += 1
+    @classmethod
+    def iterateDamageLevel(cls):
+        cls.damageLevel += 1
+
+    @classmethod
+    def iterateSpeedLevel(cls):
+        cls.speedLevel += 1

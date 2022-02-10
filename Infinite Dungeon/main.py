@@ -12,7 +12,7 @@ from copy import deepcopy
 from slime import Slime
 from atlas import Atlas
 from golem import Golem
-from upgrade import DamageUpgrade# , SpeedUpgrade, ProjectileSpeedUpgrade
+from upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
 
 
 WORLD_SIZE = Vector2(1008, 1008)
@@ -165,16 +165,13 @@ def main():
                     if enemyCollisionRect.colliderect(arrowCollisionRect):
                         arrow.kill()
                         enemy.takeDamage(arrow.getDamage())
-                        print(enemy.HP)
 
         for door in rooms[currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
             if doorCollisionRect.colliderect(archerCollisionRect):
-                print("Moving")
                 # Change the index to change what room is drawn
                 currentRoom = door.getDestination()
                 # Move the archer to the center of the room when moving rooms
-                print(currentRoom)
                 archer.setPosition(deepcopy(CENTER_OF_ROOM))
 
                 if currentRoom == 99:
@@ -193,7 +190,11 @@ def main():
             if archerCollisionRect.colliderect(rooms[currentRoom].upgrade.getCollideRect()):
                 rooms[currentRoom].setHasUpgrade(False)
                 rooms[currentRoom].setUpgradeGrabbed(True)
-                print("TOUCHING")
+                if isinstance(rooms[currentRoom].upgrade, DamageUpgrade)\
+                or isinstance(rooms[currentRoom].upgrade, ProjectileSpeedUpgrade):
+                    rooms[currentRoom].upgrade.upgrade(Arrow)
+                elif isinstance(rooms[currentRoom].upgrade, SpeedUpgrade):
+                    rooms[currentRoom].upgrade.upgrade(archer)
 
         # Death checking
         for enemy in rooms[currentRoom].enemies:

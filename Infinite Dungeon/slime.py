@@ -8,7 +8,7 @@ Basic monster that moves back and forth.
 import pygame
 from alive import Alive
 
-SLIME_HP = 5
+SLIME_HP = 6
 
 
 class Slime(Alive):

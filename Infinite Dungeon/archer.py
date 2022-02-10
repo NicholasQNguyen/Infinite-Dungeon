@@ -84,5 +84,8 @@ class Archer(Alive):
     def setNewDoor(self, door):
         self._newDoor = door
 
+    def iterateSpeedLevel(self):
+        self.speedLevel += 1
+
     def updateVelocity(self):
         self._velocity = self._velocity + self.speedLevel

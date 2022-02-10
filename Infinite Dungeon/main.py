@@ -12,7 +12,7 @@ from copy import deepcopy
 from slime import Slime
 from atlas import Atlas
 from golem import Golem
-from upgrade import *
+from upgrade import DamageUpgrade# , SpeedUpgrade, ProjectileSpeedUpgrade
 
 
 WORLD_SIZE = Vector2(1008, 1008)
@@ -38,7 +38,7 @@ def main():
     # Let's make a background so we can see if we're moving
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
-    # Basic Room Drawing
+    # Generate the map
     atlas = Atlas()
 
     print(atlas)
@@ -61,8 +61,7 @@ def main():
 
     RUNNING = True
 
-    damageUpgrade = DamageUpgrade()
-    grabbed = False
+#     damageUpgrade = DamageUpgrade()
 
     while RUNNING:
 
@@ -78,7 +77,7 @@ def main():
         archer.draw(drawSurface, offset)
 
         if rooms[currentRoom].getHasUpgrade():
-            damageUpgrade.draw(drawSurface, offset)
+            rooms[currentRoom].upgrade.draw(drawSurface, offset)
 
         for arrow in rooms[currentRoom].arrows:
             arrow.draw(drawSurface, offset)
@@ -189,10 +188,11 @@ def main():
                 pygame.display.flip()
                 arrowCollisionRects.clear()
 
+        # Check if we touch the upgrade
         if rooms[currentRoom].getHasUpgrade():
-            if archerCollisionRect.colliderect(damageUpgrade.getCollideRect()):
+            if archerCollisionRect.colliderect(rooms[currentRoom].upgrade.getCollideRect()):
                 rooms[currentRoom].setHasUpgrade(False)
-                grabbed = True
+                rooms[currentRoom].setUpgradeGrabbed(True)
                 print("TOUCHING")
 
         # Death checking
@@ -205,10 +205,10 @@ def main():
                 rooms[currentRoom].arrows.remove(arrow)
 
         # If the room is empty, place an upgrade
-        if rooms[currentRoom].isClear() and not rooms[currentRoom].getHasUpgrade() and not grabbed:
+        if rooms[currentRoom].isClear()\
+           and not rooms[currentRoom].getHasUpgrade()\
+           and not rooms[currentRoom].getUpgradeGrabbed():
             rooms[currentRoom].setHasUpgrade(True)
-            print("UPGRADE!")
-
 
         offset = Vector2(max(0,
                              min(archer.getX() + (archer.getWidth() // 2) -

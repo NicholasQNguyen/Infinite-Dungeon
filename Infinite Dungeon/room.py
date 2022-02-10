@@ -29,7 +29,11 @@ class Room(Drawable):
         # A list of the player arrows in fired in that room
         self.arrows = []
 
+        self.upgrade = None
+
         self._hasUpgrade = False
+
+        self._upgradeGrabbed = False
 
     def setNorthDoor(self, connectingRoom):
         self.doors.append(Door("North", connectingRoom))
@@ -52,6 +56,12 @@ class Room(Drawable):
 
     def setHasUpgrade(self, boolean):
         self._hasUpgrade = boolean
+
+    def getUpgradeGrabbed(self):
+        return self._upgradeGrabbed
+
+    def setUpgradeGrabbed(self, boolean):
+        self._upgradeGrabbed = boolean
 
     def __eq__(self, other):
         # https://www.pythontutorial.net/python-oop/python-__eq__/

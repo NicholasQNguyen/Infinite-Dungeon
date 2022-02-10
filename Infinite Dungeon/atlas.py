@@ -10,7 +10,7 @@ A class to hold onto and manage rooms
 from random import randint, choice
 from room import Room
 from squads import Squads
-
+from upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
 
 DIMENSION = 5
 ROOM_TYPES = ["basicRoom.png", "bridgeRoom.png", "torchRoom.png"]
@@ -23,6 +23,11 @@ class Atlas(object):
         squads = [Squads.slimeOverload,
                   Squads.golemAttack,
                   Squads.golemAndSlimeOhNo]
+
+        # Initialize the upgrades
+        upgrades = [DamageUpgrade,
+                    SpeedUpgrade,
+                    ProjectileSpeedUpgrade]
 
         self.atlas = []
         self.listOfRooms = []
@@ -135,9 +140,13 @@ class Atlas(object):
         # we get the right room
         self.listOfRooms.sort()
 
-        # Assign an enemy squad to a specific room
+        # Assign an enemy squad to each room
         for room in self.listOfRooms:
             room.enemies = choice(squads)()
+
+        # Assign an upgrade to each room
+        for room in self.listOfRooms:
+            room.upgrade = choice(upgrades)()
 
     def getRooms(self):
         """Get a list of the rooms in order.

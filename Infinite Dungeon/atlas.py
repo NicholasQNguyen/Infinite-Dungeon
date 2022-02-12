@@ -12,8 +12,9 @@ from room import Room
 from squads import Squads
 from upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
 
-DIMENSION = 5
+DIMENSION = 6
 ROOM_TYPES = ["basicRoom.png", "bridgeRoom.png", "torchRoom.png"]
+
 
 class Atlas(object):
     # The Singleton instance variable
@@ -21,7 +22,7 @@ class Atlas(object):
 
     @classmethod
     def getInstance(cls):
-        if cls._INSTANCE == None:
+        if cls._INSTANCE is None:
             cls._INSTANCE = cls._Atlas()
         return cls._INSTANCE
 
@@ -31,8 +32,8 @@ class Atlas(object):
         def __init__(self):
             # Initialize the enemy squad types
             squads = [Squads.slimeOverload,
-                    Squads.golemAttack,
-                    Squads.golemAndSlimeOhNo]
+                      Squads.golemAttack,
+                      Squads.golemAndSlimeOhNo]
 
             # Initialize the upgrades
             upgrades = [DamageUpgrade,
@@ -67,8 +68,10 @@ class Atlas(object):
             while isinstance(self.getNorth((placerIndex1,
                                             placerIndex2)), int) and \
                 isinstance(self.getEast((placerIndex1,
-                                        placerIndex2)), int):
-                # From the bottom left room, go randomly right or up and put a room
+                                         placerIndex2)),
+                           int):
+                # From the bottom left room, go randomly
+                # right or up and put a room
                 rightOrUp = randint(0, 1)
                 if rightOrUp == 0:
                     up = True
@@ -78,7 +81,7 @@ class Atlas(object):
                     # Account for if we're on the top edge of the map
                     if placerIndex1 != 0:
                         newRoom = Room(choice(ROOM_TYPES), roomAssignment,
-                                    prevRoom, nextRoom)
+                                       prevRoom, nextRoom)
                         newRoom.setSouthDoor((prevRoom))
                         self.atlas[placerIndex1][placerIndex2] = newRoom
                         up = False
@@ -92,7 +95,7 @@ class Atlas(object):
                         placerIndex1 += 1
                         placerIndex2 += 1
                         newRoom = Room(choice(ROOM_TYPES), roomAssignment,
-                                    prevRoom, nextRoom)
+                                       prevRoom, nextRoom)
                         newRoom.setWestDoor(prevRoom)
                         self.atlas[placerIndex1][placerIndex2] = newRoom
                         # In the previous room, add a door
@@ -105,7 +108,7 @@ class Atlas(object):
                     # If we're on the right edge of the map
                     try:
                         newRoom = Room(choice(ROOM_TYPES), roomAssignment,
-                                    prevRoom, nextRoom)
+                                       prevRoom, nextRoom)
                         newRoom.setWestDoor(prevRoom)
                         self.atlas[placerIndex1][placerIndex2] = newRoom
                         # In the previous room, add a door
@@ -116,7 +119,7 @@ class Atlas(object):
                         placerIndex2 -= 1
                         placerIndex1 -= 1
                         newRoom = Room(choice(ROOM_TYPES), roomAssignment,
-                                    prevRoom, nextRoom)
+                                       prevRoom, nextRoom)
                         newRoom.setSouthDoor(prevRoom)
                         self.atlas[placerIndex1][placerIndex2] = newRoom
                         # Go to the previous room and add a door
@@ -203,7 +206,6 @@ class Atlas(object):
             # https://stackoverflow.com/questions/50731788/str-to-give-a-visual-representation-of-the-2d-table-in-python
             return ('\n'.join(['|'.join([str(cell) for cell in row])
                     for row in self.atlas]))
-
 
     """
                 The map looks like this:

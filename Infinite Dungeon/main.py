@@ -187,11 +187,15 @@ def main():
 
         # Check if we touch the upgrade
         if rooms[currentRoom].getHasUpgrade():
-            if archerCollisionRect.colliderect(rooms[currentRoom].upgrade.getCollideRect()):
+            if archerCollisionRect.colliderect(rooms[currentRoom].upgrade.
+                                               getCollideRect()):
                 rooms[currentRoom].setHasUpgrade(False)
+
                 rooms[currentRoom].setUpgradeGrabbed(True)
+
                 if isinstance(rooms[currentRoom].upgrade, DamageUpgrade)\
-                or isinstance(rooms[currentRoom].upgrade, ProjectileSpeedUpgrade):
+                    or isinstance(rooms[currentRoom].upgrade,
+                                  ProjectileSpeedUpgrade):
                     rooms[currentRoom].upgrade.upgrade(Arrow)
                 elif isinstance(rooms[currentRoom].upgrade, SpeedUpgrade):
                     rooms[currentRoom].upgrade.upgrade(archer)

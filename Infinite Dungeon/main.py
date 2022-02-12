@@ -39,7 +39,7 @@ def main():
     drawSurface = pygame.Surface(list(SCREEN_SIZE))
 
     # Generate the map
-    atlas = Atlas()
+    atlas = Atlas.getInstance()
 
     print(atlas)
 

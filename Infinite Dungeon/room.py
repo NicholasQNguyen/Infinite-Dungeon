@@ -16,7 +16,7 @@ class Room(Drawable):
 
     def __init__(self, imageName, roomNumber, connectingRoom=None,
                  north=False, east=False, south=False, west=False):
-        super().__init__(imageName, Vector2(0, 0))
+        super().__init__(imageName, Vector2(0, 0), None)
         # Dictionary to hold where there are paths
         self.doors = []
 

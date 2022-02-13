@@ -20,7 +20,7 @@ class Arrow(Projectile):
     def __init__(self, initialPosition, velocity):
         actualDamage = BASE_DAMAGE + self.damageLevel
         actualVelocity = velocity + self.speedLevel
-        super().__init__(initialPosition, actualVelocity, "arrow.png",
+        super().__init__("arrow.png", initialPosition, actualVelocity,
                          actualDamage)
         # All code to get the image and set it
         grabberRectangle = pygame.Rect(12, 9, 8, 23)

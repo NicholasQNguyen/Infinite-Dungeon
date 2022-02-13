@@ -5,12 +5,12 @@ File: mobile.py
 
 Class for thing that can move and have a position and velocity
 """
-from drawable import Drawable
+from animated import Animated
 
 
-class Mobile(Drawable):
+class Mobile(Animated):
 
-    def __init__(self, position, velocity, imageName):
+    def __init__(self, imageName, position, velocity):
         super().__init__(imageName, position)
         self._velocity = velocity
 

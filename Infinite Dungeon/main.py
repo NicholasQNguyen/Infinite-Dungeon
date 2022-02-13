@@ -50,7 +50,7 @@ def main():
     currentRoom = 0
 
     # Stuff for the hero character
-    archer = Archer((Vector2(500, 500)), "archer.png")
+    archer = Archer("archer.png", (Vector2(500, 500)))
 
     offset = Vector2(0, 0)
 

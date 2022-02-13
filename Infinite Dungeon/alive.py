@@ -10,8 +10,8 @@ from mobile import Mobile
 
 class Alive(Mobile):
 
-    def __init__(self, position, velocity, imageName, hp):
-        super().__init__(position, velocity, imageName)
+    def __init__(self, imageName, position, velocity, hp):
+        super().__init__(imageName, position, velocity)
         self._isDead = False
         self.HP = hp
         self.level = 1

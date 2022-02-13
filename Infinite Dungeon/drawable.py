@@ -9,6 +9,7 @@ Class to handle things that can be drawn (characters, UI, etc.)
 import pygame
 import os
 from vector2D import Vector2
+from frameManager import FrameManager
 
 class Drawable(object):
 
@@ -26,12 +27,14 @@ class Drawable(object):
                         worldSize[1] - screenSize[1]))
         
 
-    def __init__(self, imageName, position):
+    def __init__(self, imageName, position, offset=None):
         self._imageName = imageName
-        self._image = pygame.image.load(
-                      os.path.join("images", self._imageName)).convert_alpha()
 
-        self._position = position
+        frameManager = FrameManager.getInstance()
+
+        self._image = frameManager.getFrame(self._imageName, offset)
+
+        self._position = Vector2(*position)
 
     def draw(self, surface):
         """Blits the orb onto a specifed surface with an offset"""

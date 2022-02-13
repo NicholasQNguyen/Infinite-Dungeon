@@ -16,13 +16,10 @@ class Archer(Alive):
     _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}
 
-    def __init__(self, position, imageName):
-        super().__init__(position, ARCHER_VELOCITY, imageName, ARCHER_HP)
-        tempSurface = pygame.Surface((25, 30))
-        # Rectangle specifically for the germanic archer png
-        grabberRectangle = pygame.Rect(24, 20, 50, 50)
-        tempSurface.blit(self._image, (0, 0), grabberRectangle)
-        self._image = tempSurface
+    def __init__(self, imageName, position):
+        super().__init__(imageName, position, ARCHER_VELOCITY, ARCHER_HP)
+
+        self._nFrames = 4
 
         self.speedLevel = 0
 

@@ -8,9 +8,23 @@ Class to handle things that can be drawn (characters, UI, etc.)
 
 import pygame
 import os
-
+from vector2D import Vector2
 
 class Drawable(object):
+
+    WINDOW_OFFSET = Vector2(0, 0)
+
+    @classmethod
+    def updateWindowOffset(cls, tracked, screenSize, worldSize):
+        position = tracked.getPosition()
+        size = tracked.getSize()
+        width = size[0]
+        length = size[1]
+        Drawable.WINDOW_OFFSET = Vector2(min(max(0, position[0] + (width // 2) - (screenSize[0] // 2)),
+                        worldSize[0] - screenSize[0]),
+                    min(max(0, position[1] + (length // 2) - (screenSize[1] // 2)),
+                        worldSize[1] - screenSize[1]))
+        
 
     def __init__(self, imageName, position):
         self._imageName = imageName
@@ -19,9 +33,9 @@ class Drawable(object):
 
         self._position = position
 
-    def draw(self, surface, offset):
+    def draw(self, surface):
         """Blits the orb onto a specifed surface with an offset"""
-        surface.blit(self._image, list(self._position - offset))
+        surface.blit(self._image, list(self._position - Drawable.WINDOW_OFFSET))
 
     def getSize(self):
         """Returns the size of the surface"""

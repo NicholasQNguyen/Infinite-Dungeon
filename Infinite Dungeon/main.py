@@ -6,6 +6,7 @@ File: main.py
 
 import pygame
 from vector2D import Vector2
+from drawable import Drawable
 from archer import Archer
 from arrow import Arrow
 from copy import deepcopy
@@ -13,6 +14,7 @@ from slime import Slime
 from atlas import Atlas
 from golem import Golem
 from upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
+from frameManager import FrameManager
 
 
 WORLD_SIZE = Vector2(1008, 1008)
@@ -61,7 +63,7 @@ def main():
 
     RUNNING = True
 
-#     damageUpgrade = DamageUpgrade()
+    fm = FrameManager().getInstance()
 
     while RUNNING:
 
@@ -69,21 +71,21 @@ def main():
         drawSurface.fill((255, 255, 255))
 
         # start by drawing the starting room
-        rooms[currentRoom].draw(drawSurface, offset)
+        rooms[currentRoom].draw(drawSurface)
 
         for door in rooms[currentRoom].doors:
-            door.draw(drawSurface, offset)
+            door.draw(drawSurface)
 
-        archer.draw(drawSurface, offset)
+        archer.draw(drawSurface)
 
         if rooms[currentRoom].getHasUpgrade():
-            rooms[currentRoom].upgrade.draw(drawSurface, offset)
+            rooms[currentRoom].upgrade.draw(drawSurface)
 
         for arrow in rooms[currentRoom].arrows:
-            arrow.draw(drawSurface, offset)
+            arrow.draw(drawSurface, Drawable.WINDOW_OFFSET)
 
         for enemy in rooms[currentRoom].enemies:
-            enemy.draw(drawSurface, offset)
+            enemy.draw(drawSurface)
 
         pygame.transform.scale(drawSurface, list(UPSCALED), screen)
 
@@ -181,7 +183,7 @@ def main():
                 # rid of the enemies from the last room
                 drawSurface.fill((255, 255, 255))
                 pygame.display.flip()
-                rooms[currentRoom].draw(drawSurface, offset)
+                rooms[currentRoom].draw(drawSurface)
                 pygame.display.flip()
                 arrowCollisionRects.clear()
 
@@ -215,14 +217,7 @@ def main():
            and not rooms[currentRoom].getUpgradeGrabbed():
             rooms[currentRoom].setHasUpgrade(True)
 
-        offset = Vector2(max(0,
-                             min(archer.getX() + (archer.getWidth() // 2) -
-                                 (SCREEN_SIZE[0] // 2),
-                                 WORLD_SIZE[0] - SCREEN_SIZE[0])),
-                         max(0,
-                             min(archer.getY() + (archer.getHeight() // 2) -
-                                 (SCREEN_SIZE[1] // 2),
-                                 WORLD_SIZE[1] - SCREEN_SIZE[1])))
+        Drawable.updateWindowOffset(archer, SCREEN_SIZE, WORLD_SIZE)
 
     pygame.quit()
 

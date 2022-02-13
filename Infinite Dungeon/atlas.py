@@ -26,7 +26,7 @@ class Atlas(object):
             cls._INSTANCE = cls._Atlas()
         return cls._INSTANCE
 
-    # Do not direclty instantiate this class
+    # Do not directly instantiate this class
     class _Atlas(object):
 
         def __init__(self):

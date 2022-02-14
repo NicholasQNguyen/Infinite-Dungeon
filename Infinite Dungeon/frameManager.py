@@ -50,7 +50,7 @@ class FrameManager(object):
         def __init__(self):
             # Stores the surfaces indexed based on file name
             # The values in _surfaces can be a single Surface
-            #  or a two dimentional grid of surfaces if it is an image sheet
+            # or a two dimentional grid of surfaces if it is an image sheet
             self._surfaces = {}
 
         def __getitem__(self, key):

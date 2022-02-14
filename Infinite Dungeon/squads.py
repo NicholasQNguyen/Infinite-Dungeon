@@ -12,7 +12,6 @@ from golem import Golem
 from vector2D import Vector2
 
 
-SLIME_VELOCITY = 2
 GOLEM_VELOCITY = 2
 
 
@@ -24,8 +23,7 @@ class Squads(object):
         for i in range(10):
             # Spawn 10 slimes in the top left of the map
             slimeOverloadList.append(Slime(Vector2(randint(0, 504),
-                                                   randint(0, 504)),
-                                     SLIME_VELOCITY))
+                                                   randint(0, 504))))
         return slimeOverloadList
 
     @classmethod
@@ -33,18 +31,15 @@ class Squads(object):
         golemAttackList = []
         for i in range(3):
             golemAttackList.append(Golem(Vector2(randint(0, 1008),
-                                                 randint(0, 1008)),
-                                   GOLEM_VELOCITY))
+                                                 randint(0, 1008))))
         return golemAttackList
 
     @classmethod
     def golemAndSlimeOhNo(cls):
         golemAndSlimeOhNoList = []
         golemAndSlimeOhNoList.append(Golem(Vector2(randint(0, 1008),
-                                                   randint(0, 1008)),
-                                     GOLEM_VELOCITY))
+                                                   randint(0, 1008))))
         for i in range(5):
             golemAndSlimeOhNoList.append(Slime(Vector2(randint(0, 504),
-                                                       randint(0, 504)),
-                                         SLIME_VELOCITY))
+                                                       randint(0, 504))))
         return golemAndSlimeOhNoList

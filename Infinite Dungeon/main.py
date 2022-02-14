@@ -102,8 +102,7 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 # If the key in an arrow, apply it to the player's arrows
                 if event.key in ARROW_KEYS:
-                    arrow = Arrow(deepcopy(archer.getPosition()),
-                                  ARROW_VELOCITY)
+                    arrow = Arrow(deepcopy(archer.getPosition()))
                     # Set the direction based on what arrow was hit
                     arrow.changeDirection(event)
                     rooms[currentRoom].arrows.append(arrow)
@@ -122,14 +121,14 @@ def main():
         timer -= seconds
 
         for arrow in rooms[currentRoom].arrows:
-            arrow.update()
+            arrow.update(seconds)
             arrowCollisionRects.append(arrow.getCollideRect())
 
         for enemy in rooms[currentRoom].enemies:
             if isinstance(enemy, Slime):
-                enemy.move()
+                enemy.move(seconds)
             elif isinstance(enemy, Golem):
-                enemy.move(deepcopy(archer.getPosition()))
+                enemy.move(seconds, deepcopy(archer.getPosition()))
 
         # Change the slime's movement direction every 5 seconds
         if timer <= 0:
@@ -148,7 +147,7 @@ def main():
                    enemy.getY() < 0:
                     enemy.changeDirection()
 
-        archer.update()
+        archer.update(seconds)
 
         # Check if arrows are beyond the border and delete them if they are
         for arrow in rooms[currentRoom].arrows:

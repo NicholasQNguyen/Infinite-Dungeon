@@ -25,7 +25,6 @@ class Drawable(object):
                         worldSize[0] - screenSize[0]),
                     min(max(0, position[1] + (length // 2) - (screenSize[1] // 2)),
                         worldSize[1] - screenSize[1]))
-        
 
     def __init__(self, imageName, position, offset=None):
         self._imageName = imageName

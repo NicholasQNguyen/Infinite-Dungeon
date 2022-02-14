@@ -7,9 +7,11 @@ Class for the player character
 """
 import pygame
 from alive import Alive
+from FSM import ArcherState
 
 ARCHER_HP = 50
 ARCHER_VELOCITY = 4
+ARCHER_V_SPEED = 50
 
 
 class Archer(Alive):
@@ -17,63 +19,44 @@ class Archer(Alive):
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}
 
     def __init__(self, imageName, position):
-        super().__init__(imageName, position, ARCHER_VELOCITY, ARCHER_HP)
+        super().__init__(imageName, position, ARCHER_HP)
 
         self._nFrames = 4
 
         self.speedLevel = 0
+
+        self.vSpeed = ARCHER_V_SPEED
+
+        self._state = ArcherState()
 
     def handleEvent(self, event):
         """Given an event, change the appropriate value in
            self._movement, if necessary."""
         if event.type == pygame.KEYDOWN:
             if event.key == event.key == ord("s"):
-                self._movement[pygame.K_DOWN] = True
+                self._state.manageState("down", self)
 
             elif event.key == event.key == ord("w"):
-                self._movement[pygame.K_UP] = True
+                self._state.manageState("up", self)
 
             elif event.key == event.key == ord("a"):
-                self._movement[pygame.K_LEFT] = True
+                self._state.manageState("left", self)
 
             elif event.key == event.key == ord("d"):
-                self._movement[pygame.K_RIGHT] = True
+                self._state.manageState("right", self)
 
         elif event.type == pygame.KEYUP:
             if event.key == ord("s"):
-                self._movement[pygame.K_DOWN] = False
+                self._state.manageState("stopdown", self)
 
             elif event.key == ord("w"):
-                self._movement[pygame.K_UP] = False
+                self._state.manageState("stopup", self)
 
             elif event.key == ord("a"):
-                self._movement[pygame.K_LEFT] = False
+                self._state.manageState("stopleft", self)
 
             elif event.key == ord("d"):
-                self._movement[pygame.K_RIGHT] = False
-
-    def update(self):
-        # Change the position
-        # based on what keys are True in _movement
-        for key in self._movement:
-            if self._movement[key]:
-                if key == pygame.K_DOWN:
-                    self._position[1] += self._velocity
-
-                elif key == pygame.K_UP:
-                    self._position[1] -= self._velocity
-
-                elif key == pygame.K_LEFT:
-                    self._position[0] -= self._velocity
-
-                elif key == pygame.K_RIGHT:
-                    self._position[0] += self._velocity
-
-    def getLastTouchedDoor(self):
-        return self._lastTouchedDoor
-
-    def setLastTouchedDoor(self, door):
-        self._lastTouchedDoor = door
+                self._state.manageState("stopright", self)
 
     def getNewDoor(self):
         return self._newDoor
@@ -84,5 +67,13 @@ class Archer(Alive):
     def iterateSpeedLevel(self):
         self.speedLevel += 1
 
-    def updateVelocity(self):
-        self._velocity = self._velocity + self.speedLevel
+    def updateVSpeed(self):
+        self._vSpeed = self._vSpeed + self.speedLevel
+
+    def transitionState(self, state):
+        self._nFrames = self.nFramesList[state]
+        self._frame = 0
+        self._row = self._rowList[state]
+        self._framesPerSeconds = self._framesPerSecondList[state]
+        self._animationTimer = 0
+        self.setImage(FrameManager.getInstance().getFrame(self._imageName, (self._row, self._frame)))

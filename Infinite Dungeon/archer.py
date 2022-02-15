@@ -18,8 +18,8 @@ class Archer(Alive):
     _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
                  pygame.K_LEFT: False, pygame.K_RIGHT: False}
 
-    def __init__(self, imageName, position):
-        super().__init__(imageName, position, ARCHER_HP)
+    def __init__(self, position):
+        super().__init__("archer.png", position, ARCHER_HP)
 
         self._nFrames = 4
 

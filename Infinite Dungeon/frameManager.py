@@ -34,7 +34,8 @@ class FrameManager(object):
 
         # Static information about the frame sizes of particular image sheets.
         _FRAME_SIZES = {"archer.png": (74, 72),
-                        "slime_monster_spritesheet.png": (24, 24)}
+                        "slime_monster_spritesheet.png": (24, 24),
+                        "golem-walk.png": (64, 64)}
 
         # A default frame size
         _DEFAULT_FRAME = (32, 32)
@@ -68,6 +69,9 @@ class FrameManager(object):
             # If this is an image sheet,
             # return the correctly offset sub surface
             if offset is not None:
+                print("FILE NAME:", fileName)
+                print(offset)
+                print(self._surfaces)
                 return self[fileName][offset[1]][offset[0]]
 
             # Otherwise, return the sheet created
@@ -103,25 +107,24 @@ class FrameManager(object):
 
                 # Iterate over the entire sheet, increment by the sprite size
                 for y in range(0, sheetDimensions[1], spriteSize[1]):
-
                     self[fileName].append([])
 
-                for x in range(0, sheetDimensions[0], spriteSize[0]):
+                    for x in range(0, sheetDimensions[0], spriteSize[0]):
 
-                    # If we need transparency
-                    if transparent:
-                        frame = Surface(spriteSize, SRCALPHA, 32)
-                    else:
-                        frame = Surface(spriteSize)
+                        # If we need transparency
+                        if transparent:
+                            frame = Surface(spriteSize, SRCALPHA, 32)
+                        else:
+                            frame = Surface(spriteSize)
 
-                    frame.blit(fullImage, (0, 0), Rect((x, y), spriteSize))
+                        frame.blit(fullImage, (0, 0), Rect((x, y), spriteSize))
 
-                    # If we need to set the color key
-                    if colorKey:
-                        frame.set_colorkey(frame.get_at((0, 0)))
+                        # If we need to set the color key
+                        if colorKey:
+                            frame.set_colorkey(frame.get_at((0, 0)))
 
-                    # Add the frame to the end of the current row
-                    self[fileName][-1].append(frame)
+                        # Add the frame to the end of the current row
+                        self[fileName][-1].append(frame)
             else:
                 # Not a sprite sheet, full image is what we wish to store
                 self[fileName] = fullImage

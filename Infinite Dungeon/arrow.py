@@ -10,6 +10,7 @@ import pygame
 from projectile import Projectile
 
 BASE_DAMAGE = 5
+BASE_VSPEED = 50
 
 
 class Arrow(Projectile):
@@ -71,7 +72,7 @@ class Arrow(Projectile):
             surface.blit(pygame.transform.rotate(self._image, 90),
                          list(self._position - offset))
 
-    def update(self):
+    def update(self, seconds):
         # Update the position based on the velocity and direction
         self._position[self._direction] += self._velocity * self._posOrNeg
 

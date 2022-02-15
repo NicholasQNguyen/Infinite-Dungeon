@@ -37,8 +37,9 @@ class Squads(object):
     @classmethod
     def golemAndSlimeOhNo(cls):
         golemAndSlimeOhNoList = []
-        golemAndSlimeOhNoList.append(Golem(Vector2(randint(0, 1008),
-                                                   randint(0, 1008))))
+#         golemAndSlimeOhNoList.append(Golem(Vector2(randint(0, 1008),
+#                                                    randint(0, 1008))))
+        golemAndSlimeOhNoList.append(Golem(Vector2(0,0)))
         for i in range(5):
             golemAndSlimeOhNoList.append(Slime(Vector2(randint(0, 504),
                                                        randint(0, 504))))

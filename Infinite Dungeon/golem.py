@@ -18,6 +18,16 @@ class Golem(Alive):
 
         self._vSpeed = GOLEM_V_SPEED
 
+        self._nFramesList = {
+            "moving": 5}
+
+        self._rowList = {
+            "moving": 0}
+
+        self._framesPerSecondList = {
+            "moving": 10}
+
+
     def move(self, seconds, archerPosition):
         # Move the golem left or right to chase the archer
         if archerPosition[0] > self._position[0]:

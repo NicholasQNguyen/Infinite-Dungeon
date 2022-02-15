@@ -46,7 +46,7 @@ class SpeedUpgrade(Upgrade):
 
     def upgrade(self, archer):
         archer.iterateSpeedLevel()
-        archer.updateVelocity()
+        archer.updateVSpeed()
 
 
 class ProjectileSpeedUpgrade(Upgrade):

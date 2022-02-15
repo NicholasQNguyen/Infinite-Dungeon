@@ -12,7 +12,7 @@ from frameManager import FrameManager
 
 ARCHER_HP = 50
 ARCHER_VELOCITY = 4
-ARCHER_V_SPEED = 50
+ARCHER_V_SPEED = 150
 
 
 class Archer(Alive):
@@ -76,10 +76,10 @@ class Archer(Alive):
         self._newDoor = door
 
     def iterateSpeedLevel(self):
-        self.speedLevel += 1
+        self.speedLevel += 50
 
     def updateVSpeed(self):
-        self._vSpeed = self._vSpeed + self.speedLevel
+        self._vspeed = self._vspeed + self.speedLevel
 
     def transitionState(self, state):
         self._nFrames = self._nFramesList[state]

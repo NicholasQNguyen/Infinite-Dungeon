@@ -96,3 +96,33 @@ class SlimeState(object):
             self._state = "right"
         else:
             self._state = "left"
+
+class GolemState(object):
+    def __init__(self, state="left"):
+        self._state = state
+        self._movement = {
+            "up": False,
+            "down": False,
+            "left": False,
+            "right": False
+         }
+
+        self._lastFacing = "right"
+
+    def getFacing(self):
+        if self._movement["left"]:
+            self._lastFacing = "left"
+        elif self._movement["right"]:
+            self._lastFacing = "right"
+        elif self._movement["up"]:
+            self._lastFacing = "up"
+        elif self._movement["down"]:
+            self._lastFacing = "down"
+
+        return self._lastFacing
+
+    def getState(self):
+        return self._state
+
+    def manageState(self, obj):
+        pass

@@ -39,6 +39,9 @@ class Drawable(object):
         """Blits the orb onto a specifed surface with an offset"""
         surface.blit(self._image, list(self._position - Drawable.WINDOW_OFFSET))
 
+    def setImage(self, surface):
+        self._image = surface
+
     def getSize(self):
         """Returns the size of the surface"""
         return self._image.get_size()

@@ -8,6 +8,7 @@ Class for the player character
 import pygame
 from alive import Alive
 from FSM import ArcherState
+from frameManager import FrameManager
 
 ARCHER_HP = 50
 ARCHER_VELOCITY = 4
@@ -25,7 +26,16 @@ class Archer(Alive):
 
         self.speedLevel = 0
 
-        self.vSpeed = ARCHER_V_SPEED
+        self._vspeed = ARCHER_V_SPEED
+
+        self._nFramesList = {
+            "moving" : 5}
+
+        self._rowList = {
+            "moving" : 0}
+
+        self._framesPerSecondList = {
+            "moving" : 10}
 
         self._state = ArcherState()
 
@@ -71,7 +81,7 @@ class Archer(Alive):
         self._vSpeed = self._vSpeed + self.speedLevel
 
     def transitionState(self, state):
-        self._nFrames = self.nFramesList[state]
+        self._nFrames = self._nFramesList[state]
         self._frame = 0
         self._row = self._rowList[state]
         self._framesPerSeconds = self._framesPerSecondList[state]

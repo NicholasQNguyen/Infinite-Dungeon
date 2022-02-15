@@ -23,13 +23,13 @@ class ArcherState(object):
         self._lastFacing = "right"
 
     def getFacing(self):
-        if self.movement["left"]:
+        if self._movement["left"]:
             self._lastFacing = "left"
-        elif self.movement["right"]:
+        elif self._movement["right"]:
             self._lastFacing = "right"
-        elif self.movement["up"]:
+        elif self._movement["up"]:
             self._lastFacing = "up"
-        elif self.movement["down"]:
+        elif self._movement["down"]:
             self._lastFacing = "down"
 
         return self._lastFacing
@@ -38,20 +38,20 @@ class ArcherState(object):
         return self._state
 
     def manageState(self, action, obj):
-        if action in self.movement.keys():
-            if self.movement[action] == False:
-                self.movement[action] = True
+        if action in self._movement.keys():
+            if self._movement[action] == False:
+                self._movement[action] = True
                 if self._state == "standing":
                     self._state = "moving"
                     obj.transitionState(self._state)
 
-        elif action.startswith("stop") and action[4:] in self.movement.keys():
+        elif action.startswith("stop") and action[4:] in self._movement.keys():
             direction = action[4:]
-            if self.movement[direction]:            
-                self.movement[direction] = False
+            if self._movement[direction]:            
+                self._movement[direction] = False
                 allStop = True
-                for move in self.movement.keys():
-                    if self.movement[move]:
+                for move in self._movement.keys():
+                    if self._movement[move]:
                         allStop = False
                         break
 
@@ -61,8 +61,8 @@ class ArcherState(object):
 
         elif action == "stopall":
             if self._state != "standing":
-                for direction in self.movement.keys():
-                    self.movement[direction] = False
+                for direction in self._movement.keys():
+                    self._movement[direction] = False
 
                 self._state = "standing"
                 obj.transitionState(self._state)
@@ -70,7 +70,7 @@ class ArcherState(object):
 class SlimeState(object):
     def __init__(self, state="left"):
         self._state = state
-        self.movement = {         
+        self._movement = {         
             "up" : False,
             "down" : False,
             "left" : False,
@@ -80,9 +80,9 @@ class SlimeState(object):
         self._lastFacing = "right"
 
     def getFacing(self):
-        if self.movement["left"]:
+        if self._movement["left"]:
             self._lastFacing = "left"
-        elif self.movement["right"]:
+        elif self._movement["right"]:
             self._lastFacing = "right"
 
         return self._lastFacing

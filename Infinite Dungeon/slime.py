@@ -5,7 +5,6 @@ File: target.py
 
 Basic monster that moves back and forth.
 """
-import pygame
 from alive import Alive
 from FSM import SlimeState
 
@@ -21,14 +20,14 @@ class Slime(Alive):
 
         self._nFrames = 2
         self._framesPerSecond = 2
-        self._nFramesList = {"walking" : 3}
-        self._rowList ={
-        "up": 0,
-        "right" : 1,
-        "down" : 2
-        }
+        self._nFramesList = {"walking": 3}
+        self._rowList = {
+            "up": 0,
+            "right": 1,
+            "down": 2
+            }
 
-        self._framesPerSecondList = {"walking" : 6}
+        self._framesPerSecondList = {"walking": 6}
 
         self._state = SlimeState()
 
@@ -39,7 +38,7 @@ class Slime(Alive):
 
     def move(self, seconds):
         """Move right for 5 seconds then left for 5 seconds"""
-        self._position[0] += self._vSpeed * seconds 
+        self._position[0] += self._vSpeed * seconds
 
     def handleEvent(self):
-        self._state.manageState(self) 
+        self._state.manageState(self)

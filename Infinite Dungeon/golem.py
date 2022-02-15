@@ -5,11 +5,11 @@ File: golem.py
 
 Basic monster that moves back and forth.
 """
-import pygame
 from alive import Alive
 
 GOLEM_HP = 20
 GOLEM_V_SPEED = 50
+
 
 class Golem(Alive):
 
@@ -17,10 +17,6 @@ class Golem(Alive):
         super().__init__("golem-walk.png", position, GOLEM_HP)
 
         self._vSpeed = GOLEM_V_SPEED
-        grabberRectangle = pygame.Rect(11, 0, 44, 60)
-        tempSurface = pygame.Surface((44, 60))
-        tempSurface.blit(self._image, (0, 0), grabberRectangle)
-        self._image = tempSurface
 
     def move(self, seconds, archerPosition):
         # Move the golem left or right to chase the archer
@@ -34,4 +30,3 @@ class Golem(Alive):
             self._position[1] += self._vSpeed * seconds
         elif archerPosition[1] < self._position[1]:
             self._position[1] -= self._vSpeed * seconds
-

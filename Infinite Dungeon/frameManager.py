@@ -69,9 +69,6 @@ class FrameManager(object):
             # If this is an image sheet,
             # return the correctly offset sub surface
             if offset is not None:
-                print("FILE NAME:", fileName)
-                print(offset)
-                print(self._surfaces)
                 return self[fileName][offset[1]][offset[0]]
 
             # Otherwise, return the sheet created

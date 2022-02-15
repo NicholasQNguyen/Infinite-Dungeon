@@ -13,11 +13,11 @@ class BasicState(object):
 class ArcherState(object):
     def __init__(self, state="standing"):
         self._state = state
-        self._movement = {         
-            "up" : False,
-            "down" : False,
-            "left" : False,
-            "right" : False
+        self._movement = {
+            "up": False,
+            "down": False,
+            "left": False,
+            "right": False
          }
 
         self._lastFacing = "right"
@@ -39,7 +39,7 @@ class ArcherState(object):
 
     def manageState(self, action, obj):
         if action in self._movement.keys():
-            if self._movement[action] == False:
+            if self._movement[action] is False:
                 self._movement[action] = True
                 if self._state == "standing":
                     self._state = "moving"
@@ -47,7 +47,7 @@ class ArcherState(object):
 
         elif action.startswith("stop") and action[4:] in self._movement.keys():
             direction = action[4:]
-            if self._movement[direction]:            
+            if self._movement[direction]:
                 self._movement[direction] = False
                 allStop = True
                 for move in self._movement.keys():
@@ -67,14 +67,15 @@ class ArcherState(object):
                 self._state = "standing"
                 obj.transitionState(self._state)
 
+
 class SlimeState(object):
     def __init__(self, state="left"):
         self._state = state
-        self._movement = {         
-            "up" : False,
-            "down" : False,
-            "left" : False,
-            "right" : False
+        self._movement = {
+            "up": False,
+            "down": False,
+            "left": False,
+            "right": False
          }
 
         self._lastFacing = "right"

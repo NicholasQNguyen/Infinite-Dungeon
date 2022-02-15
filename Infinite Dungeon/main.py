@@ -52,8 +52,6 @@ def main():
     # Stuff for the hero character
     archer = Archer(Vector2(500, 500))
 
-    offset = Vector2(0, 0)
-
     gameClock = pygame.time.Clock()
     seconds = 0
 

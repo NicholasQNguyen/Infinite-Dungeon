@@ -16,8 +16,6 @@ ARCHER_V_SPEED = 50
 
 
 class Archer(Alive):
-    _movement = {pygame.K_DOWN: False, pygame.K_UP: False,
-                 pygame.K_LEFT: False, pygame.K_RIGHT: False}
 
     def __init__(self, position):
         super().__init__("archer.png", position, ARCHER_HP)
@@ -29,13 +27,16 @@ class Archer(Alive):
         self._vspeed = ARCHER_V_SPEED
 
         self._nFramesList = {
-            "moving" : 5}
+            "moving": 5,
+            "standing": 1}
 
         self._rowList = {
-            "moving" : 0}
+            "moving": 0,
+            "standing": 1}
 
         self._framesPerSecondList = {
-            "moving" : 10}
+            "moving": 10,
+            "standing": 1}
 
         self._state = ArcherState()
 
@@ -86,4 +87,5 @@ class Archer(Alive):
         self._row = self._rowList[state]
         self._framesPerSeconds = self._framesPerSecondList[state]
         self._animationTimer = 0
-        self.setImage(FrameManager.getInstance().getFrame(self._imageName, (self._row, self._frame)))
+        self.setImage(FrameManager.getInstance().getFrame(
+                      self._imageName, (self._row, self._frame)))

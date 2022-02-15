@@ -1,9 +1,5 @@
-import pygame
-from pygame import image
-import os
 from frameManager import FrameManager
 from drawable import Drawable
-from vector2D import Vector2
 
 
 class Animated(Drawable):
@@ -22,12 +18,13 @@ class Animated(Drawable):
     def update(self, seconds):
         if self._animate:
             self._animationTimer += seconds
-         
+
             if self._animationTimer > 1 / self._framesPerSecond:
                 self._frame += 1
                 self._frame %= self._nFrames
                 self._animationTimer -= 1 / self._framesPerSecond
-                self._image = FrameManager.getInstance().getFrame(self._imageName, (self._frame, self._row))
+                self._image = FrameManager.getInstance().getFrame(
+                              self._imageName, (self._frame, self._row))
 
     def startAnimation(self):
         self._animate = True

@@ -10,7 +10,7 @@ import pygame
 from projectile import Projectile
 
 BASE_DAMAGE = 5
-BASE_VSPEED = 50
+BASE_VSPEED = 5
 
 
 class Arrow(Projectile):
@@ -21,17 +21,14 @@ class Arrow(Projectile):
     def __init__(self, initialPosition):
         actualDamage = BASE_DAMAGE + self.damageLevel
         super().__init__("arrow.png", initialPosition, actualDamage)
-        # All code to get the image and set it
-        grabberRectangle = pygame.Rect(12, 9, 8, 23)
-        tempSurface = pygame.Surface((8, 23))
-        tempSurface.blit(self._image, (0, 0), grabberRectangle)
-        self._image = tempSurface
 
         # 0 means horizontal, 1 means vertical
         self._direction = 0
 
         # Variable used to track direction arrows fly
         self._posOrNeg = 1
+
+        self._vspeed = BASE_VSPEED
 
     def changeDirection(self, event):
         """Function to change if the arrow is vertical or
@@ -74,7 +71,7 @@ class Arrow(Projectile):
 
     def update(self, seconds):
         # Update the position based on the velocity and direction
-        self._position[self._direction] += self._velocity * self._posOrNeg
+        self._position[self._direction] += self._vspeed * self._posOrNeg
 
     @classmethod
     def iterateDamageLevel(cls):

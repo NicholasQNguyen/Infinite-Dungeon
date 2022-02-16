@@ -39,8 +39,13 @@ class Drawable(object):
         self._position = Vector2(*position)
 
     def draw(self, surface):
-        """Blits the orb onto a specifed surface with an offset"""
-        surface.blit(self._image, list(self._position -
+        """Blits the character onto a specifed surface with an offset"""
+        blitImage = self._image
+
+        if self._state.getFacing() == "left":
+            blitImage = pygame.transform.flip(self._image, True, False)
+
+        surface.blit(blitImage, list(self._position -
                                        Drawable.WINDOW_OFFSET))
 
     def setImage(self, surface):

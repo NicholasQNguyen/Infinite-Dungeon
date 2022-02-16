@@ -8,11 +8,14 @@ Class to handle doors and room transitions
 
 from vector2D import Vector2
 from drawable import Drawable
+from FSM import BasicState
 
 
 class Door(Drawable):
 
     def __init__(self, cardinalDirection, destination):
+
+        self._state = BasicState()
         # Place it on the North wall
         if cardinalDirection == "North":        # Half the width of the room
             super().__init__("door.png", Vector2(504, 0), None)

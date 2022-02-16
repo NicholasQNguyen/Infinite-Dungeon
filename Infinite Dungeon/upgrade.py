@@ -10,6 +10,7 @@ A class to manage upgrades.
 from drawable import Drawable
 from vector2D import Vector2
 import pygame
+from FSM import BasicState
 
 CENTER_OF_ROOM = Vector2(504, 504)
 
@@ -18,6 +19,7 @@ class Upgrade(Drawable):
 
     def __init__(self):
         super().__init__("Potions.png", CENTER_OF_ROOM)
+        self._state = BasicState()
 
 
 class DamageUpgrade(Upgrade):

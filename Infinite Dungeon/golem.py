@@ -6,6 +6,7 @@ File: golem.py
 Basic monster that moves back and forth.
 """
 from alive import Alive
+from FSM import GolemState
 
 GOLEM_HP = 20
 GOLEM_V_SPEED = 50
@@ -26,6 +27,8 @@ class Golem(Alive):
 
         self._framesPerSecondList = {
             "moving": 10}
+
+        self._state = GolemState()
 
 
     def move(self, seconds, archerPosition):

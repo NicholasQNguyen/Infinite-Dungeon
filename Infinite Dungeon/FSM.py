@@ -1,6 +1,6 @@
 
 class BasicState(object):
-    def __init__(self, facing="none"):
+    def __init__(self, facing="left"):
         self._facing = facing
 
     def getFacing(self):
@@ -107,7 +107,7 @@ class GolemState(object):
             "right": False
          }
 
-        self._lastFacing = "right"
+        self._lastFacing = "left"
 
     def getFacing(self):
         if self._movement["left"]:

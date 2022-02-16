@@ -9,6 +9,7 @@ Class for handling the dungeons the player walks around on
 from vector2D import Vector2
 from drawable import Drawable
 from door import Door
+from FSM import BasicState
 # from upgrade import Upgrade
 
 
@@ -22,6 +23,8 @@ class Room(Drawable):
 
         # room ID number to allow for blitting of the right one
         self._roomNumber = roomNumber
+
+        self._state = BasicState()
 
         # A list of the enemies in a specific room
         self.enemies = []

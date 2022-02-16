@@ -1,3 +1,10 @@
+"""
+Author: Nicholas Nguyen
+Infinite Dungeon
+File: FSM.py
+
+Classes for the finite state machines
+"""
 
 class BasicState(object):
     def __init__(self, facing="left"):
@@ -122,5 +129,18 @@ class GolemState(object):
     def getState(self):
         return self._state
 
-    def manageState(self, obj):
-        pass
+    def manageState(self, obj, archerPosition):
+        # Move the golem left or right to chase the archer
+        if archerPosition[0] > obj._position[0]:
+            self._movement["left"] = False
+            self._movement["right"] = True
+        elif archerPosition[0] < obj._position[0]:
+            self._movement["right"] = False
+            self._movement["left"] = True
+        # Move the golem up or down to chase the archer
+        if archerPosition[1] > obj._position[1]:
+            self._movement["up"] = False
+            self._movement["down"] = True
+        elif archerPosition[1] < obj._position[1]:
+            self._movement["down"] = False
+            self._movement["up"] = True

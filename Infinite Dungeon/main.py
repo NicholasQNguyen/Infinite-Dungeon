@@ -113,6 +113,10 @@ def main():
                 if event.key in WASD_KEYS:
                     archer.handleEvent(event)
 
+        for enemy in rooms[currentRoom].enemies:
+            if isinstance(enemy, Golem):
+                enemy.changeDirection(enemy, deepcopy(archer.getPosition()))
+
         gameClock.tick(60)
         seconds = min(.5, gameClock.get_time() / 1000)
 
@@ -126,7 +130,7 @@ def main():
             if isinstance(enemy, Slime):
                 enemy.update(seconds)
             elif isinstance(enemy, Golem):
-                enemy.move(seconds, deepcopy(archer.getPosition()))
+                enemy.update(seconds)
 
         # Change the slime's movement direction every 5 seconds
         if timer <= 0:

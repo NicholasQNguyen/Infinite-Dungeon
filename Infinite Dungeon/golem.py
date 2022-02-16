@@ -17,28 +17,26 @@ class Golem(Alive):
     def __init__(self, position):
         super().__init__("golem-walk.png", position, GOLEM_HP)
 
-        self._vSpeed = GOLEM_V_SPEED
+        self._vspeed = GOLEM_V_SPEED
 
         self._nFramesList = {
-            "moving": 5}
+            "up": 5,
+            "left": 5,
+            "down": 5,
+            "right": 5}
 
         self._rowList = {
-            "moving": 0}
-
+             "up": 0,
+            "left": 1,
+            "down": 2,
+            "right": 3}
         self._framesPerSecondList = {
-            "moving": 10}
+            "up": 10,
+            "left": 10,
+            "down": 10,
+            "right": 10}
 
         self._state = GolemState()
 
-    def move(self, seconds, archerPosition):
-        # Move the golem left or right to chase the archer
-        if archerPosition[0] > self._position[0]:
-            self._position[0] += self._vSpeed * seconds
-        elif archerPosition[0] < self._position[0]:
-            self._position[0] -= self._vSpeed * seconds
-
-        # Move the golem up or down to chase the archer
-        if archerPosition[1] > self._position[1]:
-            self._position[1] += self._vSpeed * seconds
-        elif archerPosition[1] < self._position[1]:
-            self._position[1] -= self._vSpeed * seconds
+    def changeDirection(self, obj, archerPosition):
+        self._state.manageState(obj, archerPosition)

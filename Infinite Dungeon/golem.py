@@ -9,7 +9,7 @@ from alive import Alive
 from FSM import GolemState
 
 GOLEM_HP = 20
-GOLEM_V_SPEED = 50
+GOLEM_V_SPEED = 100
 
 
 class Golem(Alive):

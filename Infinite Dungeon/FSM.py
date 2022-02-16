@@ -69,13 +69,11 @@ class ArcherState(object):
 
 
 class SlimeState(object):
-    def __init__(self, state="left"):
+    def __init__(self, state="right"):
         self._state = state
         self._movement = {
-            "up": False,
-            "down": False,
             "left": False,
-            "right": False
+            "right": True
          }
 
         self._lastFacing = "right"
@@ -91,11 +89,10 @@ class SlimeState(object):
     def getState(self):
         return self._state
 
-    def manageState(self, obj):
-        if self._state == "left":
-            self._state = "right"
-        else:
-            self._state = "left"
+    def manageState(self):
+        """Flip the direction of the movement"""
+        self._movement["left"] = not self._movement["left"]
+        self._movement["right"] = not self._movement["right"]
 
 class GolemState(object):
     def __init__(self, state="left"):

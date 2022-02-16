@@ -124,7 +124,7 @@ def main():
 
         for enemy in rooms[currentRoom].enemies:
             if isinstance(enemy, Slime):
-                enemy.move(seconds)
+                enemy.update(seconds)
             elif isinstance(enemy, Golem):
                 enemy.move(seconds, deepcopy(archer.getPosition()))
 
@@ -132,7 +132,7 @@ def main():
         if timer <= 0:
             for enemy in rooms[currentRoom].enemies:
                 if isinstance(enemy, Slime):
-                    enemy.changeDirection()
+                    enemy.handleEvent()
             timer = 5
 
         # Check if the slimes are going beyond the borders

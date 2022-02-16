@@ -30,7 +30,6 @@ class Golem(Alive):
 
         self._state = GolemState()
 
-
     def move(self, seconds, archerPosition):
         # Move the golem left or right to chase the archer
         if archerPosition[0] > self._position[0]:

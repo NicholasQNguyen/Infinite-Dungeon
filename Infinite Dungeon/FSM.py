@@ -94,6 +94,7 @@ class SlimeState(object):
         self._movement["left"] = not self._movement["left"]
         self._movement["right"] = not self._movement["right"]
 
+
 class GolemState(object):
     def __init__(self, state="left"):
         self._state = state

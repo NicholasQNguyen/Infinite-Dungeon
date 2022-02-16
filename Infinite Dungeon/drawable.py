@@ -46,7 +46,7 @@ class Drawable(object):
             blitImage = pygame.transform.flip(self._image, True, False)
 
         surface.blit(blitImage, list(self._position -
-                                       Drawable.WINDOW_OFFSET))
+                                     Drawable.WINDOW_OFFSET))
 
     def setImage(self, surface):
         self._image = surface

@@ -9,7 +9,6 @@ A class to manage upgrades.
 
 from drawable import Drawable
 from vector2D import Vector2
-import pygame
 from FSM import BasicState
 
 CENTER_OF_ROOM = Vector2(504, 504)

@@ -80,5 +80,3 @@ class Arrow(Projectile):
     def update(self, seconds):
         # Update the position based on the velocity and direction
         self._position[self._direction] += self._vspeed * self._posOrNeg
-
-

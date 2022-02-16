@@ -18,6 +18,14 @@ class Arrow(Projectile):
     damageLevel = 0
     speedLevel = 0
 
+    @classmethod
+    def iterateDamageLevel(cls):
+        cls.damageLevel += 1
+
+    @classmethod
+    def iterateSpeedLevel(cls):
+        cls.speedLevel += 1
+
     def __init__(self, initialPosition):
         actualDamage = BASE_DAMAGE + self.damageLevel
         super().__init__("arrow.png", initialPosition, actualDamage)
@@ -73,10 +81,4 @@ class Arrow(Projectile):
         # Update the position based on the velocity and direction
         self._position[self._direction] += self._vspeed * self._posOrNeg
 
-    @classmethod
-    def iterateDamageLevel(cls):
-        cls.damageLevel += 1
 
-    @classmethod
-    def iterateSpeedLevel(cls):
-        cls.speedLevel += 1

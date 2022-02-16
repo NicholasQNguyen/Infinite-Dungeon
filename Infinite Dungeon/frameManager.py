@@ -35,7 +35,8 @@ class FrameManager(object):
         # Static information about the frame sizes of particular image sheets.
         _FRAME_SIZES = {"archer.png": (74, 72),
                         "slime_monster_spritesheet.png": (24, 24),
-                        "golem-walk.png": (64, 64)}
+                        "golem-walk.png": (64, 64),
+                        "Potions.png": (32, 32)}
 
         # A default frame size
         _DEFAULT_FRAME = (32, 32)

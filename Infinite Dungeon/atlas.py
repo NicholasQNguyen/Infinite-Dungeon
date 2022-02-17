@@ -12,7 +12,7 @@ from room import Room
 from squads import Squads
 from upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
 
-DIMENSION = 4
+DIMENSION = 6
 ROOM_TYPES = ["basicRoom.png", "bridgeRoom.png", "torchRoom.png"]
 
 

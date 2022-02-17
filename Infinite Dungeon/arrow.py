@@ -10,7 +10,7 @@ import pygame
 from projectile import Projectile
 
 BASE_DAMAGE = 5
-BASE_VSPEED = 5
+BASE_VSPEED = 250
 
 
 class Arrow(Projectile):
@@ -79,4 +79,4 @@ class Arrow(Projectile):
 
     def update(self, seconds):
         # Update the position based on the velocity and direction
-        self._position[self._direction] += self._vspeed * self._posOrNeg
+        self._position[self._direction] += self._vspeed * self._posOrNeg * seconds

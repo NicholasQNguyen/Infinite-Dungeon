@@ -57,7 +57,7 @@ def main():
 
     arrowCollisionRects = []
 
-    timer = 5
+    slimeTimer = 5
 
     RUNNING = True
 
@@ -120,7 +120,7 @@ def main():
         gameClock.tick(60)
         seconds = min(.5, gameClock.get_time() / 1000)
 
-        timer -= seconds
+        slimeTimer -= seconds
 
         for arrow in rooms[currentRoom].arrows:
             arrow.update(seconds)
@@ -133,11 +133,11 @@ def main():
                 enemy.update(seconds)
 
         # Change the slime's movement direction every 5 seconds
-        if timer <= 0:
+        if slimeTimer <= 0:
             for enemy in rooms[currentRoom].enemies:
                 if isinstance(enemy, Slime):
                     enemy.handleEvent()
-            timer = 5
+            slimeTimer = 5
 
         # Check if the slimes are going beyond the borders
         # and bounce them back if so

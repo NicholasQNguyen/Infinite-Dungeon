@@ -139,8 +139,12 @@ class GolemState(object):
             self._movement["left"] = True
         # Move the golem up or down to chase the archer
         if archerPosition[1] > obj._position[1]:
+            if not self._movement["down"]:
+                obj.transitionState("down")
             self._movement["up"] = False
             self._movement["down"] = True
         elif archerPosition[1] < obj._position[1]:
+            if not self._movement["up"]:
+                obj.transitionState("up")
             self._movement["down"] = False
             self._movement["up"] = True

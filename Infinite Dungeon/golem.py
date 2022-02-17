@@ -3,10 +3,11 @@ Author: Nicholas Nguyen
 Final Project
 File: golem.py
 
-Basic monster that moves back and forth.
+Monster that follows the player
 """
 from alive import Alive
 from FSM import GolemState
+from frameManager import FrameManager
 
 GOLEM_HP = 20
 GOLEM_V_SPEED = 100
@@ -40,3 +41,11 @@ class Golem(Alive):
 
     def changeDirection(self, obj, archerPosition):
         self._state.manageState(obj, archerPosition)
+
+    def transitionState(self, state):
+        self._nFrames = self._nFramesList[state]
+        self._frame = 0
+        self._row = self._rowList[state]
+        self._framesPerSecond = self._framesPerSecondList[state]
+        self._animationTimer = 0
+        self.setImage(FrameManager.getInstance().getFrame(self._imageName, (self._row, self._frame)))

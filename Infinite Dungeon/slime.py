@@ -16,36 +16,24 @@ SLIME_VSPEED = 150
 class Slime(Alive):
 
     def __init__(self, position):
-        super().__init__("slime_monster_spritesheet.png", position, SLIME_HP)
+        super().__init__("slime_monster_spritesheet.png", position, SLIME_HP, (0,1))
 
-        self._direction = 1
+        self._vspeed = SLIME_VSPEED
 
-        self._nFrames = 2
-        self._framesPerSecond = 2
-        self._nFramesList = {"walking": 3}
-        self._rowList = {
-            "up": 0,
-            "right": 1,
-            "down": 2
-            }
-
-        self._framesPerSecondList = {"walking": 6}
+        self._nFramesList = {"moving": 3}
+        self._rowList = {"moving": 2}
+        self._framesPerSecondList = {"moving": 6}
 
         self._state = SlimeState()
 
-        self._vSpeed = SLIME_VSPEED
 
     def changeDirection(self):
         """Flip from left to right or right to left"""
-        self._state.manageState()
-
-#     def move(self, seconds):
-#         """Move right for 5 seconds then left for 5 seconds"""
-#         self._position[0] += self._vSpeed * seconds * self._direction
+        self._state.manageState(self)
 
     def handleEvent(self):
-        self._state.manageState()
-
+        self._state.manageState(self)
+"""
     def update(self, seconds):
         self._velocity = Vector2(0, 0)
         currentFacing = self._state.getFacing()
@@ -57,3 +45,4 @@ class Slime(Alive):
 
         newPosition = self.getPosition() + self._velocity * seconds
         self.setPosition(newPosition)
+"""

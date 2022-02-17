@@ -79,6 +79,8 @@ class SlimeState(object):
     def __init__(self, state="right"):
         self._state = state
         self._movement = {
+            "up": False,
+            "down": False,
             "left": False,
             "right": True
          }
@@ -96,11 +98,10 @@ class SlimeState(object):
     def getState(self):
         return self._state
 
-    def manageState(self):
+    def manageState(self, obj):
         """Flip the direction of the movement"""
         self._movement["left"] = not self._movement["left"]
         self._movement["right"] = not self._movement["right"]
-
 
 class GolemState(object):
     def __init__(self, state="left"):

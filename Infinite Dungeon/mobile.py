@@ -11,8 +11,8 @@ from vector2D import Vector2
 
 class Mobile(Animated):
 
-    def __init__(self, imageName, position):
-        super().__init__(imageName, position)
+    def __init__(self, imageName, position, offset=(0,0)):
+        super().__init__(imageName, position, offset)
 
     def getPosition(self):
         """Returns the Vector2 of the position"""

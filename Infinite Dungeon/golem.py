@@ -31,6 +31,7 @@ class Golem(Alive):
             "left": 1,
             "down": 2,
             "right": 3}
+
         self._framesPerSecondList = {
             "up": 10,
             "left": 10,
@@ -41,11 +42,3 @@ class Golem(Alive):
 
     def changeDirection(self, obj, archerPosition):
         self._state.manageState(obj, archerPosition)
-
-    def transitionState(self, state):
-        self._nFrames = self._nFramesList[state]
-        self._frame = 0
-        self._row = self._rowList[state]
-        self._framesPerSecond = self._framesPerSecondList[state]
-        self._animationTimer = 0
-        self.setImage(FrameManager.getInstance().getFrame(self._imageName, (self._row, self._frame)))

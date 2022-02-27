@@ -30,7 +30,7 @@ class FrameManager(object):
            Is a private class."""
 
         # Folder in which images are stored
-        _IMAGE_FOLDER = "images"
+        _IMAGE_FOLDER = join("resources", "images")
 
         # Static information about the frame sizes of particular image sheets.
         _FRAME_SIZES = {"archer.png": (74, 72),

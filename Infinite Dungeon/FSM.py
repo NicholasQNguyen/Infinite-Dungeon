@@ -17,7 +17,7 @@ class BasicState(object):
         self._facing = direction
 
 
-class ArcherState(object):
+class ArcherState(BasicState):
     def __init__(self, state="standing"):
         self._state = state
         self._movement = {
@@ -75,7 +75,7 @@ class ArcherState(object):
                 obj.transitionState(self._state)
 
 
-class SlimeState(object):
+class SlimeState(BasicState):
     def __init__(self, state="right"):
         self._state = state
         self._movement = {
@@ -103,7 +103,7 @@ class SlimeState(object):
         self._movement["left"] = not self._movement["left"]
         self._movement["right"] = not self._movement["right"]
 
-class GolemState(object):
+class GolemState(BasicState):
     def __init__(self, state="left"):
         self._state = state
         self._movement = {

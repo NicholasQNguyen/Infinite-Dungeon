@@ -5,16 +5,17 @@ File: main.py
 """
 
 import pygame
-from vector2D import Vector2
-from drawable import Drawable
-from archer import Archer
-from arrow import Arrow
 from copy import deepcopy
-from slime import Slime
-from atlas import Atlas
-from golem import Golem
-from upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
-from frameManager import FrameManager
+
+from modules.gameObjects.vector2D import Vector2
+from modules.gameObjects.drawable import Drawable
+from modules.gameObjects.archer import Archer
+from modules.gameObjects.arrow import Arrow
+from modules.gameObjects.slime import Slime
+from modules.gameObjects.atlas import Atlas
+from modules.gameObjects.golem import Golem
+from modules.gameObjects.upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
+from modules.managers.frameManager import FrameManager
 
 
 WORLD_SIZE = Vector2(1008, 1008)

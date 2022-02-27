@@ -23,7 +23,7 @@ class AbstractUIEntry(Drawable):
     }
 
     def __init__(self, position):
-        super().__init__("", position, parallax=0)
+        super().__init__("", position)
 
 
 class Text(AbstractUIEntry):

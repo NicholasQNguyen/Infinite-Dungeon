@@ -11,8 +11,7 @@ from ..FSMs.gameObjectFSM import ArcherState
 from ..managers.frameManager import FrameManager
 
 ARCHER_HP = 50
-ARCHER_VELOCITY = 4
-ARCHER_V_SPEED = 150
+ARCHER_V_SPEED = 100
 
 
 class Archer(Alive):
@@ -89,3 +88,17 @@ class Archer(Alive):
         self._animationTimer = 0
         self.setImage(FrameManager.getInstance().getFrame(
                       self._imageName, (self._row, self._frame)))
+
+    def updateMovement(self):
+        # For unpausing the game
+        pressed = pygame.key.get_pressed()
+      
+        if not pressed[pygame.K_UP]:
+            self._state.manageState("stopup", self)
+        if not pressed[pygame.K_DOWN]:
+            self._state.manageState("stopdown", self)
+        if not pressed[pygame.K_LEFT]:
+            self._state.manageState("stopleft", self)
+        if not pressed[pygame.K_RIGHT]:
+            self._state.manageState("stopright", self)
+ 

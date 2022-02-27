@@ -5,17 +5,7 @@ File: FSM.py
 
 Classes for the finite state machines
 """
-
-
-class BasicState(object):
-    def __init__(self, facing="left"):
-        self._facing = facing
-
-    def getFacing(self):
-        return self._facing
-
-    def _setFacing(self, direction):
-        self._facing = direction
+from .basicFSM import BasicState
 
 
 class ArcherState(BasicState):

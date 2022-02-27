@@ -9,7 +9,7 @@ class AbstractMenu(Drawable):
     """Abstract class for basic menus."""
     def __init__(self, background,
                  fontName="default", color=(255, 255, 255)):
-        super().__init__(background, (0, 0), parallax=0)
+        super().__init__(background, (0, 0))
 
         self._options = {}
 
@@ -29,7 +29,7 @@ class AbstractMenu(Drawable):
             if center in ["horizontal", "both"]:
                 x -= size[0] // 2
 
-            if center in ["veritcal", "both"]:
+            if center in ["vertical", "both"]:
                 y -= size[1] // 2
 
             position = Vector2(x, y)
@@ -53,7 +53,7 @@ class CursorMenu(AbstractMenu):
                  fontName="default", color=(255, 255, 255)):
         super().__init__(background, fontName, color)
 
-        self._cursor = Drawable(cursor, Vector2(0, 0), parallax=0)
+        self._cursor = Drawable(cursor, Vector2(0, 0))
         self._current = None
 
         self._controls = {
@@ -79,7 +79,7 @@ class CursorMenu(AbstractMenu):
 
     def _moveCursor(self):
         self._cursor.setPosition(self._options[self._current].getPosition() -
-                                 Vector2(self._cursor.getCollisionRect().width,
+                                 Vector2(self._cursor.getCollideRect().width,
                                  0))
 
     def _findNearestInDirection(self, direction):
@@ -100,11 +100,7 @@ class CursorMenu(AbstractMenu):
                (direction == "right" and
                    keyPosition[0] > currentPosition[0]):
 
-                if nearest is not None or (keyPosition - currentPosition)\
-                                                         .magnitude() <\
-                                          (self._options[nearest]
-                                           .getPosition() -
-                                           currentPosition).magnitude():
+                if nearest is None or (keyPosition - currentPosition).magnitude() < (self._options[nearest].getPosition() - currentPosition).magnitude():
                     nearest = key
 
         return nearest

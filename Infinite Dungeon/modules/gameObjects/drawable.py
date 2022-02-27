@@ -9,6 +9,7 @@ Class to handle things that can be drawn (characters, UI, etc.)
 import pygame
 from .vector2D import Vector2
 from ..managers.frameManager import FrameManager
+from ..FSMs.basicFSM import BasicState
 
 
 class Drawable(object):
@@ -34,9 +35,11 @@ class Drawable(object):
 
         frameManager = FrameManager.getInstance()
 
-        self._image = frameManager.getFrame(self._imageName, offset)
+        if self._imageName != "":
+            self._image = frameManager.getFrame(self._imageName, offset)
 
         self._position = Vector2(*position)
+        self._state = BasicState()
 
     def draw(self, surface):
         """Blits the character onto a specifed surface with an offset"""
@@ -50,6 +53,12 @@ class Drawable(object):
 
     def setImage(self, surface):
         self._image = surface
+
+    def setPosition(self, newPosition):
+        self._position = newPosition
+
+    def getPosition(self):
+        return self._position
 
     def getSize(self):
         """Returns the size of the surface"""

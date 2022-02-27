@@ -6,6 +6,7 @@ File: FSM.py
 Classes for the finite state machines
 """
 
+
 class BasicState(object):
     def __init__(self, facing="left"):
         self._facing = facing
@@ -102,6 +103,7 @@ class SlimeState(BasicState):
         """Flip the direction of the movement"""
         self._movement["left"] = not self._movement["left"]
         self._movement["right"] = not self._movement["right"]
+
 
 class GolemState(BasicState):
     def __init__(self, state="left"):

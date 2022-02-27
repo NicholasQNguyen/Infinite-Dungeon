@@ -7,7 +7,7 @@ Monster that follows the player
 """
 from .alive import Alive
 from ..FSMs.gameObjectFSM import GolemState
-from ..managers.frameManager import FrameManager
+# from ..managers.frameManager import FrameManager
 
 GOLEM_HP = 20
 GOLEM_V_SPEED = 100
@@ -28,9 +28,9 @@ class Golem(Alive):
 
         self._rowList = {
              "up": 0,
-            "left": 1,
-            "down": 2,
-            "right": 3}
+             "left": 1,
+             "down": 2,
+             "right": 3}
 
         self._framesPerSecondList = {
             "up": 10,

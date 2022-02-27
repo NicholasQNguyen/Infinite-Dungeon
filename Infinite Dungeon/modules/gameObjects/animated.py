@@ -4,7 +4,7 @@ from .drawable import Drawable
 
 class Animated(Drawable):
 
-    def __init__(self, imageName, location, offset=(0,0)):
+    def __init__(self, imageName, location, offset=(0, 0)):
         super().__init__(imageName, location, offset)
 
         self._frame = 0

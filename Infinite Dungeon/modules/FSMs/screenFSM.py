@@ -8,7 +8,8 @@ class ScreenState(object):
             self._paused = not self._paused
             screenManager.transitionState(self._state)
 
-        elif action == "mainMenu" and not self._paused and self._state != "mainMenu":
+        elif action == "mainMenu" and not self._paused and\
+                       self._state != "mainMenu":
             self._state = "mainMenu"
             screenManager.transitionState(self._state)
 
@@ -16,7 +17,8 @@ class ScreenState(object):
             self._state = "game"
             screenManager.transitionState(self._state)
 
-        elif action in ["cursor", "event", "hoverclick"] and self._state != "mainMenu":
+        elif action == "cursor" and\
+                       self._state != "mainMenu":
             self._state = "mainMenu"
             screenManager.setMainMenu(action)
             screenManager.transitionState(self._state)

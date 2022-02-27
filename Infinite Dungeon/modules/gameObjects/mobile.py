@@ -11,7 +11,7 @@ from .vector2D import Vector2
 
 class Mobile(Animated):
 
-    def __init__(self, imageName, position, offset=(0,0)):
+    def __init__(self, imageName, position, offset=(0, 0)):
         super().__init__(imageName, position, offset)
 
     def getPosition(self):
@@ -34,7 +34,7 @@ class Mobile(Animated):
         super().update(seconds)
         self._velocity = Vector2(0, 0)
         if self._state.getState() != "standing":
-            currentFacing = self._state.getFacing()
+            # currentFacing = self._state.getFacing()
 
             if self._state._movement["down"]:
                 self._velocity[1] = self._vspeed

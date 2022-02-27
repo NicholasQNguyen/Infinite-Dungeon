@@ -26,23 +26,9 @@ class Slime(Alive):
 
         self._state = SlimeState()
 
-
     def changeDirection(self):
         """Flip from left to right or right to left"""
         self._state.manageState(self)
 
     def handleEvent(self):
         self._state.manageState(self)
-"""
-    def update(self, seconds):
-        self._velocity = Vector2(0, 0)
-        currentFacing = self._state.getFacing()
-
-        if self._state._movement["left"]:
-            self._velocity[0] = -self._vSpeed
-        elif self._state._movement["right"]:
-            self._velocity[0] = self._vSpeed
-
-        newPosition = self.getPosition() + self._velocity * seconds
-        self.setPosition(newPosition)
-"""

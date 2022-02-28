@@ -100,7 +100,10 @@ class CursorMenu(AbstractMenu):
                (direction == "right" and
                    keyPosition[0] > currentPosition[0]):
 
-                if nearest is None or (keyPosition - currentPosition).magnitude() < (self._options[nearest].getPosition() - currentPosition).magnitude():
+                if nearest is None or (keyPosition - currentPosition)\
+                                      .magnitude()\
+                                      < (self._options[nearest].getPosition() -
+                                          currentPosition).magnitude():
                     nearest = key
 
         return nearest

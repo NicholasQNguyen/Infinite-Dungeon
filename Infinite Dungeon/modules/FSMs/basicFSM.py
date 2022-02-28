@@ -7,5 +7,3 @@ class BasicState(object):
 
     def _setFacing(self, direction):
         self._facing = direction
-
-

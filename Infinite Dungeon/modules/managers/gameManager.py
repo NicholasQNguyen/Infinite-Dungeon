@@ -9,12 +9,13 @@ from modules.gameObjects.arrow import Arrow
 from modules.gameObjects.slime import Slime
 from modules.gameObjects.atlas import Atlas
 from modules.gameObjects.golem import Golem
-from modules.gameObjects.upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
-from modules.managers.frameManager import FrameManager
+from modules.gameObjects.upgrade import DamageUpgrade,\
+                                        SpeedUpgrade,\
+                                        ProjectileSpeedUpgrade
 
 
 class GameManager(BasicManager):
-   
+
     WORLD_SIZE = Vector2(1008, 1008)
     BEGINNING = Vector2(-600, -600)
     BEGINNING = Vector2(-600, -600)
@@ -40,12 +41,12 @@ class GameManager(BasicManager):
         self.slimeTimer = 5
 
     def draw(self, drawSurf):
-      
+
         # Blit the background
         drawSurf.fill((255, 255, 255))
 
         self.rooms[self.currentroom].draw(drawSurf)
-      
+
         for door in self.rooms[self.currentroom].doors:
             door.draw(drawSurf)
 
@@ -60,29 +61,30 @@ class GameManager(BasicManager):
 
         for enemy in self.rooms[self.currentroom].enemies:
             enemy.draw(drawSurf)
-   
+
     def handleEvent(self, event):
         if event.type == pygame.KEYDOWN:
-        # If the key in an arrow, apply it to the player's arrows
+            # If the key in an arrow, apply it to the player's arrows
             if event.key in GameManager.ARROW_KEYS:
-                 arrow = Arrow(deepcopy(self.archer.getPosition()))
-                 # Set the direction based on what arrow was hit
-                 arrow.changeDirection(event)
-                 self.rooms[self.currentroom].arrows.append(arrow)
+                arrow = Arrow(deepcopy(self.archer.getPosition()))
+                # Set the direction based on what arrow was hit
+                arrow.changeDirection(event)
+                self.rooms[self.currentroom].arrows.append(arrow)
 
             elif event.key in GameManager.WASD_KEYS:
-                 self.archer.handleEvent(event)
+                self.archer.handleEvent(event)
 
         elif event.type == pygame.KEYUP:
             if event.key in GameManager.WASD_KEYS:
                 self.archer.handleEvent(event)
-   
+
     def update(self, seconds, screenSize):
         # let others update based on the amount of time elapsed
         self.archer.update(seconds)
         for enemy in self.rooms[self.currentroom].enemies:
             if isinstance(enemy, Golem):
-                enemy.changeDirection(enemy, deepcopy(self.archer.getPosition()))
+                enemy.changeDirection(enemy,
+                                      deepcopy(self.archer.getPosition()))
 
         for arrow in self.rooms[self.currentroom].arrows:
             arrow.update(seconds)
@@ -107,7 +109,8 @@ class GameManager(BasicManager):
         # and bounce them back if so
         for enemy in self.rooms[self.currentroom].enemies:
             if isinstance(enemy, Slime):
-                if enemy.getX() + enemy.getWidth() > GameManager.WORLD_SIZE[0] or \
+                if enemy.getX() + enemy.getWidth() >\
+                   GameManager.WORLD_SIZE[0] or\
                    enemy.getX() < 0 or \
                    enemy.getY() > GameManager.WORLD_SIZE[1] or \
                    enemy.getY() < 0:
@@ -117,7 +120,7 @@ class GameManager(BasicManager):
 
         # Check if arrows are beyond the border and delete them if they are
         for arrow in self.rooms[self.currentroom].arrows:
-            if arrow.getX() > GameManager.WORLD_SIZE[0] or arrow.getX() < 0 or \
+            if arrow.getX() > GameManager.WORLD_SIZE[0] or arrow.getX() < 0 or\
                arrow.getY() > GameManager.WORLD_SIZE[1] or arrow.getY() < 0:
                 arrow.isDead()
 
@@ -136,9 +139,9 @@ class GameManager(BasicManager):
         for door in self.rooms[self.currentroom].doors:
             doorCollisionRect = door.getCollideRect()
             if doorCollisionRect.colliderect(self.archerCollisionRect):
-                # Change the index to change what self.room is drawn
+                # Change the index to change what room is drawn
                 self.currentroom = door.getDestination()
-                # Move the self.archer to the center of the self.room when moving self.rooms
+                # Move the archer to the center of the room when moving rooms
                 self.archer.setPosition(deepcopy(GameManager.CENTER_OF_ROOM))
 
                 if self.currentroom == 99:
@@ -156,17 +159,20 @@ class GameManager(BasicManager):
 
         # Check if we touch the upgrade
         if self.rooms[self.currentroom].getHasUpgrade():
-            if self.archerCollisionRect.colliderect(self.rooms[self.currentroom].upgrade.
-                                               getCollideRect()):
+            if self.archerCollisionRect.colliderect(
+                                                   self.rooms[self.currentroom]
+                                                   .upgrade.getCollideRect()):
                 self.rooms[self.currentroom].setHasUpgrade(False)
 
                 self.rooms[self.currentroom].setUpgradeGrabbed(True)
 
-                if isinstance(self.rooms[self.currentroom].upgrade, DamageUpgrade)\
-                    or isinstance(self.rooms[self.currentroom].upgrade,
-                                  ProjectileSpeedUpgrade):
+                if isinstance(self.rooms[self.currentroom].upgrade,
+                              DamageUpgrade)\
+                   or isinstance(self.rooms[self.currentroom].upgrade,
+                                 ProjectileSpeedUpgrade):
                     self.rooms[self.currentroom].upgrade.upgrade(Arrow)
-                elif isinstance(self.rooms[self.currentroom].upgrade, SpeedUpgrade):
+                elif isinstance(self.rooms[self.currentroom].upgrade,
+                                SpeedUpgrade):
                     self.rooms[self.currentroom].upgrade.upgrade(self.archer)
 
         # Death checking
@@ -184,7 +190,8 @@ class GameManager(BasicManager):
            and not self.rooms[self.currentroom].getUpgradeGrabbed():
             self.rooms[self.currentroom].setHasUpgrade(True)
 
-        Drawable.updateWindowOffset(self.archer, screenSize, GameManager.WORLD_SIZE)
-      
+        Drawable.updateWindowOffset(
+                 self.archer, screenSize, GameManager.WORLD_SIZE)
+
     def updateMovement(self):
         self.archer.updateMovement()

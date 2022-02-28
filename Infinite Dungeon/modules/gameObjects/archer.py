@@ -92,7 +92,7 @@ class Archer(Alive):
     def updateMovement(self):
         # For unpausing the game
         pressed = pygame.key.get_pressed()
-      
+
         if not pressed[pygame.K_UP]:
             self._state.manageState("stopup", self)
         if not pressed[pygame.K_DOWN]:
@@ -101,4 +101,3 @@ class Archer(Alive):
             self._state.manageState("stopleft", self)
         if not pressed[pygame.K_RIGHT]:
             self._state.manageState("stopright", self)
- 

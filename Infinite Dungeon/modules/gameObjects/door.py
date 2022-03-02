@@ -23,12 +23,15 @@ class Door(Drawable):
         elif cardinalDirection == "East":
             super().__init__("door.png", Vector2((1008 - 64), 504), None)
             self._position = Vector2((1008 - 64), 504)
+            self.type = cardinalDirection
         elif cardinalDirection == "South":
             super().__init__("door.png", Vector2(504, (1008 - 54)), None)
             self._position = Vector2(504, (1008 - 54))
+            self.type = cardinalDirection
         elif cardinalDirection == "West":
             super().__init__("door.png", Vector2(0, 504), None)
             self._position = Vector2(0, 504)
+            self.type = cardinalDirection
 
         # Room id number of where it leads
         self._destination = destination
@@ -40,3 +43,7 @@ class Door(Drawable):
 
     def getPosition(self):
         return self._position
+
+    def getType(self):
+        """Return if it's a north east south or west door"""
+        return self.type

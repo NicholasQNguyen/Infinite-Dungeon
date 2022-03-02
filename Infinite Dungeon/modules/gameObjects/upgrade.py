@@ -29,6 +29,7 @@ class DamageUpgrade(Upgrade):
 
     def upgrade(self, arrow):
         arrow.iterateDamageLevel()
+        print("DAMAGE UP")
 
 
 class SpeedUpgrade(Upgrade):
@@ -40,7 +41,7 @@ class SpeedUpgrade(Upgrade):
     def upgrade(self, archer):
         archer.iterateSpeedLevel()
         archer.updateVSpeed()
-
+        print("SPEED UP")
 
 class ProjectileSpeedUpgrade(Upgrade):
 
@@ -51,3 +52,4 @@ class ProjectileSpeedUpgrade(Upgrade):
     def upgrade(self, arrow):
         """Upgrade the projectile speed level"""
         arrow.iterateSpeedLevel()
+        print("PROJECTILE SPEED UP")

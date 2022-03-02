@@ -141,21 +141,18 @@ class GameManager(BasicManager):
             if doorCollisionRect.colliderect(self.archerCollisionRect):
                 # Change the index to change what room is drawn
                 self.currentroom = door.getDestination()
-                # Move the archer to the center of the room when moving rooms
-                self.archer.setPosition(deepcopy(GameManager.CENTER_OF_ROOM))
+                # Move the archer to the corresponding door when moving rooms
+                if door.getType() == "North":
+                    self.archer.setPosition(Vector2(504, 800))
+                elif door.getType() == "East":
+                    self.archer.setPosition(Vector2(200, 504))
+                elif door.getType() == "South":
+                    self.archer.setPosition(Vector2(504, 200))
+                elif door.getType() == "West":
+                    self.archer.setPosition(Vector2(800, 504))
 
                 if self.currentroom == 99:
                     self.currentroom = -1
-
-                """
-                # Redraw the self.room so that we get
-                # rid of the enemies from the last self.room
-                drawSurf.fill((255, 255, 255))
-                pygame.display.flip()
-                self.rooms[self.currentroom].draw(drawSurf)
-                pygame.display.flip()
-                self.arrowCollisionRects.clear()
-                """
 
         # Check if we touch the upgrade
         if self.rooms[self.currentroom].getHasUpgrade():
@@ -166,11 +163,13 @@ class GameManager(BasicManager):
 
                 self.rooms[self.currentroom].setUpgradeGrabbed(True)
 
+                # Apply projectile speed and damage upgrades to the arrow
                 if isinstance(self.rooms[self.currentroom].upgrade,
                               DamageUpgrade)\
                    or isinstance(self.rooms[self.currentroom].upgrade,
                                  ProjectileSpeedUpgrade):
                     self.rooms[self.currentroom].upgrade.upgrade(Arrow)
+                # Apply speed upgrades to the archer
                 elif isinstance(self.rooms[self.currentroom].upgrade,
                                 SpeedUpgrade):
                     self.rooms[self.currentroom].upgrade.upgrade(self.archer)

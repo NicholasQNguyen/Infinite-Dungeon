@@ -9,6 +9,7 @@ from .basicFSM import BasicState
 
 
 class ArcherState(BasicState):
+
     def __init__(self, state="standing"):
         self._state = state
         self._movement = {
@@ -67,6 +68,7 @@ class ArcherState(BasicState):
 
 
 class SlimeState(BasicState):
+
     def __init__(self, state="right"):
         self._state = state
         self._movement = {
@@ -96,6 +98,7 @@ class SlimeState(BasicState):
 
 
 class GolemState(BasicState):
+
     def __init__(self, state="left"):
         self._state = state
         self._movement = {
@@ -141,3 +144,13 @@ class GolemState(BasicState):
                 obj.transitionState("up")
             self._movement["down"] = False
             self._movement["up"] = True
+
+
+class TowerState(BasicState):
+
+    def __init__(self, state="standing"):
+        self._state = state
+        self._lastFacing = "down"
+
+    def manageState(self, obj, archerPosition):
+        self

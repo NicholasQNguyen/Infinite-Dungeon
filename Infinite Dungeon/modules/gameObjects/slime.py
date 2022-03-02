@@ -1,7 +1,7 @@
 """
 Author: Nicholas Nguyen
 Project 2
-File: target.py
+File: slime.py
 
 Basic monster that moves back and forth.
 """

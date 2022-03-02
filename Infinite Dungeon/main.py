@@ -29,9 +29,7 @@ def main():
     while RUNNING:
 
         screenManager.draw(drawSurface)
-
         pygame.transform.scale(drawSurface, list(UPSCALED), screen)
-
         pygame.display.flip()
 
         # event handling, gets all event from the eventqueue

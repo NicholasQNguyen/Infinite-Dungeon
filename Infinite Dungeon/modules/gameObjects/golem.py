@@ -11,6 +11,7 @@ from ..FSMs.gameObjectFSM import GolemState
 
 GOLEM_HP = 20
 GOLEM_V_SPEED = 100
+GOLEM_DAMAGE = 5
 
 
 class Golem(Alive):
@@ -39,6 +40,8 @@ class Golem(Alive):
             "right": 10}
 
         self._state = GolemState()
+
+        self._damage = GOLEM_DAMAGE
 
     def changeDirection(self, obj, archerPosition):
         self._state.manageState(obj, archerPosition)

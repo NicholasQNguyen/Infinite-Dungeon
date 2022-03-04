@@ -20,6 +20,9 @@ class Alive(Mobile):
     def takeDamage(self, damage):
         self.HP -= damage
 
+    def getDamage(self):
+        return self._damage
+
     def kill(self):
         self._isDead = True
 

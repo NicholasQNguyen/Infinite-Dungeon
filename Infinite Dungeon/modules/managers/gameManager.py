@@ -18,7 +18,6 @@ class GameManager(BasicManager):
 
     WORLD_SIZE = Vector2(1008, 1008)
     BEGINNING = Vector2(-600, -600)
-    BEGINNING = Vector2(-600, -600)
     ARROW_KEYS = [pygame.K_DOWN, pygame.K_UP,
                   pygame.K_LEFT, pygame.K_RIGHT]
     WASD_KEYS = [ord("s"), ord("w"), ord("a"), ord("d")]
@@ -39,6 +38,7 @@ class GameManager(BasicManager):
 
         self.seconds = 0
         self.slimeTimer = 5
+        self.invincibilityTimer = 0
 
     def draw(self, drawSurf):
 
@@ -64,7 +64,7 @@ class GameManager(BasicManager):
 
     def handleEvent(self, event):
         if event.type == pygame.KEYDOWN:
-            # If the key in an arrow, apply it to the player's arrows
+            # If the key is an arrow key, apply it to the player's arrows
             if event.key in GameManager.ARROW_KEYS:
                 arrow = Arrow(deepcopy(self.archer.getPosition()))
                 # Set the direction based on what arrow was hit
@@ -136,6 +136,14 @@ class GameManager(BasicManager):
                         arrow.kill()
                         enemy.takeDamage(arrow.getDamage())
 
+        # Check for enemy collision for damage purposes
+        for enemy in self.rooms[self.currentroom].enemies:
+            enemyCollisionRect = enemy.getCollideRect()
+            if enemyCollisionRect.colliderect(self.archerCollisionRect):
+                self.archer.takeDamage(enemy.getDamage())
+                print(self.archer.HP)
+
+        # Check to see if we entered a door
         for door in self.rooms[self.currentroom].doors:
             doorCollisionRect = door.getCollideRect()
             if doorCollisionRect.colliderect(self.archerCollisionRect):
@@ -183,7 +191,7 @@ class GameManager(BasicManager):
             if arrow.isDead():
                 self.rooms[self.currentroom].arrows.remove(arrow)
 
-        # If the self.room is empty, place an upgrade
+        # If the room is empty, place an upgrade
         if self.rooms[self.currentroom].isClear()\
            and not self.rooms[self.currentroom].getHasUpgrade()\
            and not self.rooms[self.currentroom].getUpgradeGrabbed():

@@ -10,7 +10,7 @@ from ..FSMs.gameObjectFSM import SlimeState
 
 SLIME_HP = 6
 SLIME_VSPEED = 150
-
+SLIME_DAMAGE = 5
 
 class Slime(Alive):
 
@@ -26,9 +26,14 @@ class Slime(Alive):
 
         self._state = SlimeState()
 
+        self._damage = SLIME_DAMAGE
+
     def changeDirection(self):
         """Flip from left to right or right to left"""
         self._state.manageState(self)
 
     def handleEvent(self):
         self._state.manageState(self)
+
+    def hit(self, player):
+        pass

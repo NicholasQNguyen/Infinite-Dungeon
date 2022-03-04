@@ -22,22 +22,3 @@ class Tower(Alive):
 
         self._direction = "down"
 
-    def fire(self):
-        # Shooting down
-        if self._direction == "down":
-            # Start it on the archer
-            surface.blit(self._image, list(self._position - offset))
-
-        # Shooting up
-        elif self._direction == "up":
-            surface.blit(pygame.transform.rotate(self._image, 180),
-                         list(self._position - offset))
-        # Shooting left
-        elif self._direction == "left":
-            surface.blit(pygame.transform.rotate(self._image, 270),
-                         list(self._position - offset))
-
-        # Shooting right
-        elif self._direction == "right":
-            surface.blit(pygame.transform.rotate(self._image, 90),
-                         list(self._position - offset))

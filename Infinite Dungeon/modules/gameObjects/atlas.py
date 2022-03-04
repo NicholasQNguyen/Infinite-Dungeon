@@ -212,8 +212,4 @@ class Atlas(object):
                 [0, 0, 0]
                 [0, 0, 0]
                 [0, 0, 0]
-
-                These methods check for 1's above,
-                to the right, below, and to the left
-                of the inputted index
     """

@@ -30,6 +30,15 @@ class ScreenManager(BasicManager):
                                  SCREEN_SIZE // 2 + Vector2(0, 50),
                                  center="both")
 
+        self._gameOver = CursorMenu("background.png", fontName="default8")
+        self._gameOver.addText("Game Over",
+                               SCREEN_SIZE // 2 - Vector2(0,50),
+                               center="both")
+        self._gameOver.addOption("exit", "Exit Game",
+                               SCREEN_SIZE // 2 + Vector2(0,50),
+                               center="both")
+ 
+
     def draw(self, drawSurf):
         if self._state == "game":
             self._game.draw(drawSurf)
@@ -39,6 +48,9 @@ class ScreenManager(BasicManager):
 
         elif self._state == "mainMenu":
             self._mainMenu.draw(drawSurf)
+
+        elif self._state == "gameOver":
+            self._gameOver.draw(drawSurf)
 
     def handleEvent(self, event):
         # Handle screen-changing events first
@@ -57,11 +69,23 @@ class ScreenManager(BasicManager):
                 elif choice == "exit":
                     return "exit"
 
+            elif self._state == "gameOver":
+                choice = self._gameOver.handleEvent(event)
+
+                if choice == "exit":
+                    return "exit"
+
     def update(self, ticks):
         if self._state == "game" and not self._state.isPaused():
-            self._game.update(ticks, SCREEN_SIZE)
+            status = self._game.update(ticks, SCREEN_SIZE)
+            if status == "dead":
+                status = None
+                self._state.manageState("gameOver", self)
         elif self._state == "mainMenu":
             self._mainMenu.update(ticks)
+
+        elif self._state == "gameOver":
+            self._gameOver.update(ticks)
 
     # Prevents kirby from constantly walking if the direction arrow
     #  is released when the game isn't playing

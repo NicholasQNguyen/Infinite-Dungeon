@@ -12,6 +12,7 @@ from modules.gameObjects.golem import Golem
 from modules.gameObjects.upgrade import DamageUpgrade,\
                                         SpeedUpgrade,\
                                         ProjectileSpeedUpgrade
+from ..UI.items import Text
 
 
 class GameManager(BasicManager):
@@ -34,6 +35,8 @@ class GameManager(BasicManager):
         self.rooms = atlas.getRooms()
         self.currentroom = 0
 
+        self.mapText = Text(Vector2(600, 600), str(atlas), "default8")
+
         self.arrowCollisionRects = []
 
         self.seconds = 0
@@ -46,6 +49,8 @@ class GameManager(BasicManager):
         drawSurf.fill((255, 255, 255))
 
         self.rooms[self.currentroom].draw(drawSurf)
+
+        self.mapText.draw(drawSurf)
 
         for door in self.rooms[self.currentroom].doors:
             door.draw(drawSurf)
@@ -79,6 +84,10 @@ class GameManager(BasicManager):
                 self.archer.handleEvent(event)
 
     def update(self, seconds, screenSize):
+        if self.archer.HP <= 0:
+            print("RIP")
+            # Transition to game over screen
+            return "dead"
         # let others update based on the amount of time elapsed
         self.archer.update(seconds)
         for enemy in self.rooms[self.currentroom].enemies:
@@ -141,10 +150,10 @@ class GameManager(BasicManager):
         for enemy in self.rooms[self.currentroom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
             if enemyCollisionRect.colliderect(self.archerCollisionRect) and\
-               self.invincibilityTimer < 0:
+                self.invincibilityTimer < 0:
                 self.archer.takeDamage(enemy.getDamage())
-                # 5 seconds of invincibilty
-                self.invincibilityTimer = 5
+                # 2 seconds of invincibilty
+                self.invincibilityTimer = 2
                 print(self.archer.HP)
 
         # Check to see if we entered a door

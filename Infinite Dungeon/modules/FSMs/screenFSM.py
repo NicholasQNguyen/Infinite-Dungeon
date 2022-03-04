@@ -23,6 +23,10 @@ class ScreenState(object):
             screenManager.setMainMenu(action)
             screenManager.transitionState(self._state)
 
+        elif action == "gameOver":
+            self._state = "gameOver"
+            screenManager.transitionState(self._state)
+
     def __eq__(self, other):
         return self._state == other
 

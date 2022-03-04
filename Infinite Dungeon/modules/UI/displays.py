@@ -12,6 +12,7 @@ class AbstractMenu(Drawable):
         super().__init__(background, (0, 0))
 
         self._options = {}
+        self._text = []
 
         self._color = color
         self._font = fontName
@@ -36,8 +37,14 @@ class AbstractMenu(Drawable):
 
             self._options[key].setPosition(position)
 
+    def addText(self, text, position, center=None):
+        self._text.append(Text(position, text, self._font, self._color))
+
     def draw(self, surface):
         super().draw(surface)
+
+        for item in self._text:
+            item.draw(surface)
 
         for item in self._options.values():
             item.draw(surface)

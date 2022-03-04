@@ -97,6 +97,7 @@ class GameManager(BasicManager):
                 enemy.update(seconds)
 
         self.slimeTimer -= seconds
+        self.invincibilityTimer -= seconds
 
         # Change the slime's movement direction every 5 seconds
         if self.slimeTimer <= 0:
@@ -130,17 +131,20 @@ class GameManager(BasicManager):
         for enemy in self.rooms[self.currentroom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
             if self.rooms[self.currentroom].arrows != []:
-                for arrow in self.rooms[self.currentroom].arrows:
-                    self.arrowCollisionRect = arrow.getCollideRect()
-                    if enemyCollisionRect.colliderect(self.arrowCollisionRect):
+                for arrow in self.rooms[self.currentroom].arrows: 
+                    arrowCollisionRect = arrow.getCollideRect()
+                    if enemyCollisionRect.colliderect(arrowCollisionRect):
                         arrow.kill()
                         enemy.takeDamage(arrow.getDamage())
 
         # Check for enemy collision for damage purposes
         for enemy in self.rooms[self.currentroom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
-            if enemyCollisionRect.colliderect(self.archerCollisionRect):
+            if enemyCollisionRect.colliderect(self.archerCollisionRect) and\
+               self.invincibilityTimer < 0:
                 self.archer.takeDamage(enemy.getDamage())
+                # 5 seconds of invincibilty
+                self.invincibilityTimer = 5
                 print(self.archer.HP)
 
         # Check to see if we entered a door

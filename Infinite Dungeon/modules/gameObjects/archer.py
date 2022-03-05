@@ -6,12 +6,18 @@ File: archer.py
 Class for the player character
 """
 import pygame
+
 from .alive import Alive
+from .items import FollowRectBarItem
+from .vector2D import Vector2
+
 from ..FSMs.gameObjectFSM import ArcherState
 from ..managers.frameManager import FrameManager
+from ..managers.itemManager import BasicItemManager
+
 
 ARCHER_HP = 50
-ARCHER_V_SPEED = 100
+ARCHER_V_SPEED = 150
 
 
 class Archer(Alive):
@@ -19,25 +25,29 @@ class Archer(Alive):
     def __init__(self, position):
         super().__init__("archer.png", position, ARCHER_HP)
 
-        self._nFrames = 4
+        self._stats = BasicItemManager()
+        self._stats.addItem("HP", FollowRectBarItem(self, Vector2(0, -50), pygame.Rect(0, 50, 55, 10), outlineWidth=1, initialValue=self.HP * 100, maxValue=self.HP * 100, backgroundColor=(0, 0, 0)))
 
         self.speedLevel = 0
-
         self._vspeed = ARCHER_V_SPEED
 
+        self._nFrames = 4
         self._nFramesList = {
             "moving": 5,
             "standing": 1}
-
         self._rowList = {
             "moving": 0,
             "standing": 1}
-
         self._framesPerSecondList = {
             "moving": 10,
             "standing": 1}
 
         self._state = ArcherState()
+
+    def update(self, damage, seconds):
+        super().update(seconds)
+        self._stats.decreaseItem("HP", damage * 100)
+        self._stats.update(seconds)
 
     def handleEvent(self, event):
         """Given an event, change the appropriate value in
@@ -101,3 +111,9 @@ class Archer(Alive):
             self._state.manageState("stopleft", self)
         if not pressed[pygame.K_RIGHT]:
             self._state.manageState("stopright", self)
+
+    def drawStats(self, drawSurf):
+        self._stats.draw(drawSurf)
+
+    def getStats(self):
+        return self._stats

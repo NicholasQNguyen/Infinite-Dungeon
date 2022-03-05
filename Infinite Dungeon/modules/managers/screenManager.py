@@ -32,12 +32,11 @@ class ScreenManager(BasicManager):
 
         self._gameOver = CursorMenu("background.png", fontName="default8")
         self._gameOver.addText("Game Over",
-                               SCREEN_SIZE // 2 - Vector2(0,50),
+                               SCREEN_SIZE // 2 - Vector2(0, 50),
                                center="both")
         self._gameOver.addOption("exit", "Exit Game",
-                               SCREEN_SIZE // 2 + Vector2(0,50),
-                               center="both")
- 
+                                 SCREEN_SIZE // 2 + Vector2(0, 50),
+                                 center="both")
 
     def draw(self, drawSurf):
         if self._state == "game":

@@ -7,15 +7,20 @@ Class for things that can be dead.
 """
 from .mobile import Mobile
 from ..managers.frameManager import FrameManager
+from ..managers.itemManager import BasicItemManager
 
 
 class Alive(Mobile):
 
     def __init__(self, imageName, position, hp, offset=(0, 0)):
         super().__init__(imageName, position, offset)
-        self._isDead = False
+        self._stats = BasicItemManager()
         self.HP = hp
+        self._isDead = False
         self.level = 1
+
+    def getHP(self):
+        return self.HP
 
     def takeDamage(self, damage):
         self.HP -= damage

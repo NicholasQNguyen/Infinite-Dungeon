@@ -50,13 +50,11 @@ class GameManager(BasicManager):
 
         self.rooms[self.currentroom].draw(drawSurf)
 
-        self.mapText.draw(drawSurf)
-
         for door in self.rooms[self.currentroom].doors:
             door.draw(drawSurf)
 
-        # Draw everything
         self.archer.draw(drawSurf)
+        self.archer.drawStats(drawSurf)
 
         if self.rooms[self.currentroom].getHasUpgrade():
             self.rooms[self.currentroom].upgrade.draw(drawSurf)
@@ -84,12 +82,14 @@ class GameManager(BasicManager):
                 self.archer.handleEvent(event)
 
     def update(self, seconds, screenSize):
-        if self.archer.HP <= 0:
+        if self.archer.getHP() <= 0:
             print("RIP")
             # Transition to game over screen
             return "dead"
         # let others update based on the amount of time elapsed
-        self.archer.update(seconds)
+        self.archer.update(0, seconds)
+        self.archer.getStats().update(seconds)
+
         for enemy in self.rooms[self.currentroom].enemies:
             if isinstance(enemy, Golem):
                 enemy.changeDirection(enemy,
@@ -126,8 +126,6 @@ class GameManager(BasicManager):
                    enemy.getY() < 0:
                     enemy.changeDirection()
 
-        self.archer.update(seconds)
-
         # Check if arrows are beyond the border and delete them if they are
         for arrow in self.rooms[self.currentroom].arrows:
             if arrow.getX() > GameManager.WORLD_SIZE[0] or arrow.getX() < 0 or\
@@ -140,7 +138,7 @@ class GameManager(BasicManager):
         for enemy in self.rooms[self.currentroom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
             if self.rooms[self.currentroom].arrows != []:
-                for arrow in self.rooms[self.currentroom].arrows: 
+                for arrow in self.rooms[self.currentroom].arrows:
                     arrowCollisionRect = arrow.getCollideRect()
                     if enemyCollisionRect.colliderect(arrowCollisionRect):
                         arrow.kill()
@@ -150,11 +148,12 @@ class GameManager(BasicManager):
         for enemy in self.rooms[self.currentroom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
             if enemyCollisionRect.colliderect(self.archerCollisionRect) and\
-                self.invincibilityTimer < 0:
+               self.invincibilityTimer < 0:
                 self.archer.takeDamage(enemy.getDamage())
+                self.archer.update(enemy.getDamage(), seconds)
                 # 2 seconds of invincibilty
                 self.invincibilityTimer = 2
-                print(self.archer.HP)
+                print(self.archer.getHP())
 
         # Check to see if we entered a door
         for door in self.rooms[self.currentroom].doors:

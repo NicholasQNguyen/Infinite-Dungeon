@@ -46,7 +46,7 @@ class Atlas(object):
         placerIndex1 = DIMENSION - 1
         placerIndex2 = 0
 
-        firstRoom = Room(choice(ROOM_TYPES), 0, 1)
+        firstRoom = Room("firstRoom.png", 0, 1)
         lastRoom = Room(choice(ROOM_TYPES), 99)
 
         # Put a room in the bottom left and top right of the grid
@@ -144,7 +144,11 @@ class Atlas(object):
 
         # Assign an enemy squad to each room
         for room in self.listOfRooms:
-            room.enemies = choice(squads)()
+            # Don't assign to the first room
+            if room.getRoomNumber() == 0:
+                pass
+            else:
+                room.enemies = choice(squads)()
 
         # Assign an upgrade to each room
         for room in self.listOfRooms:

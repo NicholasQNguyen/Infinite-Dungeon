@@ -65,6 +65,9 @@ class Room(Drawable):
     def setUpgradeGrabbed(self, boolean):
         self._upgradeGrabbed = boolean
 
+    def getRoomNumber(self):
+        return self._roomNumber
+
     def __eq__(self, other):
         # https://www.pythontutorial.net/python-oop/python-__eq__/
         if isinstance(other, Room):

@@ -32,23 +32,3 @@ class Text(AbstractUIEntry):
       self._color = color
       
       self._image = AbstractUIEntry.FONTS[font].render(text, False, self._color)
-
-class HoverText(Text):
-   """Text which changes color when the mouse hovers over it."""
-   def __init__(self, position, text, font, color, hoverColor):
-      super().__init__(position, text, font, color)
-
-      self._image = AbstractUIEntry.FONTS[font].render(text, False, color)
-      self._passive = self._image
-      self._hover = AbstractUIEntry.FONTS[font].render(text, False, hoverColor)
-   
-   def handleEvent(self, event):      
-      if event.type == pygame.MOUSEMOTION:
-         position = adjustMousePos(event.pos)
-         if self.getCollisionRect().collidepoint(*position):
-            self._image = self._hover
-         else:
-            self._image = self._passive
-   
-   def clearHover(self):
-      self._image = self._passive

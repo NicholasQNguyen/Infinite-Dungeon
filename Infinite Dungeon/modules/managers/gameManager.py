@@ -30,7 +30,7 @@ class GameManager(BasicManager):
         self.archer = Archer(Vector2(500, 500))
 
         # Generate the map
-        atlas = Atlas.getInstance()
+        atlas = Atlas()
         print(atlas)
         self.rooms = atlas.getRooms()
         self.currentroom = 0
@@ -83,7 +83,6 @@ class GameManager(BasicManager):
 
     def update(self, seconds, screenSize):
         if self.archer.getHP() <= 0:
-            print("RIP")
             # Transition to game over screen
             return "dead"
         # let others update based on the amount of time elapsed
@@ -153,7 +152,6 @@ class GameManager(BasicManager):
                 self.archer.update(enemy.getDamage(), seconds)
                 # 2 seconds of invincibilty
                 self.invincibilityTimer = 2
-                print(self.archer.getHP())
 
         # Check to see if we entered a door
         for door in self.rooms[self.currentroom].doors:

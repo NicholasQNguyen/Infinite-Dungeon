@@ -26,7 +26,13 @@ class Archer(Alive):
         super().__init__("archer.png", position, ARCHER_HP)
 
         self._stats = BasicItemManager()
-        self._stats.addItem("HP", FollowRectBarItem(self, Vector2(0, -50), pygame.Rect(0, 50, 55, 10), outlineWidth=1, initialValue=self.HP * 100, maxValue=self.HP * 100, backgroundColor=(0, 0, 0)))
+        self._stats.addItem("HP", FollowRectBarItem(self,
+                                                    Vector2(0, -50),
+                                                    pygame.Rect(0, 50, 55, 10),
+                                                    outlineWidth=1,
+                                                    initialValue=self.HP * 100,
+                                                    maxValue=self.HP * 100,
+                                                    backgroundColor=(0, 0, 0)))
 
         self.speedLevel = 0
         self._vspeed = ARCHER_V_SPEED

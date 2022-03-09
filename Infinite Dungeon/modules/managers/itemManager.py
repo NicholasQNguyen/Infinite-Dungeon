@@ -3,7 +3,7 @@ from ..gameObjects.drawable import Drawable
 
 class BasicItemManager(Drawable):
     """Basic ItemManager class for countable item display."""
-    def __init__(self, background="", position=(0,0)):
+    def __init__(self, background="", position=(0, 0)):
         super().__init__(background, position)
         self._items = {}
 

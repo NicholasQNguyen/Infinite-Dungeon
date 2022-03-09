@@ -14,5 +14,4 @@ BASE_VSPEED = 250
 
 
 class EnemyProjectile(Projectile):
-
-
+    pass

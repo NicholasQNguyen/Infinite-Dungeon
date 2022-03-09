@@ -200,6 +200,7 @@ class Atlas(object):
         return ('\n'.join(['|'.join([str(cell) for cell in row])
                 for row in self.atlas]))
 
+
 """
             The map looks like this:
             [0, 0, 0]

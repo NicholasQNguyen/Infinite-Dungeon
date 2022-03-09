@@ -12,6 +12,7 @@ SLIME_HP = 6
 SLIME_VSPEED = 150
 SLIME_DAMAGE = 5
 
+
 class Slime(Alive):
 
     def __init__(self, position):

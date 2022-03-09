@@ -15,14 +15,12 @@ CENTER_OF_ROOM = Vector2(504, 504)
 
 
 class Upgrade(Drawable):
-
     def __init__(self, offset):
         super().__init__("Potions.png", CENTER_OF_ROOM, offset)
         self._state = BasicState()
 
 
 class DamageUpgrade(Upgrade):
-
     def __init__(self):
         super().__init__((0, 0))
         # Grab the red bottle for damage up
@@ -33,7 +31,6 @@ class DamageUpgrade(Upgrade):
 
 
 class SpeedUpgrade(Upgrade):
-
     def __init__(self):
         super().__init__((1, 0))
         # Grab the green bottle for speed up
@@ -43,8 +40,8 @@ class SpeedUpgrade(Upgrade):
         archer.updateVSpeed()
         print("SPEED UP")
 
-class ProjectileSpeedUpgrade(Upgrade):
 
+class ProjectileSpeedUpgrade(Upgrade):
     def __init__(self):
         super().__init__((2, 0))
         # Grab the blue bottle for speed up

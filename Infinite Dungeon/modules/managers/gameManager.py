@@ -36,7 +36,7 @@ class GameManager(BasicManager):
         self.currentroom = 0
 
         self.clearMessage = "You have completed 1 floor!"
-        self.clearText = Text(Vector2(404, 400), self.clearMessage , "default8")
+        self.clearText = Text(Vector2(404, 400), self.clearMessage, "default8")
         self.drawClearText = False
         self.floorsCleared = 1
 
@@ -169,8 +169,9 @@ class GameManager(BasicManager):
             if doorCollisionRect.colliderect(self.archerCollisionRect):
                 # Change the index to change what room is drawn
                 self.currentroom = door.getDestination()
-                # Invincible for 2 seconds entering a new room to prevent cheap hits
-                self.invincibilityTimer = 2
+                # Invincible for 1 seconds entering a new room
+                # to prevent cheap hits
+                self.invincibilityTimer = 1
                 # Move the archer to the corresponding door when moving rooms
                 if door.getType() == "North":
                     self.archer.setPosition(Vector2(504, 800))
@@ -188,7 +189,7 @@ class GameManager(BasicManager):
         if self.rooms[self.currentroom].getHasStairs():
             if self.archerCollisionRect.colliderect(
                                            self.rooms[self.currentroom]
-                                                   .stairs.getCollideRect()):
+                                           .stairs.getCollideRect()):
                 newAtlas = Atlas()
                 self.atlas = newAtlas
                 print(self.atlas)
@@ -197,7 +198,9 @@ class GameManager(BasicManager):
                 self.archer.setPosition(self.BEGINNING)
                 self.drawClearText = False
                 self.floorsCleared += 1
-                self.clearText.setText("You have cleared " + str(self.floorsCleared) + " floors!")
+                self.clearText.setText("You have cleared " +
+                                       str(self.floorsCleared) +
+                                       " floors!")
 
         # Check if we touch the upgrade
         if self.rooms[self.currentroom].getHasUpgrade():

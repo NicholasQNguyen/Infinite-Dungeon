@@ -16,7 +16,7 @@ from ..managers.frameManager import FrameManager
 from ..managers.itemManager import BasicItemManager
 
 
-ARCHER_HP = 50
+ARCHER_HP = 10
 ARCHER_V_SPEED = 150
 
 

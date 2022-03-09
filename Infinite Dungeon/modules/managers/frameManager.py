@@ -48,7 +48,7 @@ class FrameManager(object):
                          "stairs.png"]
 
         # A list of images that require to be loaded with a color key
-        _COLOR_KEY = []
+        _COLOR_KEY = ["cursor.png", "cursor32.png"]
 
         def __init__(self):
             # Stores the surfaces indexed based on file name

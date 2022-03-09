@@ -19,7 +19,9 @@ class AbstractUIEntry(Drawable):
                                     _FONT_FOLDER, _DEFAULT_FONT),
                                     _DEFAULT_SIZE),
         "default8": pygame.font.Font(os.path.join(
-                                     _FONT_FOLDER, _DEFAULT_FONT), 8)
+                                     _FONT_FOLDER, _DEFAULT_FONT), 8),
+        "default32": pygame.font.Font(os.path.join(
+                                      _FONT_FOLDER, _DEFAULT_FONT), 32)
     }
 
     def __init__(self, position):
@@ -33,5 +35,11 @@ class Text(AbstractUIEntry):
         super().__init__(position)
         self._color = color
 
-        self._image = AbstractUIEntry.FONTS[font].render(
+        self._font = font
+
+        self._image = AbstractUIEntry.FONTS[self._font].render(
                                                   text, False, self._color)
+
+    def setText(self, newText):
+        self._image = AbstractUIEntry.FONTS[self._font].render(
+                                                  newText, False, self._color)

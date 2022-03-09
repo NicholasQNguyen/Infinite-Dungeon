@@ -35,7 +35,10 @@ class GameManager(BasicManager):
         self.rooms = atlas.getRooms()
         self.currentroom = 0
 
-        self.mapText = Text(Vector2(600, 600), str(atlas), "default8")
+        self.clearMessage = "You have completed 1 floor!"
+        self.clearText = Text(Vector2(404, 400), self.clearMessage , "default8")
+        self.drawClearText = False
+        self.floorsCleared = 1
 
         self.arrowCollisionRects = []
 
@@ -49,6 +52,9 @@ class GameManager(BasicManager):
         drawSurf.fill((255, 255, 255))
 
         self.rooms[self.currentroom].draw(drawSurf)
+
+        if self.drawClearText:
+            self.clearText.draw(drawSurf)
 
         for door in self.rooms[self.currentroom].doors:
             door.draw(drawSurf)
@@ -88,6 +94,7 @@ class GameManager(BasicManager):
         if self.archer.getHP() <= 0:
             # Transition to game over screen
             return "dead"
+
         # let others update based on the amount of time elapsed
         self.archer.update(0, seconds)
         self.archer.getStats().update(seconds)
@@ -162,6 +169,8 @@ class GameManager(BasicManager):
             if doorCollisionRect.colliderect(self.archerCollisionRect):
                 # Change the index to change what room is drawn
                 self.currentroom = door.getDestination()
+                # Invincible for 2 seconds entering a new room to prevent cheap hits
+                self.invincibilityTimer = 2
                 # Move the archer to the corresponding door when moving rooms
                 if door.getType() == "North":
                     self.archer.setPosition(Vector2(504, 800))
@@ -186,6 +195,9 @@ class GameManager(BasicManager):
                 self.rooms = self.atlas.getRooms()
                 self.currentroom = 0
                 self.archer.setPosition(self.BEGINNING)
+                self.drawClearText = False
+                self.floorsCleared += 1
+                self.clearText.setText("You have cleared " + str(self.floorsCleared) + " floors!")
 
         # Check if we touch the upgrade
         if self.rooms[self.currentroom].getHasUpgrade():
@@ -222,6 +234,7 @@ class GameManager(BasicManager):
            and not self.rooms[self.currentroom].getUpgradeGrabbed():
             if self.currentroom == -1:
                 self.rooms[self.currentroom].setHasStairs(True)
+                self.drawClearText = True
             else:
                 self.rooms[self.currentroom].setHasUpgrade(True)
 

@@ -56,7 +56,7 @@ class AbstractMenu(Drawable):
 class CursorMenu(AbstractMenu):
     """Menu which uses directional keys/a cursor for selection."""
 
-    def __init__(self, background, cursor="cursor.png",
+    def __init__(self, background, cursor="cursor32.png",
                  fontName="default", color=(255, 255, 255)):
         super().__init__(background, fontName, color)
 

@@ -22,7 +22,7 @@ class ScreenManager(BasicManager):
 
         self._pausedText.setPosition(Vector2(midPointX, midPointY))
 
-        self._mainMenu = CursorMenu("background.png", fontName="default8")
+        self._mainMenu = CursorMenu("background.png", fontName="default32")
         self._mainMenu.addOption("start", "Start Game",
                                  SCREEN_SIZE // 2 - Vector2(0, 50),
                                  center="both")
@@ -30,7 +30,7 @@ class ScreenManager(BasicManager):
                                  SCREEN_SIZE // 2 + Vector2(0, 50),
                                  center="both")
 
-        self._gameOver = CursorMenu("background.png", fontName="default8")
+        self._gameOver = CursorMenu("background.png", fontName="default32")
         self._gameOver.addText("Game Over",
                                SCREEN_SIZE // 2 - Vector2(0, 50),
                                center="both")

@@ -33,7 +33,11 @@ class Room(Drawable):
 
         self.upgrade = None
 
+        self.stairs = None
+
         self._hasUpgrade = False
+
+        self._hasStairs = False
 
         self._upgradeGrabbed = False
 
@@ -58,6 +62,12 @@ class Room(Drawable):
 
     def setHasUpgrade(self, boolean):
         self._hasUpgrade = boolean
+
+    def getHasStairs(self):
+        return self._hasStairs
+
+    def setHasStairs(self, boolean):
+        self._hasStairs = boolean
 
     def getUpgradeGrabbed(self):
         return self._upgradeGrabbed

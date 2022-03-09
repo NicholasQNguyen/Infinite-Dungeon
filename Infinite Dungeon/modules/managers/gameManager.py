@@ -18,7 +18,7 @@ from ..UI.items import Text
 class GameManager(BasicManager):
 
     WORLD_SIZE = Vector2(1008, 1008)
-    BEGINNING = Vector2(-600, -600)
+    BEGINNING = Vector2(504, 600)
     ARROW_KEYS = [pygame.K_DOWN, pygame.K_UP,
                   pygame.K_LEFT, pygame.K_RIGHT]
     WASD_KEYS = [ord("s"), ord("w"), ord("a"), ord("d")]
@@ -27,7 +27,7 @@ class GameManager(BasicManager):
 
     def __init__(self, screenSize):
         # Stuff for the hero character
-        self.archer = Archer(Vector2(500, 500))
+        self.archer = Archer(self.BEGINNING)
 
         # Generate the map
         atlas = Atlas()
@@ -58,6 +58,9 @@ class GameManager(BasicManager):
 
         if self.rooms[self.currentroom].getHasUpgrade():
             self.rooms[self.currentroom].upgrade.draw(drawSurf)
+
+        if self.rooms[self.currentroom].getHasStairs():
+            self.rooms[self.currentroom].stairs.draw(drawSurf)
 
         for arrow in self.rooms[self.currentroom].arrows:
             arrow.draw(drawSurf, Drawable.WINDOW_OFFSET)
@@ -201,11 +204,14 @@ class GameManager(BasicManager):
             if arrow.isDead():
                 self.rooms[self.currentroom].arrows.remove(arrow)
 
-        # If the room is empty, place an upgrade
+        # If the room is empty, place an upgrade or stairs if it's the last room
         if self.rooms[self.currentroom].isClear()\
            and not self.rooms[self.currentroom].getHasUpgrade()\
            and not self.rooms[self.currentroom].getUpgradeGrabbed():
-            self.rooms[self.currentroom].setHasUpgrade(True)
+            if self.currentroom == -1:
+                self.rooms[self.currentroom].setHasStairs(True)
+            else:
+                self.rooms[self.currentroom].setHasUpgrade(True)
 
         Drawable.updateWindowOffset(
                  self.archer, screenSize, GameManager.WORLD_SIZE)

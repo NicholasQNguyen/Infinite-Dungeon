@@ -13,7 +13,7 @@ from .squads import Squads
 from .upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
 from .stairs import Stairs
 
-DIMENSION = 2
+DIMENSION = 6
 ROOM_TYPES = ["basicRoom.png", "bridgeRoom.png", "torchRoom.png"]
 
 
@@ -151,10 +151,9 @@ class Atlas(object):
             else:
                 room.enemies = choice(squads)()
 
-        # Assign an upgrade to each room besides the first and last room
+        # Assign an upgrade to each room
         for room in self.listOfRooms:
-            if room.getRoomNumber() != 0 or room.getRoomNumber() != 99:
-                room.upgrade = choice(upgrades)()
+            room.upgrade = choice(upgrades)()
 
         # Assign a stair to the last room
         self.listOfRooms[-1].stairs = Stairs()

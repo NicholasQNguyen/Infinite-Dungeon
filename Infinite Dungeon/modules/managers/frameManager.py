@@ -44,7 +44,8 @@ class FrameManager(object):
         # A list of images that require to be loaded with transparency
         _TRANSPARENCY = ["archer.png", "arrow.png", "door.png",
                          "golem-walk.png", "Potions.png",
-                         "slime_monster_spritesheet.png"]
+                         "slime_monster_spritesheet.png",
+                         "stairs.png"]
 
         # A list of images that require to be loaded with a color key
         _COLOR_KEY = []

@@ -6,7 +6,6 @@ File: enemyProjectile.py
 Class for the enemy's projectiles
 """
 
-import pygame
 from .projectile import Projectile
 
 BASE_DAMAGE = 5

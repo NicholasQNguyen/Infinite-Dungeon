@@ -6,9 +6,11 @@ File: tower.py
 Monster that moves fires based on where the archer is.
 """
 from .alive import Alive
+from ..FSMs.gameobjectFSM import TowerState
 
 TOWER_HP = 6
 TOWER_VSPEED = 0
+
 
 class Tower(Alive):
 
@@ -21,4 +23,3 @@ class Tower(Alive):
         self._state = TowerState()
 
         self._direction = "down"
-

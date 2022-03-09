@@ -175,6 +175,10 @@ class GameManager(BasicManager):
                 if self.currentroom == 99:
                     self.currentroom = -1
 
+        # Check to see if we hit stairs and reset the dungeon
+        if self.rooms[self.currentroom].hasStairs():
+            pass
+
         # Check if we touch the upgrade
         if self.rooms[self.currentroom].getHasUpgrade():
             if self.archerCollisionRect.colliderect(
@@ -204,7 +208,7 @@ class GameManager(BasicManager):
             if arrow.isDead():
                 self.rooms[self.currentroom].arrows.remove(arrow)
 
-        # If the room is empty, place an upgrade or stairs if it's the last room
+        # If room is empty, place an upgrade or stairs if it's the last room
         if self.rooms[self.currentroom].isClear()\
            and not self.rooms[self.currentroom].getHasUpgrade()\
            and not self.rooms[self.currentroom].getUpgradeGrabbed():

@@ -176,8 +176,16 @@ class GameManager(BasicManager):
                     self.currentroom = -1
 
         # Check to see if we hit stairs and reset the dungeon
-        if self.rooms[self.currentroom].hasStairs():
-            pass
+        if self.rooms[self.currentroom].getHasStairs():
+            if self.archerCollisionRect.colliderect(
+                                           self.rooms[self.currentroom]
+                                                   .stairs.getCollideRect()):
+                newAtlas = Atlas()
+                self.atlas = newAtlas
+                print(self.atlas)
+                self.rooms = self.atlas.getRooms()
+                self.currentroom = 0
+                self.archer.setPosition(self.BEGINNING)
 
         # Check if we touch the upgrade
         if self.rooms[self.currentroom].getHasUpgrade():

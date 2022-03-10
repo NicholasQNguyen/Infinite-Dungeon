@@ -33,7 +33,7 @@ class GameManager(BasicManager):
         atlas = Atlas()
         print(atlas)
         self.rooms = atlas.getRooms()
-        self.currentroom = 0
+        self.currentRoom = 0
 
         self.clearMessage = "You have completed 1 floor!"
         self.clearText = Text(Vector2(404, 400), self.clearMessage, "default8")
@@ -51,30 +51,30 @@ class GameManager(BasicManager):
         # Blit the background
         drawSurf.fill((255, 255, 255))
 
-        self.rooms[self.currentroom].draw(drawSurf)
+        self.rooms[self.currentRoom].draw(drawSurf)
 
         if self.drawClearText:
             self.clearText.draw(drawSurf)
 
-        for door in self.rooms[self.currentroom].doors:
+        for door in self.rooms[self.currentRoom].doors:
             door.draw(drawSurf)
 
-        for rock in self.rooms[self.currentroom].rocks:
+        for rock in self.rooms[self.currentRoom].rocks:
             rock.draw(drawSurf)
 
         self.archer.draw(drawSurf)
         self.archer.drawStats(drawSurf)
 
-        if self.rooms[self.currentroom].getHasUpgrade():
-            self.rooms[self.currentroom].upgrade.draw(drawSurf)
+        if self.rooms[self.currentRoom].getHasUpgrade():
+            self.rooms[self.currentRoom].upgrade.draw(drawSurf)
 
-        if self.rooms[self.currentroom].getHasStairs():
-            self.rooms[self.currentroom].stairs.draw(drawSurf)
+        if self.rooms[self.currentRoom].getHasStairs():
+            self.rooms[self.currentRoom].stairs.draw(drawSurf)
 
-        for arrow in self.rooms[self.currentroom].arrows:
+        for arrow in self.rooms[self.currentRoom].arrows:
             arrow.draw(drawSurf, Drawable.WINDOW_OFFSET)
 
-        for enemy in self.rooms[self.currentroom].enemies:
+        for enemy in self.rooms[self.currentRoom].enemies:
             enemy.draw(drawSurf)
 
     def handleEvent(self, event):
@@ -84,7 +84,7 @@ class GameManager(BasicManager):
                 arrow = Arrow(deepcopy(self.archer.getPosition()))
                 # Set the direction based on what arrow was hit
                 arrow.changeDirection(event)
-                self.rooms[self.currentroom].arrows.append(arrow)
+                self.rooms[self.currentRoom].arrows.append(arrow)
 
             elif event.key in GameManager.WASD_KEYS:
                 self.archer.handleEvent(event)
@@ -99,18 +99,19 @@ class GameManager(BasicManager):
             return "dead"
 
         # let others update based on the amount of time elapsed
-        self.archer.update(0, seconds)
+        change = self.archer.update(0, seconds)
+        # print("CHANGE", change)
         self.archer.getStats().update(seconds)
 
-        for enemy in self.rooms[self.currentroom].enemies:
+        for enemy in self.rooms[self.currentRoom].enemies:
             if isinstance(enemy, Golem):
                 enemy.changeDirection(deepcopy(self.archer.getPosition()))
 
-        for arrow in self.rooms[self.currentroom].arrows:
+        for arrow in self.rooms[self.currentRoom].arrows:
             arrow.update(seconds)
             self.arrowCollisionRects.append(arrow.getCollideRect())
 
-        for enemy in self.rooms[self.currentroom].enemies:
+        for enemy in self.rooms[self.currentRoom].enemies:
             if isinstance(enemy, Slime):
                 enemy.update(seconds)
             elif isinstance(enemy, Golem):
@@ -121,14 +122,14 @@ class GameManager(BasicManager):
 
         # Change the slime's movement direction every 5 seconds
         if self.slimeTimer <= 0:
-            for enemy in self.rooms[self.currentroom].enemies:
+            for enemy in self.rooms[self.currentRoom].enemies:
                 if isinstance(enemy, Slime):
                     enemy.handleEvent()
             self.slimeTimer = 5
 
         # Check if the slimes are going beyond the borders
         # and bounce them back if so
-        for enemy in self.rooms[self.currentroom].enemies:
+        for enemy in self.rooms[self.currentRoom].enemies:
             if isinstance(enemy, Slime):
                 if enemy.getX() + enemy.getWidth() >\
                    GameManager.WORLD_SIZE[0] or\
@@ -138,7 +139,7 @@ class GameManager(BasicManager):
                     enemy.changeDirection()
 
         # Check if arrows are beyond the border and delete them if they are
-        for arrow in self.rooms[self.currentroom].arrows:
+        for arrow in self.rooms[self.currentRoom].arrows:
             if arrow.getX() > GameManager.WORLD_SIZE[0] or arrow.getX() < 0 or\
                arrow.getY() > GameManager.WORLD_SIZE[1] or arrow.getY() < 0:
                 arrow.isDead()
@@ -146,27 +147,27 @@ class GameManager(BasicManager):
         self.archerCollisionRect = self.archer.getCollideRect()
 
         # Check for enemy arrow collisions
-        for enemy in self.rooms[self.currentroom].enemies:
+        for enemy in self.rooms[self.currentRoom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
-            if self.rooms[self.currentroom].arrows != []:
-                for arrow in self.rooms[self.currentroom].arrows:
+            if self.rooms[self.currentRoom].arrows != []:
+                for arrow in self.rooms[self.currentRoom].arrows:
                     arrowCollisionRect = arrow.getCollideRect()
                     if enemyCollisionRect.colliderect(arrowCollisionRect):
                         arrow.kill()
                         enemy.takeDamage(arrow.getDamage())
 
         # Check for rock arrow collision
-        for rock in self.rooms[self.currentroom].rocks:
+        for rock in self.rooms[self.currentRoom].rocks:
             rockCollisionRect = rock.getCollideRect()
-            if self.rooms[self.currentroom].arrows != []:
-                for arrow in self.rooms[self.currentroom].arrows:
+            if self.rooms[self.currentRoom].arrows != []:
+                for arrow in self.rooms[self.currentRoom].arrows:
                     arrowCollisionRect = arrow.getCollideRect()
                     if rockCollisionRect.colliderect(arrowCollisionRect):
                         arrow.kill()
 
 
         # Check for enemy collision for damage purposes
-        for enemy in self.rooms[self.currentroom].enemies:
+        for enemy in self.rooms[self.currentRoom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
             if enemyCollisionRect.colliderect(self.archerCollisionRect) and\
                self.invincibilityTimer < 0:
@@ -177,22 +178,22 @@ class GameManager(BasicManager):
 
             # Hit a rock
             else:
-                for rock in self.rooms[self.currentroom].rocks:
+                for rock in self.rooms[self.currentRoom].rocks:
                     rockCollisionRect = rock.getCollideRect()
-            
+
                     if enemyCollisionRect.colliderect(rockCollisionRect):
                         if isinstance(enemy, Slime):
                             enemy.changeDirection()
                         elif isinstance(enemy, Golem):
                             enemy.changeDirection(Vector2(0, 0), True)
-                            # print("DANG")
+                            print("DANG")
 
         # Check to see if we entered a door
-        for door in self.rooms[self.currentroom].doors:
+        for door in self.rooms[self.currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
             if doorCollisionRect.colliderect(self.archerCollisionRect):
                 # Change the index to change what room is drawn
-                self.currentroom = door.getDestination()
+                self.currentRoom = door.getDestination()
                 # Invincible for 1 seconds entering a new room
                 # to prevent cheap hits
                 self.invincibilityTimer = 1
@@ -206,24 +207,24 @@ class GameManager(BasicManager):
                 elif door.getType() == "West":
                     self.archer.setPosition(Vector2(800, 504))
 
-                if self.currentroom == 99:
-                    self.currentroom = -1
+                if self.currentRoom == 99:
+                    self.currentRoom = -1
 
-                for enemy in self.rooms[self.currentroom].enemies:
-                    for rock in self.rooms[self.currentroom].rocks:
+                for enemy in self.rooms[self.currentRoom].enemies:
+                    for rock in self.rooms[self.currentRoom].rocks:
                         if rock.getCollideRect().colliderect(enemy.getCollideRect()):
                             enemy.kill()
 
         # Check to see if we hit stairs and reset the dungeon
-        if self.rooms[self.currentroom].getHasStairs():
+        if self.rooms[self.currentRoom].getHasStairs():
             if self.archerCollisionRect.colliderect(
-                                           self.rooms[self.currentroom]
+                                           self.rooms[self.currentRoom]
                                            .stairs.getCollideRect()):
                 newAtlas = Atlas()
                 self.atlas = newAtlas
                 print(self.atlas)
                 self.rooms = self.atlas.getRooms()
-                self.currentroom = 0
+                self.currentRoom = 0
                 self.archer.setPosition(self.BEGINNING)
                 self.drawClearText = False
                 self.floorsCleared += 1
@@ -232,43 +233,43 @@ class GameManager(BasicManager):
                                        " floors!")
 
         # Check if we touch the upgrade
-        if self.rooms[self.currentroom].getHasUpgrade():
+        if self.rooms[self.currentRoom].getHasUpgrade():
             if self.archerCollisionRect.colliderect(
-                                                   self.rooms[self.currentroom]
+                                                   self.rooms[self.currentRoom]
                                                    .upgrade.getCollideRect()):
-                self.rooms[self.currentroom].setHasUpgrade(False)
+                self.rooms[self.currentRoom].setHasUpgrade(False)
 
-                self.rooms[self.currentroom].setUpgradeGrabbed(True)
+                self.rooms[self.currentRoom].setUpgradeGrabbed(True)
 
                 # Apply projectile speed and damage upgrades to the arrow
-                if isinstance(self.rooms[self.currentroom].upgrade,
+                if isinstance(self.rooms[self.currentRoom].upgrade,
                               DamageUpgrade)\
-                   or isinstance(self.rooms[self.currentroom].upgrade,
+                   or isinstance(self.rooms[self.currentRoom].upgrade,
                                  ProjectileSpeedUpgrade):
-                    self.rooms[self.currentroom].upgrade.upgrade(Arrow)
+                    self.rooms[self.currentRoom].upgrade.upgrade(Arrow)
                 # Apply speed upgrades to the archer
-                elif isinstance(self.rooms[self.currentroom].upgrade,
+                elif isinstance(self.rooms[self.currentRoom].upgrade,
                                 SpeedUpgrade):
-                    self.rooms[self.currentroom].upgrade.upgrade(self.archer)
+                    self.rooms[self.currentRoom].upgrade.upgrade(self.archer)
 
         # Death checking
-        for enemy in self.rooms[self.currentroom].enemies:
+        for enemy in self.rooms[self.currentRoom].enemies:
             if enemy.isDead():
-                self.rooms[self.currentroom].enemies.remove(enemy)
+                self.rooms[self.currentRoom].enemies.remove(enemy)
 
-        for arrow in self.rooms[self.currentroom].arrows:
+        for arrow in self.rooms[self.currentRoom].arrows:
             if arrow.isDead():
-                self.rooms[self.currentroom].arrows.remove(arrow)
+                self.rooms[self.currentRoom].arrows.remove(arrow)
 
         # If room is empty, place an upgrade or stairs if it's the last room
-        if self.rooms[self.currentroom].isClear()\
-           and not self.rooms[self.currentroom].getHasUpgrade()\
-           and not self.rooms[self.currentroom].getUpgradeGrabbed():
-            if self.currentroom == -1:
-                self.rooms[self.currentroom].setHasStairs(True)
+        if self.rooms[self.currentRoom].isClear()\
+           and not self.rooms[self.currentRoom].getHasUpgrade()\
+           and not self.rooms[self.currentRoom].getUpgradeGrabbed():
+            if self.currentRoom == -1:
+                self.rooms[self.currentRoom].setHasStairs(True)
                 self.drawClearText = True
             else:
-                self.rooms[self.currentroom].setHasUpgrade(True)
+                self.rooms[self.currentRoom].setHasUpgrade(True)
 
         Drawable.updateWindowOffset(
                  self.archer, screenSize, GameManager.WORLD_SIZE)

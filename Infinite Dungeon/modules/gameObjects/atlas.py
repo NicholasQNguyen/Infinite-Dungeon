@@ -58,10 +58,11 @@ class Atlas(object):
 
         # Keep adding rooms until we see the last room
         while isinstance(self.getNorth((placerIndex1,
-                                        placerIndex2)), int) and \
-            isinstance(self.getEast((placerIndex1,
-                                     placerIndex2)),
-                       int):
+                                        placerIndex2)),
+                         int) and\
+              isinstance(self.getEast((placerIndex1,
+                                       placerIndex2)),
+                         int):
             # From the bottom left room, go randomly
             # right or up and put a room
             rightOrUp = randint(0, 1)
@@ -162,8 +163,8 @@ class Atlas(object):
         for room in self.listOfRooms:
             if room.getRoomNumber() != 0:
                 for i in range(randint(0, 10)):
-                    room.rocks.append(Rock(Vector2(randint(0, 1008),
-                                                   randint(0, 1008))))
+                    room.rocks.append(Rock(Vector2(randint(200, 808),
+                                                   randint(200, 808))))
 
         # Assign a stair to the last room
         self.listOfRooms[-1].stairs = Stairs()

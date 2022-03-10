@@ -32,6 +32,7 @@ class Mobile(Animated):
 
     def update(self, seconds):
         super().update(seconds)
+        oldPosition = self.getPosition()
         self._velocity = Vector2(0, 0)
         if self._state.getState() != "standing":
             # currentFacing = self._state.getFacing()
@@ -45,11 +46,30 @@ class Mobile(Animated):
             elif self._state._movement["right"]:
                 self._velocity[0] = self._vspeed
 
-            newPosition = self.getPosition() + self._velocity * seconds
+            newPosition = oldPosition + self._velocity * seconds
             self.setPosition(newPosition)
+            changeInPosition = newPosition - oldPosition
+            # print("CHANGEINPOSITION", changeInPosition)
+            return changeInPosition
 
         else:
             self._velocity = Vector2(0, 0)
+            return Vector2(0, 0)
 
-    def setVelocity(self, newVelocity):
-        self._velocity = Vector2(0, 0)
+    # https://www.youtube.com/watch?v=Okm3-OKzWa8
+    def collideBlocks(self, direction, xChange, yChange, listOfObjects):
+        hits = pygame.sprite.spritecollide(self, listOfObjects, False)
+        if direction == "x":
+            # Moving left
+            if xChange > 0:
+                self.rect.x = hits[0].rect.left - self.rect.width
+            # Moving right
+            if xChange < 0:
+                self.rect.x = hits[0].rect.right
+        if direction == "y":
+            # Moving up
+            if yChange > 0:
+                self.rect.y = hits[0].rect.top - self.rect.height
+            # Moving down
+            if yChange < 0:
+                self.rect.y = hits[0].rect.down

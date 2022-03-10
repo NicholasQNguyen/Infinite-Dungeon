@@ -1,5 +1,6 @@
 from ..managers.frameManager import FrameManager
 from .drawable import Drawable
+from .vector2D import Vector2
 
 
 class Animated(Drawable):
@@ -25,6 +26,7 @@ class Animated(Drawable):
                 self._animationTimer -= 1 / self._framesPerSecond
                 self._image = FrameManager.getInstance().getFrame(
                               self._imageName, (self._frame, self._row))
+            return Vector2(0, 0)
 
     def startAnimation(self):
         self._animate = True

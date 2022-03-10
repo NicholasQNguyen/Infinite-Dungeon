@@ -50,3 +50,6 @@ class Mobile(Animated):
 
         else:
             self._velocity = Vector2(0, 0)
+
+    def setVelocity(self, newVelocity):
+        self._velocity = Vector2(0, 0)

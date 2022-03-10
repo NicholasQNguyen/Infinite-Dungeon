@@ -17,7 +17,7 @@ class Room(Drawable):
     def __init__(self, imageName, roomNumber, connectingRoom=None,
                  north=False, east=False, south=False, west=False):
         super().__init__(imageName, Vector2(0, 0))
-        # Dictionary to hold where there are paths
+        # A list containing the 2 doors in the room
         self.doors = []
 
         # room ID number to allow for blitting of the right one
@@ -32,14 +32,14 @@ class Room(Drawable):
         self.arrows = []
 
         self.upgrade = None
-
         self.stairs = None
 
         self._hasUpgrade = False
-
+        self._upgradeGrabbed = False
         self._hasStairs = False
 
-        self._upgradeGrabbed = False
+        # List holding all of the rocks in a room
+        self.rocks = []
 
     def setNorthDoor(self, connectingRoom):
         self.doors.append(Door("North", connectingRoom))

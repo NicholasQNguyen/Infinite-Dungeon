@@ -59,6 +59,9 @@ class GameManager(BasicManager):
         for door in self.rooms[self.currentroom].doors:
             door.draw(drawSurf)
 
+        for rock in self.rooms[self.currentroom].rocks:
+            rock.draw(drawSurf)
+
         self.archer.draw(drawSurf)
         self.archer.drawStats(drawSurf)
 
@@ -153,6 +156,16 @@ class GameManager(BasicManager):
                         arrow.kill()
                         enemy.takeDamage(arrow.getDamage())
 
+        # Check for rock arrow collision
+        for rock in self.rooms[self.currentroom].rocks:
+            rockCollisionRect = rock.getCollideRect()
+            if self.rooms[self.currentroom].arrows != []:
+                for arrow in self.rooms[self.currentroom].arrows:
+                    arrowCollisionRect = arrow.getCollideRect()
+                    if rockCollisionRect.colliderect(arrowCollisionRect):
+                        arrow.kill()
+
+
         # Check for enemy collision for damage purposes
         for enemy in self.rooms[self.currentroom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
@@ -162,6 +175,18 @@ class GameManager(BasicManager):
                 self.archer.update(enemy.getDamage(), seconds)
                 # 2 seconds of invincibilty
                 self.invincibilityTimer = 2
+
+            # Hit a rock
+            else:
+                for rock in self.rooms[self.currentroom].rocks:
+                    rockCollisionRect = rock.getCollideRect()
+            
+                    if enemyCollisionRect.colliderect(rockCollisionRect):
+                        if isinstance(enemy, Slime):
+                            print("SLIME DANG")
+                            enemy.changeDirection()
+                        elif isinstance(enemy, Golem):
+                            print("DANG")
 
         # Check to see if we entered a door
         for door in self.rooms[self.currentroom].doors:
@@ -184,6 +209,11 @@ class GameManager(BasicManager):
 
                 if self.currentroom == 99:
                     self.currentroom = -1
+
+                for enemy in self.rooms[self.currentroom].enemies:
+                    for rock in self.rooms[self.currentroom].rocks:
+                        if rock.getCollideRect().colliderect(enemy.getCollideRect()):
+                            enemy.kill()
 
         # Check to see if we hit stairs and reset the dungeon
         if self.rooms[self.currentroom].getHasStairs():

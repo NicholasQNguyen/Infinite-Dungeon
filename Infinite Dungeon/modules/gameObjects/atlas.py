@@ -12,8 +12,10 @@ from .room import Room
 from .squads import Squads
 from .upgrade import DamageUpgrade, SpeedUpgrade, ProjectileSpeedUpgrade
 from .stairs import Stairs
+from .rock import Rock
+from .vector2D import Vector2
 
-DIMENSION = 2
+DIMENSION = 3
 ROOM_TYPES = ["basicRoom.png", "bridgeRoom.png", "torchRoom.png"]
 
 
@@ -155,6 +157,13 @@ class Atlas(object):
         for room in self.listOfRooms:
             if room.getRoomNumber() != 0 or room.getRoomNumber() != 99:
                 room.upgrade = choice(upgrades)()
+
+        # Place a random number of rocks in each room
+        for room in self.listOfRooms:
+            if room.getRoomNumber() != 0:
+                for i in range(randint(0, 10)):
+                    room.rocks.append(Rock(Vector2(randint(0, 1008),
+                                                   randint(0, 1008))))
 
         # Assign a stair to the last room
         self.listOfRooms[-1].stairs = Stairs()

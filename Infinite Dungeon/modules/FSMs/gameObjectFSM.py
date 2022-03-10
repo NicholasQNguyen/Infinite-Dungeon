@@ -125,25 +125,36 @@ class GolemState(BasicState):
     def getState(self):
         return self._state
 
-    def manageState(self, obj, archerPosition):
-        # Move the golem left or right to chase the archer
-        if archerPosition[0] > obj._position[0]:
-            self._movement["left"] = False
-            self._movement["right"] = True
-        elif archerPosition[0] < obj._position[0]:
-            self._movement["right"] = False
-            self._movement["left"] = True
-        # Move the golem up or down to chase the archer
-        if archerPosition[1] > obj._position[1]:
-            if not self._movement["down"]:
-                obj.transitionState("down")
-            self._movement["up"] = False
-            self._movement["down"] = True
-        elif archerPosition[1] < obj._position[1]:
-            if not self._movement["up"]:
-                obj.transitionState("up")
-            self._movement["down"] = False
-            self._movement["up"] = True
+    def manageState(self, X, Y, obj, stopAll):
+        if stopAll:
+            if self._state != "standing":
+                self._state = "standing"
+                for direction in self._movement.keys():
+                    self._movement[direction] = False
+
+                obj.transitionState(self._state)
+
+        else:
+            if X in self._movement.keys():
+                if X == "right":
+                    self._movement["right"] = True
+                    self._movement["left"] = False
+                else:
+                    self._movement["right"] = False
+                    self._movement["left"] = True
+
+            if Y in self._movement.keys():
+                if self._state == "standing":
+                    self._state = "down"
+                    obj.transitionState(self._state)
+
+                if Y == "up":
+                    self._movement["up"] = True
+                    self._movement["down"] = False
+                else:
+                    self._movement["up"] = False
+                    self._movement["down"] = True
+
 
 
 class TowerState(BasicState):

@@ -104,8 +104,7 @@ class GameManager(BasicManager):
 
         for enemy in self.rooms[self.currentroom].enemies:
             if isinstance(enemy, Golem):
-                enemy.changeDirection(enemy,
-                                      deepcopy(self.archer.getPosition()))
+                enemy.changeDirection(deepcopy(self.archer.getPosition()))
 
         for arrow in self.rooms[self.currentroom].arrows:
             arrow.update(seconds)
@@ -183,10 +182,10 @@ class GameManager(BasicManager):
             
                     if enemyCollisionRect.colliderect(rockCollisionRect):
                         if isinstance(enemy, Slime):
-                            print("SLIME DANG")
                             enemy.changeDirection()
                         elif isinstance(enemy, Golem):
-                            print("DANG")
+                            enemy.changeDirection(Vector2(0, 0), True)
+                            # print("DANG")
 
         # Check to see if we entered a door
         for door in self.rooms[self.currentroom].doors:

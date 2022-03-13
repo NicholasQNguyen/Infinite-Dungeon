@@ -40,6 +40,10 @@ class GameManager(BasicManager):
         self.drawClearText = False
         self.floorsCleared = 1
 
+        self.damageUpMessage = "DAMAGE UP!"
+        self.speedUpMessage = "DAMAGE UP!"
+        self.projectileUpMessage = "DAMAGE UP!"
+
         self.arrowCollisionRects = []
 
         self.seconds = 0
@@ -136,6 +140,17 @@ class GameManager(BasicManager):
                    enemy.getY() > GameManager.WORLD_SIZE[1] or \
                    enemy.getY() < 0:
                     enemy.changeDirection()
+
+        # Check if the player is going beyond the borders
+        if self.archer.getX() > GameManager.WORLD_SIZE[0]:
+            self.archer.setPosition(self.archer.getPosition() - Vector2(50,0))
+        elif self.archer.getX() < 0:
+            self.archer.setPosition(self.archer.getPosition() - Vector2(-50,0))
+
+        if self.archer.getY() > GameManager.WORLD_SIZE[1]:
+            self.archer.setPosition(self.archer.getPosition() - Vector2(0,50))
+        elif self.archer.getY() < 0:
+            self.archer.setPosition(self.archer.getPosition() - Vector2(0,-50))
 
         # Check if arrows are beyond the border and delete them if they are
         for arrow in self.rooms[self.currentRoom].arrows:

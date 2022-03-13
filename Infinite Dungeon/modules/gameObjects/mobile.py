@@ -73,21 +73,3 @@ class Mobile(Animated):
                 change = Vector2(0,clipbox.height)
       
         self.setPosition(self.getPosition() + change)
-
-    # https://www.youtube.com/watch?v=Okm3-OKzWa8
-    def collideBlocks(self, direction, xChange, yChange, listOfObjects):
-        hits = pygame.sprite.spritecollide(self, listOfObjects, False)
-        if direction == "x":
-            # Moving left
-            if xChange > 0:
-                self.rect.x = hits[0].rect.left - self.rect.width
-            # Moving right
-            if xChange < 0:
-                self.rect.x = hits[0].rect.right
-        if direction == "y":
-            # Moving up
-            if yChange > 0:
-                self.rect.y = hits[0].rect.top - self.rect.height
-            # Moving down
-            if yChange < 0:
-                self.rect.y = hits[0].rect.down

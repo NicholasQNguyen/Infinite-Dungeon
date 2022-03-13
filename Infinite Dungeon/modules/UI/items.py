@@ -20,6 +20,8 @@ class AbstractUIEntry(Drawable):
                                     _DEFAULT_SIZE),
         "default8": pygame.font.Font(os.path.join(
                                      _FONT_FOLDER, _DEFAULT_FONT), 8),
+        "default16": pygame.font.Font(os.path.join(
+                                     _FONT_FOLDER, _DEFAULT_FONT), 16),
         "default32": pygame.font.Font(os.path.join(
                                       _FONT_FOLDER, _DEFAULT_FONT), 32)
     }

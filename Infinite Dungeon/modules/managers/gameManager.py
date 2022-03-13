@@ -35,14 +35,16 @@ class GameManager(BasicManager):
         self.rooms = atlas.getRooms()
         self.currentRoom = 0
 
-        self.clearMessage = "You have completed 1 floor!"
-        self.clearText = Text(Vector2(404, 400), self.clearMessage, "default8")
+        clearMessage = "You have completed 1 floor!"
+        self.clearText = Text(Vector2(404, 400), clearMessage, "default8")
         self.drawClearText = False
         self.floorsCleared = 1
 
-        self.damageUpMessage = "DAMAGE UP!"
-        self.speedUpMessage = "DAMAGE UP!"
-        self.projectileUpMessage = "DAMAGE UP!"
+        self.damageUpText = Text(Vector2(504, 400), "DAMAGE UP!", "default16")
+        self.speedUpText = Text(Vector2(504, 400), "SPEED UP!", "default16")
+        self.projectileUpText = Text(Vector2(504, 400), "PROJECTILE SPEED UP!", "default16")
+        self.drawUpgradeText = False
+        self.currentUpgradeText = None
 
         self.arrowCollisionRects = []
 
@@ -59,6 +61,9 @@ class GameManager(BasicManager):
 
         if self.drawClearText:
             self.clearText.draw(drawSurf)
+
+        if self.drawUpgradeText:
+            self.currentUpgradeText.draw(drawSurf)
 
         for door in self.rooms[self.currentRoom].doors:
             door.draw(drawSurf)
@@ -231,9 +236,13 @@ class GameManager(BasicManager):
                 elif door.getType() == "West":
                     self.archer.setPosition(Vector2(800, 504))
 
+                # Set it so that we index to the last room in the list
                 if self.currentRoom == 99:
                     self.currentRoom = -1
 
+                self.drawUpgradeText = False
+
+                # Kill any enemy that spawns on a rock to prevent trapped enemies
                 for enemy in self.rooms[self.currentRoom].enemies:
                     for rock in self.rooms[self.currentRoom].rocks:
                         if rock.getCollideRect().colliderect(
@@ -268,14 +277,22 @@ class GameManager(BasicManager):
 
                 # Apply projectile speed and damage upgrades to the arrow
                 if isinstance(self.rooms[self.currentRoom].upgrade,
-                              DamageUpgrade)\
-                   or isinstance(self.rooms[self.currentRoom].upgrade,
+                              DamageUpgrade):
+                    self.rooms[self.currentRoom].upgrade.upgrade(Arrow)
+                    self.currentUpgradeText = self.damageUpText
+
+                elif isinstance(self.rooms[self.currentRoom].upgrade,
                                  ProjectileSpeedUpgrade):
                     self.rooms[self.currentRoom].upgrade.upgrade(Arrow)
+                    self.currentUpgradeText = self.projectileUpText
+
                 # Apply speed upgrades to the archer
                 elif isinstance(self.rooms[self.currentRoom].upgrade,
                                 SpeedUpgrade):
                     self.rooms[self.currentRoom].upgrade.upgrade(self.archer)
+                    self.currentUpgradeText = self.speedUpText
+                self.drawUpgradeText = True
+
 
         # Death checking
         for enemy in self.rooms[self.currentRoom].enemies:

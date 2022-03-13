@@ -100,7 +100,6 @@ class GameManager(BasicManager):
 
         # let others update based on the amount of time elapsed
         change = self.archer.update(0, seconds)
-        # print("CHANGE", change)
         self.archer.getStats().update(seconds)
 
         for enemy in self.rooms[self.currentRoom].enemies:
@@ -165,6 +164,16 @@ class GameManager(BasicManager):
                     if rockCollisionRect.colliderect(arrowCollisionRect):
                         arrow.kill()
 
+        # Check for rock player/enemy collision
+        for rock in self.rooms[self.currentRoom].rocks:
+            rockCollisionRect = rock.getCollideRect()
+            if self.archerCollisionRect.colliderect(rockCollisionRect):
+                self.archer.collide(rock)
+            for enemy in self.rooms[self.currentRoom].enemies:
+                if isinstance(enemy, Golem):
+                    if enemy.getCollideRect().colliderect(rockCollisionRect):
+                        enemy.collide(rock)
+
 
         # Check for enemy collision for damage purposes
         for enemy in self.rooms[self.currentRoom].enemies:
@@ -184,9 +193,6 @@ class GameManager(BasicManager):
                     if enemyCollisionRect.colliderect(rockCollisionRect):
                         if isinstance(enemy, Slime):
                             enemy.changeDirection()
-                        elif isinstance(enemy, Golem):
-                            enemy.changeDirection(Vector2(0, 0), True)
-                            print("DANG")
 
         # Check to see if we entered a door
         for door in self.rooms[self.currentRoom].doors:

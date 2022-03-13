@@ -20,6 +20,7 @@ ARCHER_HP = 50
 ARCHER_V_SPEED = 150
 # ARCHER_V_SPEED = 550
 
+# TODO Make a singleton
 class Archer(Alive):
 
     def __init__(self, position):
@@ -51,9 +52,10 @@ class Archer(Alive):
         self._state = ArcherState()
 
     def update(self, damage, seconds):
-        super().update(seconds)
+        change = super().update(seconds)
         self._stats.decreaseItem("HP", damage * 100)
         self._stats.update(seconds)
+        return(change)
 
     def handleEvent(self, event):
         """Given an event, change the appropriate value in

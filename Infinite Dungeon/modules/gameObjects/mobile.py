@@ -49,12 +49,30 @@ class Mobile(Animated):
             newPosition = oldPosition + self._velocity * seconds
             self.setPosition(newPosition)
             changeInPosition = newPosition - oldPosition
-            # print("CHANGEINPOSITION", changeInPosition)
             return changeInPosition
 
         else:
             self._velocity = Vector2(0, 0)
             return Vector2(0, 0)
+
+    def collide(self, collider):
+        clipbox = collider.getCollideRect().clip(self.getCollideRect())
+      
+        if clipbox.width < clipbox.height:
+            # Move horizontally
+            if self.getPosition().x < collider.getPosition().x:
+                change = Vector2(-clipbox.width,0)
+            else:
+                change = Vector2(clipbox.width,0)
+         
+        else:
+            # move vertically
+            if self.getPosition().y < collider.getPosition().y:
+                change = Vector2(0,-clipbox.height)
+            else:
+                change = Vector2(0,clipbox.height)
+      
+        self.setPosition(self.getPosition() + change)
 
     # https://www.youtube.com/watch?v=Okm3-OKzWa8
     def collideBlocks(self, direction, xChange, yChange, listOfObjects):

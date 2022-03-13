@@ -57,19 +57,19 @@ class Mobile(Animated):
 
     def collide(self, collider):
         clipbox = collider.getCollideRect().clip(self.getCollideRect())
-      
+
         if clipbox.width < clipbox.height:
             # Move horizontally
             if self.getPosition().x < collider.getPosition().x:
-                change = Vector2(-clipbox.width,0)
+                change = Vector2(-clipbox.width, 0)
             else:
-                change = Vector2(clipbox.width,0)
-         
+                change = Vector2(clipbox.width, 0)
+
         else:
             # move vertically
             if self.getPosition().y < collider.getPosition().y:
-                change = Vector2(0,-clipbox.height)
+                change = Vector2(0, -clipbox.height)
             else:
-                change = Vector2(0,clipbox.height)
-      
+                change = Vector2(0, clipbox.height)
+
         self.setPosition(self.getPosition() + change)

@@ -20,6 +20,7 @@ ARCHER_HP = 50
 # ARCHER_V_SPEED = 150
 ARCHER_V_SPEED = 550
 
+
 # TODO Make a singleton
 class Archer(Alive):
 

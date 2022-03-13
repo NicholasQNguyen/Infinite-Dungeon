@@ -103,7 +103,7 @@ class GameManager(BasicManager):
             return "dead"
 
         # let others update based on the amount of time elapsed
-        change = self.archer.update(0, seconds)
+        self.archer.update(0, seconds)
         self.archer.getStats().update(seconds)
 
         for enemy in self.rooms[self.currentRoom].enemies:
@@ -143,14 +143,18 @@ class GameManager(BasicManager):
 
         # Check if the player is going beyond the borders
         if self.archer.getX() > GameManager.WORLD_SIZE[0]:
-            self.archer.setPosition(self.archer.getPosition() - Vector2(50,0))
+            self.archer.setPosition(self.archer.getPosition() -
+                                    Vector2(50, 0))
         elif self.archer.getX() < 0:
-            self.archer.setPosition(self.archer.getPosition() - Vector2(-50,0))
+            self.archer.setPosition(self.archer.getPosition() -
+                                    Vector2(-50, 0))
 
         if self.archer.getY() > GameManager.WORLD_SIZE[1]:
-            self.archer.setPosition(self.archer.getPosition() - Vector2(0,50))
+            self.archer.setPosition(self.archer.getPosition() -
+                                    Vector2(0, 50))
         elif self.archer.getY() < 0:
-            self.archer.setPosition(self.archer.getPosition() - Vector2(0,-50))
+            self.archer.setPosition(self.archer.getPosition() -
+                                    Vector2(0, -50))
 
         # Check if arrows are beyond the border and delete them if they are
         for arrow in self.rooms[self.currentRoom].arrows:
@@ -188,7 +192,6 @@ class GameManager(BasicManager):
                 if isinstance(enemy, Golem):
                     if enemy.getCollideRect().colliderect(rockCollisionRect):
                         enemy.collide(rock)
-
 
         # Check for enemy collision for damage purposes
         for enemy in self.rooms[self.currentRoom].enemies:
@@ -233,7 +236,8 @@ class GameManager(BasicManager):
 
                 for enemy in self.rooms[self.currentRoom].enemies:
                     for rock in self.rooms[self.currentRoom].rocks:
-                        if rock.getCollideRect().colliderect(enemy.getCollideRect()):
+                        if rock.getCollideRect().colliderect(
+                                                 enemy.getCollideRect()):
                             enemy.kill()
 
         # Check to see if we hit stairs and reset the dungeon

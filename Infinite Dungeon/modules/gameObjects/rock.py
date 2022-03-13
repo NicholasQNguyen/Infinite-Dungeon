@@ -9,7 +9,6 @@ import pygame
 
 from .vector2D import Vector2
 from .drawable import Drawable
-from ..FSMs.gameObjectFSM import BasicState
 
 
 class Rock(Drawable):

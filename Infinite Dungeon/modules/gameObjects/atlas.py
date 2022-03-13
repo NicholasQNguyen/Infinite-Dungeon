@@ -60,9 +60,9 @@ class Atlas(object):
         while isinstance(self.getNorth((placerIndex1,
                                         placerIndex2)),
                          int) and\
-              isinstance(self.getEast((placerIndex1,
-                                       placerIndex2)),
-                         int):
+            isinstance(self.getEast((placerIndex1,
+                                     placerIndex2)),
+                       int):
             # From the bottom left room, go randomly
             # right or up and put a room
             rightOrUp = randint(0, 1)

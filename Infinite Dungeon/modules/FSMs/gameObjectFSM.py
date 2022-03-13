@@ -156,7 +156,6 @@ class GolemState(BasicState):
                     self._movement["down"] = True
 
 
-
 class TowerState(BasicState):
 
     def __init__(self, state="standing"):

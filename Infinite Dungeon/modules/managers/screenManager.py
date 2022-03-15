@@ -14,7 +14,7 @@ class ScreenManager(BasicManager):
         super().__init__()
         self._game = GameManager(SCREEN_SIZE)
         self._state = ScreenState()
-        self._pausedText = Text(Vector2(0, 0), "Paused")
+        self._pausedText = Text(Vector2(0, 0), "Paused", "default16")
 
         size = self._pausedText.getSize()
         midPointX = SCREEN_SIZE.x // 2 - size[0] // 2
@@ -22,7 +22,7 @@ class ScreenManager(BasicManager):
 
         self._pausedText.setPosition(Vector2(midPointX, midPointY))
 
-        self._mainMenu = CursorMenu("background.png", fontName="default32")
+        self._mainMenu = CursorMenu("title.png", fontName="default32")
         self._mainMenu.addOption("start", "Start Game",
                                  SCREEN_SIZE // 2 - Vector2(0, 50),
                                  center="both")
@@ -30,12 +30,9 @@ class ScreenManager(BasicManager):
                                  SCREEN_SIZE // 2 + Vector2(0, 50),
                                  center="both")
 
-        self._gameOver = CursorMenu("background.png", fontName="default32")
-        self._gameOver.addText("Game Over",
-                               SCREEN_SIZE // 2 - Vector2(0, 50),
-                               center="both")
+        self._gameOver = CursorMenu("gameOver.png", fontName="default32")
         self._gameOver.addOption("exit", "Exit Game",
-                                 SCREEN_SIZE // 2 + Vector2(0, 50),
+                                 SCREEN_SIZE // 2 - Vector2(0, 50),
                                  center="both")
 
     def draw(self, drawSurf):

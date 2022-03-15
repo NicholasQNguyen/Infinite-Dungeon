@@ -40,9 +40,15 @@ class GameManager(BasicManager):
         self.drawClearText = False
         self.floorsCleared = 1
 
-        self.damageUpText = Text(Vector2(504, 400), "DAMAGE UP!", "default16")
-        self.speedUpText = Text(Vector2(504, 400), "SPEED UP!", "default16")
-        self.projectileUpText = Text(Vector2(504, 400), "PROJECTILE SPEED UP!", "default16")
+        self.damageUpText = Text(Vector2(504, 400),
+                                 "DAMAGE UP!",
+                                 "default16")
+        self.speedUpText = Text(Vector2(504, 400),
+                                "SPEED UP!",
+                                "default16")
+        self.projectileUpText = Text(Vector2(504, 400),
+                                     "PROJECTILE SPEED UP!",
+                                     "default16")
         self.drawUpgradeText = False
         self.currentUpgradeText = None
 

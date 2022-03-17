@@ -1,11 +1,13 @@
 from .gameManager import GameManager
 from .basicManager import BasicManager
+from .inputManager import InputManager
 from .highScore import * 
 from ..FSMs.screenFSM import ScreenState
 from ..UI.items import Text
 from ..UI.displays import CursorMenu
 from ..gameObjects.vector2D import Vector2
 from ..UI.screenInfo import SCREEN_SIZE
+
 import pygame
 
 
@@ -79,7 +81,7 @@ class ScreenManager(BasicManager):
                     return "exit"
 
             elif self._state == "nameInput":
-                self._InputManager.handleEvent(event)
+                choice = self._nameInput.handleEvent(event)
                 if choice == "submit":
                     return "submit"
 
@@ -90,13 +92,15 @@ class ScreenManager(BasicManager):
                 # Read the high score csv
                 highScores = getHighScores()
                 # See if the player got a new high score
-                checkIfHighScore(highScores, status[1])
+                check = checkIfHighScore(highScores, status[1])
+                print(check)
                 # If they did, then go to name input screen
-                if checkIfHighScore != False:
+                if check != False:
                     self._state.manageState("nameInput", self)
                 else:
                     status = None
                     self._state.manageState("gameOver", self)
+
         elif self._state == "mainMenu":
             self._mainMenu.update(ticks)
 

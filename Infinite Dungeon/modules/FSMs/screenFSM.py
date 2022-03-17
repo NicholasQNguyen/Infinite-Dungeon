@@ -27,6 +27,10 @@ class ScreenState(object):
             self._state = "gameOver"
             screenManager.transitionState(self._state)
 
+        elif action == "nameInput":
+            self._state = "nameInput"
+            screenManager.transitionState(self._state)
+
     def __eq__(self, other):
         return self._state == other
 

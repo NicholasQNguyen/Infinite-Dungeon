@@ -46,6 +46,10 @@ def main():
                 RUNNING = False
                 break
 
+            elif result == "submit":
+                RUNNING = False
+                break
+
         gameClock.tick(60)
         seconds = min(.5, gameClock.get_time() / 1000)
 

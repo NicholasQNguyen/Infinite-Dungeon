@@ -7,23 +7,27 @@ File to handle writing and reading high scores
 """
 from pathlib import Path
 import csv
+import operator
 import pandas as pd
-
 
 def getHighScores():
     """Function to read from the highScore.txt file"""
     # https://www.analyticsvidhya.com/blog/2021/08/python-tutorial-working-with-csv-file-for-data-science/
+    # https://www.geeksforgeeks.org/how-to-sort-data-by-column-in-a-csv-file-in-python/
     path = Path("resources")
     fileToOpen = path / "highScore.csv"
-    f = pd.read_csv(fileToOpen)
-    f.sort_values(["Score"], 0, [False], True)
-    """
-    f = open(fileToOpen)
-    csvReader = csv.reader(f)
-    header = []
-    header = next(csvReader)
-    rows = []
-    for row in csvReader:
-        rows.append(row)
-    """
-    return f
+    data = pd.read_csv(fileToOpen)
+    data.sort_values(["Score"], axis=0,ascending=[False], inplace=True)
+    print(data)
+    return data.values.tolist()
+
+def checkIfHighScore(listOfScores, newScore):
+    """Checks if an inputted score would be a high score (Top 10)"""
+    for i in range(9):
+        # Look at the scores
+        currentScore = listOfScores[i][1]
+        if newScore > currentScore:
+            listOfScores.insert(i-1, [None, currentScore])
+            return listOfScores
+    # If no high score, just return False
+    return False

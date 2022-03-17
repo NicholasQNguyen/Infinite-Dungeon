@@ -36,6 +36,8 @@ class ScreenManager(BasicManager):
                                  SCREEN_SIZE // 2 - Vector2(0, 50),
                                  center="both")
 
+        self._nameInput = InputManager(SCREEN_SIZE)
+
     def draw(self, drawSurf):
         if self._state == "game":
             self._game.draw(drawSurf)
@@ -49,6 +51,9 @@ class ScreenManager(BasicManager):
         elif self._state == "gameOver":
             self._gameOver.draw(drawSurf)
 
+        elif self._state == "nameInput":
+            self._nameInput.draw(drawSurf)
+
     def handleEvent(self, event):
         # Handle screen-changing events first
         if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
@@ -58,6 +63,7 @@ class ScreenManager(BasicManager):
         else:
             if self._state == "game" and not self._state.isPaused():
                 self._game.handleEvent(event)
+
             elif self._state == "mainMenu":
                 choice = self._mainMenu.handleEvent(event)
 
@@ -72,13 +78,25 @@ class ScreenManager(BasicManager):
                 if choice == "exit":
                     return "exit"
 
+            elif self._state == "nameInput":
+                self._InputManager.handleEvent(event)
+                if choice == "submit":
+                    return "submit"
+
     def update(self, ticks):
         if self._state == "game" and not self._state.isPaused():
             status = self._game.update(ticks, SCREEN_SIZE)
             if status[0] == "dead":
-                status = None
-                print(getHighScores())
-                self._state.manageState("gameOver", self)
+                # Read the high score csv
+                highScores = getHighScores()
+                # See if the player got a new high score
+                checkIfHighScore(highScores, status[1])
+                # If they did, then go to name input screen
+                if checkIfHighScore != False:
+                    self._state.manageState("nameInput", self)
+                else:
+                    status = None
+                    self._state.manageState("gameOver", self)
         elif self._state == "mainMenu":
             self._mainMenu.update(ticks)
 

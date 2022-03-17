@@ -111,7 +111,7 @@ class GameManager(BasicManager):
     def update(self, seconds, screenSize):
         if self.archer.getHP() <= 0:
             # Transition to game over screen
-            return "dead"
+            return ("dead", self.floorsCleared)
 
         # let others update based on the amount of time elapsed
         self.archer.update(0, seconds)
@@ -248,7 +248,8 @@ class GameManager(BasicManager):
 
                 self.drawUpgradeText = False
 
-                # Kill any enemy that spawns on a rock to prevent trapped enemies
+                # Kill any enemy that spawns on a rock to
+                # prevent trapped enemies
                 for enemy in self.rooms[self.currentRoom].enemies:
                     for rock in self.rooms[self.currentRoom].rocks:
                         if rock.getCollideRect().colliderect(
@@ -288,7 +289,7 @@ class GameManager(BasicManager):
                     self.currentUpgradeText = self.damageUpText
 
                 elif isinstance(self.rooms[self.currentRoom].upgrade,
-                                 ProjectileSpeedUpgrade):
+                                ProjectileSpeedUpgrade):
                     self.rooms[self.currentRoom].upgrade.upgrade(Arrow)
                     self.currentUpgradeText = self.projectileUpText
 
@@ -298,7 +299,6 @@ class GameManager(BasicManager):
                     self.rooms[self.currentRoom].upgrade.upgrade(self.archer)
                     self.currentUpgradeText = self.speedUpText
                 self.drawUpgradeText = True
-
 
         # Death checking
         for enemy in self.rooms[self.currentRoom].enemies:
@@ -321,6 +321,9 @@ class GameManager(BasicManager):
 
         Drawable.updateWindowOffset(
                  self.archer, screenSize, GameManager.WORLD_SIZE)
+
+        # Return a tuple to avoid error messages
+        return (None, None)
 
     def updateMovement(self):
         self.archer.updateMovement()

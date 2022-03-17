@@ -74,7 +74,7 @@ class ScreenManager(BasicManager):
     def update(self, ticks):
         if self._state == "game" and not self._state.isPaused():
             status = self._game.update(ticks, SCREEN_SIZE)
-            if status == "dead":
+            if status[0] == "dead":
                 status = None
                 self._state.manageState("gameOver", self)
         elif self._state == "mainMenu":

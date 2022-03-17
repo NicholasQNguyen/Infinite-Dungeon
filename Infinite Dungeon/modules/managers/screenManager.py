@@ -1,5 +1,6 @@
 from .gameManager import GameManager
 from .basicManager import BasicManager
+from .highScore import * 
 from ..FSMs.screenFSM import ScreenState
 from ..UI.items import Text
 from ..UI.displays import CursorMenu
@@ -76,6 +77,7 @@ class ScreenManager(BasicManager):
             status = self._game.update(ticks, SCREEN_SIZE)
             if status[0] == "dead":
                 status = None
+                print(getHighScores())
                 self._state.manageState("gameOver", self)
         elif self._state == "mainMenu":
             self._mainMenu.update(ticks)

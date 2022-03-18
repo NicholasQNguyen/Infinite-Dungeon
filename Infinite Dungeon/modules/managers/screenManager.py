@@ -16,6 +16,7 @@ class ScreenManager(BasicManager):
     def __init__(self):
         super().__init__()
         self._game = GameManager(SCREEN_SIZE)
+        self._nameInput = InputManager(SCREEN_SIZE)
         self._state = ScreenState()
         self._pausedText = Text(Vector2(0, 0), "Paused", "default16")
 
@@ -37,8 +38,6 @@ class ScreenManager(BasicManager):
         self._gameOver.addOption("exit", "Exit Game",
                                  SCREEN_SIZE // 2 - Vector2(0, 50),
                                  center="both")
-
-        self._nameInput = InputManager(SCREEN_SIZE)
 
     def draw(self, drawSurf):
         if self._state == "game":
@@ -105,6 +104,9 @@ class ScreenManager(BasicManager):
 
         elif self._state == "gameOver":
             self._gameOver.update(ticks)
+
+        elif self._state == "nameInput":
+            self._nameInput.update()
 
     # Prevents kirby from constantly walking if the direction arrow
     #  is released when the game isn't playing

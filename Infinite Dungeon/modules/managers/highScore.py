@@ -31,3 +31,7 @@ def checkIfHighScore(listOfScores, newScore):
             return listOfScores
     # If no high score, just return False
     return False
+
+def insertTheNewScore(index, listOfScores, newList):
+    listOfScores = listOfScores.insert(index, newList)
+    return listOfScores

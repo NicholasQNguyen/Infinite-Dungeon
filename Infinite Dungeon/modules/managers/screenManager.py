@@ -18,7 +18,6 @@ class ScreenManager(BasicManager):
     def __init__(self):
         super().__init__()
         self._game = GameManager(SCREEN_SIZE)
-        self._nameInput = InputManager(SCREEN_SIZE)
 
         self._state = ScreenState()
         self._pausedText = Text(Vector2(0, 0), "Paused", "default16")
@@ -87,7 +86,7 @@ class ScreenManager(BasicManager):
 
             elif self._state == "nameInput":
                 choice = self._nameInput.handleEvent(event)
-                if choice == "submit":
+                if choice[0] == "submit":
                     self._state = "highScore"
 
             elif self._state == "highScore":
@@ -106,7 +105,9 @@ class ScreenManager(BasicManager):
                 print(highScores)
                 # If they did, then go to name input screen
                 if highScores != False:
-                    self._highScore = HighScoreManager(SCREEN_SIZE, highScores)        
+                    # Make the name input screen with the new high score
+                    self._nameInput = InputManager(SCREEN_SIZE, status[1])
+                    self._highScore = HighScoreManager(SCREEN_SIZE, highScores)
                     self._state.manageState("nameInput", self)
                 # else just go to normal game over screen
                 else:

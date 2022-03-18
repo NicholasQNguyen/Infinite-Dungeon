@@ -15,7 +15,7 @@ from .stairs import Stairs
 from .rock import Rock
 from .vector2D import Vector2
 
-DIMENSION = 5
+DIMENSION = 4
 ROOM_TYPES = ["basicRoom.png", "bridgeRoom.png", "torchRoom.png"]
 
 

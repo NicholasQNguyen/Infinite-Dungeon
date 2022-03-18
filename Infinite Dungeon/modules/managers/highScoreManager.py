@@ -7,7 +7,7 @@ from modules.gameObjects.vector2D import Vector2
 class HighScoreManager(BasicManager):
 
     def __init__(self, screenSize, highScores):
-        self.message = Text(Vector2(50, 200),
+        self.message = Text(Vector2(50, 100),
                             "High Scores!",
                             "default32")
         self.scoreStrings = []
@@ -18,8 +18,8 @@ class HighScoreManager(BasicManager):
             tempString = "".join(str(score))
             self.scoreStrings.append(tempString)
         # go through the top 10 scores and render them as texts
-        for i in range(9):
-            self.scoreTexts.append(Text(Vector2(50, (300 + i * 50)),
+        for i in range(10):
+            self.scoreTexts.append(Text(Vector2(50, (200 + i * 50)),
                                         self.scoreStrings[i],
                                         "default32"))
 

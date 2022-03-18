@@ -63,9 +63,9 @@ class ScreenManager(BasicManager):
 
     def handleEvent(self, event):
         # Handle screen-changing events first
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_p and self._state == "game":
             self._state.manageState("pause", self)
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_m:
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_m and self._state == "game":
             self._state.manageState("mainMenu", self)
         else:
             if self._state == "game" and not self._state.isPaused():
@@ -102,8 +102,10 @@ class ScreenManager(BasicManager):
                 # Read the high score csv
                 highScores = getHighScores()
                 # See if the player got a new high score
+                highScores = checkIfHighScore(highScores, status[1])
+                print(highScores)
                 # If they did, then go to name input screen
-                if checkIfHighScore(highScores, status[1]):
+                if highScores != False:
                     self._highScore = HighScoreManager(SCREEN_SIZE, highScores)        
                     self._state.manageState("nameInput", self)
                 # else just go to normal game over screen

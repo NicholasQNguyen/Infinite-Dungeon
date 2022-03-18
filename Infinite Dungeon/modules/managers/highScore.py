@@ -23,10 +23,11 @@ def getHighScores():
 
 def checkIfHighScore(listOfScores, newScore):
     """Checks if an inputted score would be a high score (Top 10)"""
-    for i in range(9):
+    for i in range(10):
         # Look at the scores
         currentScore = listOfScores[i][1]
         if newScore > currentScore:
-            return True
+            listOfScores.insert(i, newScore)
+            return listOfScores
     # If no high score, just return False
     return False

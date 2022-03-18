@@ -92,11 +92,10 @@ class ScreenManager(BasicManager):
                 # Read the high score csv
                 highScores = getHighScores()
                 # See if the player got a new high score
-                check = checkIfHighScore(highScores, status[1])
-                print(check)
                 # If they did, then go to name input screen
-                if check != False:
+                if checkIfHighScore(highScores, status[1]):
                     self._state.manageState("nameInput", self)
+                # else just go to normal game over screen
                 else:
                     status = None
                     self._state.manageState("gameOver", self)

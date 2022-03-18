@@ -27,7 +27,6 @@ def checkIfHighScore(listOfScores, newScore):
         # Look at the scores
         currentScore = listOfScores[i][1]
         if newScore > currentScore:
-            listOfScores.insert(i, [None, currentScore])
-            return listOfScores
+            return True
     # If no high score, just return False
     return False

@@ -104,6 +104,9 @@ class GameManager(BasicManager):
             elif event.key in GameManager.WASD_KEYS:
                 self.archer.handleEvent(event)
 
+            elif event.key == pygame.K_8:
+                self.floorsCleared += 1
+
         elif event.type == pygame.KEYUP:
             if event.key in GameManager.WASD_KEYS:
                 self.archer.handleEvent(event)

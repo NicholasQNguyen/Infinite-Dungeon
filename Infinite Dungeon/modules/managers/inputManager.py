@@ -16,7 +16,7 @@ class InputManager(BasicManager):
                              "default32")
 
     def draw(self, drawSurf):
-        drawSurf.fill((0, 0 , 0))
+        drawSurf.fill((0, 0, 0))
         self.inputText.draw(drawSurf)
         self.userText.draw(drawSurf)
 
@@ -37,4 +37,3 @@ class InputManager(BasicManager):
         self.userText = Text(Vector2(50, 300),
                              self.inputList,
                              "default32")
-        print(self.inputList)        

@@ -6,9 +6,8 @@ highScore.py
 File to handle writing and reading high scores
 """
 from pathlib import Path
-import csv
-import operator
 import pandas as pd
+
 
 def getHighScores():
     """Function to read from the highScore.txt file"""
@@ -17,9 +16,10 @@ def getHighScores():
     path = Path("resources")
     fileToOpen = path / "highScore.csv"
     data = pd.read_csv(fileToOpen)
-    data.sort_values(["Score"], axis=0,ascending=[False], inplace=True)
+    data.sort_values(["Score"], axis=0, ascending=[False], inplace=True)
     print(data)
     return data.values.tolist()
+
 
 def checkIfHighScore(listOfScores, newScore):
     """Checks if an inputted score would be a high score (Top 10)"""

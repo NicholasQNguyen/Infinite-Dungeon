@@ -1,7 +1,7 @@
 from .gameManager import GameManager
 from .basicManager import BasicManager
 from .inputManager import InputManager
-from .highScore import * 
+from .highScore import checkIfHighScore, getHighScores
 from ..FSMs.screenFSM import ScreenState
 from ..UI.items import Text
 from ..UI.displays import CursorMenu

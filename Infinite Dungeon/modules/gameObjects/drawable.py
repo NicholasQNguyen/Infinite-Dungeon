@@ -30,6 +30,10 @@ class Drawable(object):
                                              - (screenSize[1] // 2)),
                                          worldSize[1] - screenSize[1]))
 
+    @classmethod
+    def setWindowOffset(cls, newOffset):
+        Drawable.WINDOW_OFFSET = newOffset
+
     def __init__(self, imageName, position, offset=None):
         self._imageName = imageName
 

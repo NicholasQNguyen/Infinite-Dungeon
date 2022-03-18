@@ -114,6 +114,7 @@ class GameManager(BasicManager):
     def update(self, seconds, screenSize):
         if self.archer.getHP() <= 0:
             # Transition to game over screen
+            Drawable.setWindowOffset(Vector2(0, 0))
             return ("dead", self.floorsCleared)
 
         # let others update based on the amount of time elapsed

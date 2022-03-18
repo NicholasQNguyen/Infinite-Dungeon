@@ -2,6 +2,8 @@ from .gameManager import GameManager
 from .basicManager import BasicManager
 from .inputManager import InputManager
 from .highScore import checkIfHighScore, getHighScores
+from .highScoreManager import HighScoreManager
+
 from ..FSMs.screenFSM import ScreenState
 from ..UI.items import Text
 from ..UI.displays import CursorMenu
@@ -17,6 +19,8 @@ class ScreenManager(BasicManager):
         super().__init__()
         self._game = GameManager(SCREEN_SIZE)
         self._nameInput = InputManager(SCREEN_SIZE)
+        self._highScore = HighScoreManager(SCREEN_SIZE)        
+
         self._state = ScreenState()
         self._pausedText = Text(Vector2(0, 0), "Paused", "default16")
 
@@ -82,7 +86,13 @@ class ScreenManager(BasicManager):
             elif self._state == "nameInput":
                 choice = self._nameInput.handleEvent(event)
                 if choice == "submit":
+                    self._state = "highScore"
                     return "submit"
+
+            elif self._state == "highScore":
+                choice = self._highScore.handleEvent(event)
+                if choice == "exit":
+                    return "exit"
 
     def update(self, ticks):
         if self._state == "game" and not self._state.isPaused():
@@ -107,6 +117,9 @@ class ScreenManager(BasicManager):
 
         elif self._state == "nameInput":
             self._nameInput.update()
+
+        elif self._state == "highScore":
+            self._highScore.update()
 
     # Prevents kirby from constantly walking if the direction arrow
     #  is released when the game isn't playing

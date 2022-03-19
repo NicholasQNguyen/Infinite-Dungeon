@@ -7,7 +7,7 @@ from .highScoreFunctions import writeToCSV
 
 class HighScoreManager(BasicManager):
 
-    def __init__(self, screenSize, highScores, newEntry):
+    def __init__(self, screenSize, highScores, newEntry=None):
         self.message = Text(Vector2(50, 100),
                             "High Scores!",
                             "default32")

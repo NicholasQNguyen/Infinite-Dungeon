@@ -50,7 +50,7 @@ class Atlas(object):
         placerIndex2 = 0
 
         firstRoom = Room("firstRoom.png", 0, 1)
-        lastRoom = Room(choice(ROOM_TYPES), 99)
+        lastRoom = Room("lastRoom.png", 99)
 
         # Put a room in the bottom left and top right of the grid
         self.atlas[placerIndex1][placerIndex2] = firstRoom

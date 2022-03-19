@@ -1,7 +1,7 @@
 from .gameManager import GameManager
 from .basicManager import BasicManager
 from .inputManager import InputManager
-from .highScore import checkIfHighScore, getHighScores
+from .highScoreFunctions import checkIfHighScore, getHighScores
 from .highScoreManager import HighScoreManager
 
 from ..FSMs.screenFSM import ScreenState
@@ -58,7 +58,7 @@ class ScreenManager(BasicManager):
             self._nameInput.draw(drawSurf)
 
         elif self._state == "highScore":
-            self._highScore.draw(drawSurf)
+            self._highScoreManager.draw(drawSurf)
 
     def handleEvent(self, event):
         # Handle screen-changing events first
@@ -87,10 +87,12 @@ class ScreenManager(BasicManager):
             elif self._state == "nameInput":
                 choice = self._nameInput.handleEvent(event)
                 if choice[0] == "submit":
+                    # Make a highScoreManager with the high scores and the name inputted
+                    self._highScoreManager = HighScoreManager(SCREEN_SIZE, self._highScores, choice[1])
                     self._state = "highScore"
 
             elif self._state == "highScore":
-                choice = self._highScore.handleEvent(event)
+                choice = self._highScoreManager.handleEvent(event)
                 if choice == "exit":
                     return "exit"
 
@@ -99,15 +101,13 @@ class ScreenManager(BasicManager):
             status = self._game.update(ticks, SCREEN_SIZE)
             if status[0] == "dead":
                 # Read the high score csv
-                highScores = getHighScores()
+                self._highScores = getHighScores()
                 # See if the player got a new high score
-                highScores = checkIfHighScore(highScores, status[1])
-                print(highScores)
+                self._highScores = checkIfHighScore(self._highScores, status[1])
                 # If they did, then go to name input screen
-                if highScores != False:
+                if self._highScores != False:
                     # Make the name input screen with the new high score
                     self._nameInput = InputManager(SCREEN_SIZE, status[1])
-                    self._highScore = HighScoreManager(SCREEN_SIZE, highScores)
                     self._state.manageState("nameInput", self)
                 # else just go to normal game over screen
                 else:
@@ -124,7 +124,7 @@ class ScreenManager(BasicManager):
             self._nameInput.update()
 
         elif self._state == "highScore":
-            self._highScore.update()
+            self._highScoreManager.update()
 
     # Prevents kirby from constantly walking if the direction arrow
     #  is released when the game isn't playing

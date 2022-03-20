@@ -27,7 +27,7 @@ class GameManager(BasicManager):
 
     def __init__(self, screenSize):
         # Stuff for the hero character
-        self.archer = Archer(self.BEGINNING)
+        self.archer = Archer.getInstance(self.BEGINNING)
 
         # Generate the map
         atlas = Atlas()

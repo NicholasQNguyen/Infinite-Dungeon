@@ -32,8 +32,9 @@ class InputManager(BasicManager):
             # Backspace
             elif event.key == pygame.K_BACKSPACE:
                 self.inputList = self.inputList[:-1]
-            # Add it to the username
-            else:
+            # Add it to the username but cap it at 16 char
+            # so that the high score screen isn't bad looking
+            elif len(self.inputList) < 17:
                 self.inputList += event.unicode
             return (None, None)
         return (None, None)

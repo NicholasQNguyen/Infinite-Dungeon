@@ -102,8 +102,8 @@ class ScreenManager(BasicManager):
 
             elif self._state == "highScore":
                 choice = self._highScoreManager.handleEvent(event)
-                if choice == "exit":
-                    return "exit"
+                if choice == "mainMenu":
+                    self._state.manageState("mainMenu", self)
 
     def update(self, ticks):
         if self._state == "game" and not self._state.isPaused():

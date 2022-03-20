@@ -44,7 +44,7 @@ class HighScoreManager(BasicManager):
 
     def handleEvent(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            return "exit"
+            return "mainMenu"
 
     def update(self):
         pass

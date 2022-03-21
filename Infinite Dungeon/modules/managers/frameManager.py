@@ -37,7 +37,8 @@ class FrameManager(object):
                         "slime_monster_spritesheet.png": (24, 24),
                         "golem-walk.png": (64, 64),
                         "Potions.png": (32, 32),
-                        "rock.png": (50, 50)}
+                        "rock.png": (50, 50),
+                        "range.png": (64, 64)}
 
         # A default frame size
         _DEFAULT_FRAME = (32, 32)
@@ -46,7 +47,7 @@ class FrameManager(object):
         _TRANSPARENCY = ["archer.png", "arrow.png", "door.png",
                          "golem-walk.png", "Potions.png",
                          "slime_monster_spritesheet.png",
-                         "stairs.png", "rock.png"]
+                         "stairs.png", "rock.png", "range.png"]
 
         # A list of images that require to be loaded with a color key
         _COLOR_KEY = ["cursor.png", "cursor32.png"]

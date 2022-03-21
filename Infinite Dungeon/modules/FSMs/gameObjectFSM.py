@@ -161,3 +161,6 @@ class TowerState(BasicState):
     def __init__(self, state="standing"):
         self._state = state
         self._lastFacing = "down"
+
+    def getFacing(self):
+        self._lastFacing = "down"

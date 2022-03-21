@@ -9,6 +9,7 @@ A class to hold onto and manage groups of enemies
 from random import randint
 from .slime import Slime
 from .golem import Golem
+from .tower import Tower
 from .vector2D import Vector2
 
 
@@ -43,3 +44,13 @@ class Squads(object):
             golemAndSlimeOhNoList.append(Slime(Vector2(randint(0, 504),
                                                        randint(0, 504))))
         return golemAndSlimeOhNoList
+
+    @classmethod
+    def dodgeThis(cls):
+        dodgeThisList = []
+        for i in range(5):
+            dodgeThisList.append(Tower(Vector2(randint(0, 504),
+                                               randint(0, 504))))
+        return dodgeThisList
+
+   

@@ -2,6 +2,7 @@ import pygame
 from copy import deepcopy
 
 from .basicManager import BasicManager
+
 from modules.gameObjects.vector2D import Vector2
 from modules.gameObjects.drawable import Drawable
 from modules.gameObjects.archer import Archer
@@ -9,6 +10,7 @@ from modules.gameObjects.arrow import Arrow
 from modules.gameObjects.slime import Slime
 from modules.gameObjects.atlas import Atlas
 from modules.gameObjects.golem import Golem
+from modules.gameObjects.tower import Tower
 from modules.gameObjects.upgrade import DamageUpgrade,\
                                         SpeedUpgrade,\
                                         ProjectileSpeedUpgrade
@@ -137,6 +139,7 @@ class GameManager(BasicManager):
             elif isinstance(enemy, Golem):
                 enemy.update(seconds)
 
+        self.fireTimer -= seconds
         self.slimeTimer -= seconds
         self.invincibilityTimer -= seconds
 
@@ -151,7 +154,9 @@ class GameManager(BasicManager):
         if self.fireTimer <= 0:
             for enemy in self.rooms[self.currentRoom].enemies:
                 if isinstance(enemy, Tower):
-                    enemy.fire(deepcopy(self.archer.getPosition()), self.rooms[self.currentRoom].enemyArrows)
+                    enemy.fire(deepcopy(self.archer.getPosition()),
+                               self.rooms[self.currentRoom].enemyArrows)
+            self.fireTimer = 2
 
         # Check if the slimes are going beyond the borders
         # and bounce them back if so

@@ -7,7 +7,6 @@ Monster that follows the player
 """
 from .alive import Alive
 from ..FSMs.gameObjectFSM import GolemState
-# from ..managers.frameManager import FrameManager
 
 GOLEM_HP = 20
 GOLEM_V_SPEED = 100

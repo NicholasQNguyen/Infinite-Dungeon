@@ -3,13 +3,15 @@ Author: Nicholas Nguyen
 Project 2
 File: tower.py
 
-Monster that moves fires based on where the archer is.
+Monster that fires based on where the archer is.
 """
 from .alive import Alive
-from ..FSMs.gameobjectFSM import TowerState
+from ..FSMs.gameObjectFSM import TowerState
+from .enemyProjectile import EnemyProjectile
 
 TOWER_HP = 6
 TOWER_VSPEED = 0
+TOWER_CONTACT_DAMAGE = 5
 
 
 class Tower(Alive):
@@ -24,5 +26,7 @@ class Tower(Alive):
 
         self._direction = "down"
 
+        self._damage = TOWER_CONTACT_DAMAGE
+
     def fire(self, archerPosition, arrowList):
-        
+        print("SHOOTING")

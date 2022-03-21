@@ -13,4 +13,10 @@ BASE_VSPEED = 250
 
 
 class EnemyProjectile(Projectile):
-    pass
+    def __init__(self, initialPosition, fireDirection):
+        super().__init__("arrow.png", initialPosition, BASE_DAMAGE)
+        self._vspeed = BASE_VSPEED
+
+    def update(self, seconds):
+        # Update the position based on the velocity and direction
+        self._position[self._direction] += self._vspeed

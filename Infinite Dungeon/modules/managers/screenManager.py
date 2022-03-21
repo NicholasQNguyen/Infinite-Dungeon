@@ -20,7 +20,6 @@ class ScreenManager(BasicManager):
         # Read the high score csv
         self._highScores = getHighScores()
 
-        self._game = GameManager(SCREEN_SIZE)
         self._highScoreManager = HighScoreManager(SCREEN_SIZE, self._highScores)
 
         self._state = ScreenState()
@@ -81,6 +80,7 @@ class ScreenManager(BasicManager):
                 choice = self._mainMenu.handleEvent(event)
 
                 if choice == "start":
+                    self._game = GameManager(SCREEN_SIZE)
                     self._state.manageState("startGame", self)
                 elif choice == "exit":
                     return "exit"

@@ -27,7 +27,7 @@ class GameManager(BasicManager):
 
     def __init__(self, screenSize):
         # Stuff for the hero character
-        self.archer = Archer.getInstance(self.BEGINNING)
+        self.archer = Archer(self.BEGINNING)
 
         # Generate the map
         atlas = Atlas()
@@ -160,6 +160,7 @@ class GameManager(BasicManager):
         if self.archer.getX() > GameManager.WORLD_SIZE[0]:
             self.archer.setPosition(self.archer.getPosition() -
                                     Vector2(50, 0))
+                                    
         elif self.archer.getX() < 0:
             self.archer.setPosition(self.archer.getPosition() -
                                     Vector2(-50, 0))

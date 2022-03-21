@@ -23,3 +23,6 @@ class Tower(Alive):
         self._state = TowerState()
 
         self._direction = "down"
+
+    def fire(self, archerPosition, arrowList):
+        

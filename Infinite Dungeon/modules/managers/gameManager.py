@@ -53,10 +53,12 @@ class GameManager(BasicManager):
         self.currentUpgradeText = None
 
         self.arrowCollisionRects = []
+        self.enemyArrowCollisionRects = []
 
         self.seconds = 0
         self.slimeTimer = 5
         self.invincibilityTimer = 0
+        self.fireTimer = 2
 
     def draw(self, drawSurf):
 
@@ -145,6 +147,12 @@ class GameManager(BasicManager):
                     enemy.handleEvent()
             self.slimeTimer = 5
 
+        # Fire an arrow from a tower every 2 seconds
+        if self.fireTimer <= 0:
+            for enemy in self.rooms[self.currentRoom].enemies:
+                if isinstance(enemy, Tower):
+                    enemy.fire(deepcopy(self.archer.getPosition()), self.rooms[self.currentRoom].enemyArrows)
+
         # Check if the slimes are going beyond the borders
         # and bounce them back if so
         for enemy in self.rooms[self.currentRoom].enemies:
@@ -160,11 +168,9 @@ class GameManager(BasicManager):
         if self.archer.getX() > GameManager.WORLD_SIZE[0]:
             self.archer.setPosition(self.archer.getPosition() -
                                     Vector2(50, 0))
-
         elif self.archer.getX() < 0:
             self.archer.setPosition(self.archer.getPosition() -
                                     Vector2(-50, 0))
-
         if self.archer.getY() > GameManager.WORLD_SIZE[1]:
             self.archer.setPosition(self.archer.getPosition() -
                                     Vector2(0, 50))

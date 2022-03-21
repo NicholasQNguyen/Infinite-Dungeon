@@ -31,6 +31,9 @@ class Room(Drawable):
         # A list of the player arrows in fired in that room
         self.arrows = []
 
+        # list of arrows fired by towers
+        self.enemyArrows = []
+
         self.upgrade = None
         self.stairs = None
 

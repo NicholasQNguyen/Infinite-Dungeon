@@ -36,7 +36,7 @@ class Arrow(Projectile):
         # Variable used to track direction arrows fly
         self._posOrNeg = 1
 
-        self._vspeed = BASE_VSPEED
+        self._vspeed = BASE_VSPEED + (50 * self.speedLevel)
 
     def changeDirection(self, event):
         """Function to change if the arrow is vertical or

@@ -43,8 +43,11 @@ class ScreenManager(BasicManager):
                                  center="both")
 
         self._gameOver = CursorMenu("gameOver.png", fontName="default32")
-        self._gameOver.addOption("exit", "Exit Game",
+        self._gameOver.addOption("mainMenu", "Main Menu",
                                  SCREEN_SIZE // 2 - Vector2(0, 50),
+                                 center="both")
+        self._gameOver.addOption("exit", "Exit Game",
+                                 SCREEN_SIZE // 2 + Vector2(0, 50),
                                  center="both")
 
     def draw(self, drawSurf):
@@ -70,8 +73,7 @@ class ScreenManager(BasicManager):
         # Handle screen-changing events first
         if event.type == pygame.KEYDOWN and event.key == pygame.K_p and self._state == "game":
             self._state.manageState("pause", self)
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_m and self._state == "game":
-            self._state.manageState("mainMenu", self)
+
         else:
             if self._state == "game" and not self._state.isPaused():
                 self._game.handleEvent(event)
@@ -92,12 +94,17 @@ class ScreenManager(BasicManager):
 
                 if choice == "exit":
                     return "exit"
+                elif choice == "mainMenu":
+                    self._state.manageState("mainMenu", self)
 
             elif self._state == "nameInput":
                 choice = self._nameInput.handleEvent(event)
                 if choice[0] == "submit":
-                    # Make a highScoreManager with the high scores and the name inputted
-                    self._highScoreManager = HighScoreManager(SCREEN_SIZE, self._highScores, choice[1])
+                    # Make a highScoreManager with the
+                    # high scores and the name inputted
+                    self._highScoreManager = HighScoreManager(SCREEN_SIZE,
+                                                              self._highScores,
+                                                              choice[1])
                     self._state.manageState("highScore", self)
 
             elif self._state == "highScore":
@@ -109,10 +116,12 @@ class ScreenManager(BasicManager):
         if self._state == "game" and not self._state.isPaused():
             status = self._game.update(ticks, SCREEN_SIZE)
             if status[0] == "dead":
+                self._highScores = getHighScores()
                 # See if the player got a new high score
-                self._highScores = checkIfHighScore(self._highScores, status[1])
+                self._highScores = checkIfHighScore(self._highScores,
+                                                    status[1])
                 # If they did, then go to name input screen
-                if self._highScores != False:
+                if self._highScores is not False:
                     # Make the name input screen with the new high score
                     self._nameInput = InputManager(SCREEN_SIZE, status[1])
                     self._state.manageState("nameInput", self)

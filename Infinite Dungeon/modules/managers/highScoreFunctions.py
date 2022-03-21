@@ -16,7 +16,10 @@ def getHighScores():
     path = Path("resources")
     fileToOpen = path / "highScore.csv"
     data = pd.read_csv(fileToOpen)
-    data.sort_values(["Floors Cleared"], axis=0, ascending=[False], inplace=True)
+    data.sort_values(["Floors Cleared"],
+                     axis=0,
+                     ascending=[False],
+                     inplace=True)
     return data.values.tolist()
 
 
@@ -31,10 +34,11 @@ def checkIfHighScore(listOfScores, newScore):
     # If no high score, just return False
     return False
 
+
 def writeToCSV(listOfScores):
     listOfScores.insert(0, ["Name", "Floors Cleared"])
     dataFrame = pd.DataFrame(listOfScores)
     path = Path("resources")
     fileToWrite = path / "highScore.csv"
-    dataFrame.to_csv(fileToWrite, index=False,header=False)
+    dataFrame.to_csv(fileToWrite, index=False, header=False)
     listOfScores.pop(0)

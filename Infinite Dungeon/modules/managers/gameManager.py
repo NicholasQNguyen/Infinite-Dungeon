@@ -160,7 +160,7 @@ class GameManager(BasicManager):
         if self.archer.getX() > GameManager.WORLD_SIZE[0]:
             self.archer.setPosition(self.archer.getPosition() -
                                     Vector2(50, 0))
-                                    
+
         elif self.archer.getX() < 0:
             self.archer.setPosition(self.archer.getPosition() -
                                     Vector2(-50, 0))

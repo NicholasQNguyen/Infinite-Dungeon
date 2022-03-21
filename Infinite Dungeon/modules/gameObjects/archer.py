@@ -21,6 +21,7 @@ ARCHER_HP = 5
 ARCHER_V_SPEED = 150
 ARCHER_V_SPEED = 550
 
+
 class Archer(Alive):
 
     def __init__(self, position):

@@ -56,7 +56,6 @@ class GameManager(BasicManager):
 
         self.arrowCollisionRects = []
         self.enemyArrowCollisionRects = []
-
         self.seconds = 0
         self.slimeTimer = 5
         self.invincibilityTimer = 0
@@ -92,9 +91,13 @@ class GameManager(BasicManager):
 
         for arrow in self.rooms[self.currentRoom].arrows:
             arrow.draw(drawSurf, Drawable.WINDOW_OFFSET)
+        for arrow in self.rooms[self.currentRoom].enemyArrows:
+            arrow.draw(drawSurf)
 
         for enemy in self.rooms[self.currentRoom].enemies:
             enemy.draw(drawSurf)
+
+
 
     def handleEvent(self, event):
         if event.type == pygame.KEYDOWN:
@@ -132,6 +135,10 @@ class GameManager(BasicManager):
         for arrow in self.rooms[self.currentRoom].arrows:
             arrow.update(seconds)
             self.arrowCollisionRects.append(arrow.getCollideRect())
+
+        for arrow in self.rooms[self.currentRoom].enemyArrows:
+            arrow.update(seconds)
+            self.enemyArrowCollisionRects.append(arrow.getCollideRect())
 
         for enemy in self.rooms[self.currentRoom].enemies:
             if isinstance(enemy, Slime):
@@ -210,6 +217,15 @@ class GameManager(BasicManager):
                     if rockCollisionRect.colliderect(arrowCollisionRect):
                         arrow.kill()
 
+        # Check for rock arrow collision
+        for rock in self.rooms[self.currentRoom].rocks:
+            rockCollisionRect = rock.getCollideRect()
+            if self.rooms[self.currentRoom].enemyArrows != []:
+                for arrow in self.rooms[self.currentRoom].enemyArrows:
+                    arrowCollisionRect = arrow.getCollideRect()
+                    if rockCollisionRect.colliderect(arrowCollisionRect):
+                        arrow.kill()
+
         # Check for rock player/enemy collision
         for rock in self.rooms[self.currentRoom].rocks:
             rockCollisionRect = rock.getCollideRect()
@@ -219,6 +235,18 @@ class GameManager(BasicManager):
                 if isinstance(enemy, Golem):
                     if enemy.getCollideRect().colliderect(rockCollisionRect):
                         enemy.collide(rock)
+
+        # Check if we get hit by an enemy arrow
+        for arrow in self.rooms[self.currentRoom].enemyArrows:
+            arrowCollisionRect = arrow.getCollideRect()
+            if arrowCollisionRect.colliderect(self.archerCollisionRect):
+                if self.invincibilityTimer < 0:
+                    self.archer.takeDamage(arrow.getDamage())
+                    self.archer.update(arrow.getDamage(), seconds)
+                    arrow.kill()
+                    # 2 seconds of invincibilty
+                    self.invincibilityTimer = 2
+
 
         # Check for enemy collision for damage purposes
         for enemy in self.rooms[self.currentRoom].enemies:
@@ -324,6 +352,10 @@ class GameManager(BasicManager):
         for arrow in self.rooms[self.currentRoom].arrows:
             if arrow.isDead():
                 self.rooms[self.currentRoom].arrows.remove(arrow)
+        for arrow in self.rooms[self.currentRoom].enemyArrows:
+            if arrow.isDead():
+                self.rooms[self.currentRoom].enemyArrows.remove(arrow)
+
 
         # If room is empty, place an upgrade or stairs if it's the last room
         if self.rooms[self.currentRoom].isClear()\

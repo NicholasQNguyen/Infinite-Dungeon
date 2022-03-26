@@ -29,4 +29,6 @@ class Tower(Alive):
         self._damage = TOWER_CONTACT_DAMAGE
 
     def fire(self, archerPosition, arrowList):
-        print("SHOOTING")
+        directionVector = (archerPosition - self.getPosition()).normalize() * 5
+        newArrow = EnemyProjectile(self.getPosition(), directionVector)
+        arrowList.append(newArrow)

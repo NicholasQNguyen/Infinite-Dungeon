@@ -25,6 +25,7 @@ class Atlas(object):
         # Initialize the enemy squad types
         squads = [Squads.slimeOverload,
                   Squads.golemAttack,
+                  Squads.dodgeThis,
                   Squads.golemAndSlimeOhNo]
 
         # Initialize the upgrades

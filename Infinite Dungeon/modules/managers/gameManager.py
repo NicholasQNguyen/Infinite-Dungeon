@@ -270,7 +270,8 @@ class GameManager(BasicManager):
         # Check to see if we entered a door
         for door in self.rooms[self.currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
-            if doorCollisionRect.colliderect(self.archerCollisionRect):
+            if doorCollisionRect.colliderect(self.archerCollisionRect) and\
+               self.rooms[self.currentRoom].isClear():
                 # Change the index to change what room is drawn
                 self.currentRoom = door.getDestination()
                 # Invincible for 1 seconds entering a new room

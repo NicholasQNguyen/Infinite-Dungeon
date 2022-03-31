@@ -49,7 +49,7 @@ class Squads(object):
     def dodgeThis(cls):
         dodgeThisList = []
         for i in range(5):
-            dodgeThisList.append(Tower(Vector2(randint(0, 504),
+            dodgeThisList.append(Tower(Vector2(randint(0, 1008),
                                                randint(0, 504))))
         return dodgeThisList
 

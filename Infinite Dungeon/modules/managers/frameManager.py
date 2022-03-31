@@ -47,10 +47,11 @@ class FrameManager(object):
         _TRANSPARENCY = ["archer.png", "arrow.png", "door.png",
                          "golem-walk.png", "Potions.png",
                          "slime_monster_spritesheet.png",
-                         "stairs.png", "rock.png", "range.png"]
+                         "stairs.png", "rock.png", "range.png",
+                         "cursor32.png"]
 
         # A list of images that require to be loaded with a color key
-        _COLOR_KEY = ["cursor.png", "cursor32.png"]
+        _COLOR_KEY = ["cursor.png"]
 
         def __init__(self):
             # Stores the surfaces indexed based on file name

@@ -87,6 +87,9 @@ class Archer(Alive):
             elif event.key == ord("d"):
                 self._state.manageState("stopright", self)
 
+        elif event.type == pygame.JOYAXISMOTION:
+            print("MOVING")
+
     def getNewDoor(self):
         return self._newDoor
 

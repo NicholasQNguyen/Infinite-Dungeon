@@ -62,7 +62,6 @@ class Arrow(Projectile):
         if self._direction == 1 and self._posOrNeg == 1:
             # Start it on the archer
             surface.blit(self._image, list(self._position - offset))
-
         # Shooting up
         elif self._direction == 1 and self._posOrNeg == -1:
             surface.blit(pygame.transform.rotate(self._image, 180),
@@ -71,7 +70,6 @@ class Arrow(Projectile):
         elif self._direction == 0 and self._posOrNeg == -1:
             surface.blit(pygame.transform.rotate(self._image, 270),
                          list(self._position - offset))
-
         # Shooting right
         elif self._direction == 0 and self._posOrNeg == 1:
             surface.blit(pygame.transform.rotate(self._image, 90),

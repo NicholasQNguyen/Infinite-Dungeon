@@ -12,6 +12,11 @@ def main():
     # Initialize the module
     pygame.init()
 
+    # Initialize the joystick stuff
+    pygame.joystick.init()
+    if pygame.joystick.get_count() != 0:
+        joystick = pygame.joystick.Joystick(0)
+
     # Load and set the logo
     pygame.display.set_caption("Infinite Dungeon")
 

@@ -28,6 +28,9 @@ class GameManager(BasicManager):
     CENTER_OF_ROOM = Vector2(504, 504)
 
     def __init__(self, screenSize):
+        # Start up the controller if we have one
+        if pygame.joystick.get_count() != 0:
+            self.js = pygame.joystick.Joystick(0)
         # Stuff for the hero character
         self.archer = Archer(self.BEGINNING)
 
@@ -68,9 +71,6 @@ class GameManager(BasicManager):
 
         self.rooms[self.currentRoom].draw(drawSurf)
 
-        if self.drawClearText:
-            self.clearText.draw(drawSurf)
-
         if self.drawUpgradeText:
             self.currentUpgradeText.draw(drawSurf)
 
@@ -79,6 +79,9 @@ class GameManager(BasicManager):
 
         for rock in self.rooms[self.currentRoom].rocks:
             rock.draw(drawSurf)
+
+        if self.drawClearText:
+            self.clearText.draw(drawSurf)
 
         self.archer.draw(drawSurf)
         self.archer.drawStats(drawSurf)
@@ -113,6 +116,14 @@ class GameManager(BasicManager):
 
             elif event.key == pygame.K_8:
                 self.floorsCleared += 1
+
+        if pygame.joystick.get_count() != 0:
+            for i in range(2):
+                if event.type == pygame.JOYAXISMOTION:
+                    # Apply a deadband to not twitch
+                    if self.js.get_axis(i) >= .25 or \
+                       self.js.get_axis(i) <= -.25:
+                        self.archer.handleEvent(event)
 
         elif event.type == pygame.KEYUP:
             if event.key in GameManager.WASD_KEYS:

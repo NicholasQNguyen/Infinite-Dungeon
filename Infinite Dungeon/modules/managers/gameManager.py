@@ -117,17 +117,24 @@ class GameManager(BasicManager):
             elif event.key == pygame.K_8:
                 self.floorsCleared += 1
 
-        if pygame.joystick.get_count() != 0:
-            for i in range(2):
-                if event.type == pygame.JOYAXISMOTION:
-                    # Apply a deadband to not twitch
-                    if self.js.get_axis(i) >= .25 or \
-                       self.js.get_axis(i) <= -.25:
-                        self.archer.handleEvent(event)
-
         elif event.type == pygame.KEYUP:
             if event.key in GameManager.WASD_KEYS:
                 self.archer.handleEvent(event)
+
+        if pygame.joystick.get_count() != 0:
+            if event.type == pygame.JOYHATMOTION:
+                self.archer.handleEvent(event, self.js.get_hat(0))
+
+            elif event.type == pygame.JOYBUTTONDOWN:
+                arrow = Arrow(deepcopy(self.archer.getPosition()))
+                buttonList = []
+                for i in range(4):
+                    buttonList.append(self.js.get_button(i))
+                # Set the direction based on what arrow was hit
+                for i in range(4):
+                    if buttonList[i]:
+                        arrow.changeDirection(event, i)
+                        self.rooms[self.currentRoom].arrows.append(arrow)
 
     def update(self, seconds, screenSize):
         if self.archer.getHP() <= 0:

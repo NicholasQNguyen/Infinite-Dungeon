@@ -58,7 +58,7 @@ class Archer(Alive):
         self._stats.update(seconds)
         return(change)
 
-    def handleEvent(self, event):
+    def handleEvent(self, event, jsHat=None):
         """Given an event, change the appropriate value in
            self._movement, if necessary."""
         if event.type == pygame.KEYDOWN:
@@ -87,8 +87,26 @@ class Archer(Alive):
             elif event.key == ord("d"):
                 self._state.manageState("stopright", self)
 
-        elif event.type == pygame.JOYAXISMOTION:
-            print("MOVING")
+        elif event.type == pygame.JOYHATMOTION:
+            if jsHat[1] == -1:
+                self._state.manageState("down", self)
+
+            if jsHat[1] == 1:
+                self._state.manageState("up", self)
+
+            if jsHat[0] == -1:
+                self._state.manageState("left", self)
+
+            if jsHat[0] == 1:
+                self._state.manageState("right", self)
+
+            if jsHat[1] == 0:
+                self._state.manageState("stopdown", self)
+                self._state.manageState("stopup", self)
+
+            if jsHat[0] == 0:
+                self._state.manageState("stopleft", self)
+                self._state.manageState("stopright", self)
 
     def getNewDoor(self):
         return self._newDoor

@@ -38,9 +38,27 @@ class Arrow(Projectile):
 
         self._vspeed = BASE_VSPEED + (50 * self.speedLevel)
 
-    def changeDirection(self, event):
+    def changeDirection(self, event, jsButton=None):
         """Function to change if the arrow is vertical or
            horizontal based on the arrow key inputted"""
+        if pygame.joystick.get_count() != 0 and event.type == pygame.JOYBUTTONDOWN:
+            if jsButton == 0:
+                self._direction = 1
+                self._posOrNeg = 1
+
+            elif jsButton == 3:
+                self._direction = 1
+                self._posOrNeg = -1
+
+            if jsButton == 2:
+                self._direction = 0
+                self._posOrNeg = -1
+
+            elif jsButton == 1:
+                self._direction = 0
+                self._posOrNeg = 1
+            return None
+
         if event.key == pygame.K_DOWN:
             self._direction = 1
             self._posOrNeg = 1
@@ -53,7 +71,7 @@ class Arrow(Projectile):
             self._direction = 0
             self._posOrNeg = -1
 
-        if event.key == pygame.K_RIGHT:
+        elif event.key == pygame.K_RIGHT:
             self._direction = 0
             self._posOrNeg = 1
 

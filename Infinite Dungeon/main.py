@@ -15,7 +15,7 @@ def main():
     # Initialize the joystick stuff
     pygame.joystick.init()
     if pygame.joystick.get_count() != 0:
-        joystick = pygame.joystick.Joystick(0)
+        js = pygame.joystick.Joystick(0)
 
     # Load and set the logo
     pygame.display.set_caption("Infinite Dungeon")
@@ -45,7 +45,10 @@ def main():
                 # change the value to False, to exit the main loop
                 RUNNING = False
                 break
-            result = screenManager.handleEvent(event)
+            if pygame.joystick.get_count() != 0:
+                result = screenManager.handleEvent(event, js)
+            else:
+                result = screenManager.handleEvent(event)
 
             if result == "exit":
                 RUNNING = False

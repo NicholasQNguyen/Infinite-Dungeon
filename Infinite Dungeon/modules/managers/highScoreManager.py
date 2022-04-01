@@ -42,8 +42,10 @@ class HighScoreManager(BasicManager):
         for text in self.scoreTexts:
             text.draw(drawSurf)
 
-    def handleEvent(self, event):
+    def handleEvent(self, event, js=None):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            return "mainMenu"
+        elif js is not None and js.get_button(0):
             return "mainMenu"
 
     def update(self):

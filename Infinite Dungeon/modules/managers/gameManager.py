@@ -28,9 +28,6 @@ class GameManager(BasicManager):
     CENTER_OF_ROOM = Vector2(504, 504)
 
     def __init__(self, screenSize):
-        # Start up the controller if we have one
-        if pygame.joystick.get_count() != 0:
-            self.js = pygame.joystick.Joystick(0)
         # Stuff for the hero character
         self.archer = Archer(self.BEGINNING)
 
@@ -62,7 +59,7 @@ class GameManager(BasicManager):
         self.seconds = 0
         self.slimeTimer = 5
         self.invincibilityTimer = 0
-        self.fireTimer = 2
+        self.fireTimer = 3
 
     def draw(self, drawSurf):
 
@@ -100,9 +97,7 @@ class GameManager(BasicManager):
         for enemy in self.rooms[self.currentRoom].enemies:
             enemy.draw(drawSurf)
 
-
-
-    def handleEvent(self, event):
+    def handleEvent(self, event, js):
         if event.type == pygame.KEYDOWN:
             # If the key is an arrow key, apply it to the player's arrows
             if event.key in GameManager.ARROW_KEYS:
@@ -123,13 +118,13 @@ class GameManager(BasicManager):
 
         if pygame.joystick.get_count() != 0:
             if event.type == pygame.JOYHATMOTION:
-                self.archer.handleEvent(event, self.js.get_hat(0))
+                self.archer.handleEvent(event, js.get_hat(0))
 
             elif event.type == pygame.JOYBUTTONDOWN:
                 arrow = Arrow(deepcopy(self.archer.getPosition()))
                 buttonList = []
                 for i in range(4):
-                    buttonList.append(self.js.get_button(i))
+                    buttonList.append(js.get_button(i))
                 # Set the direction based on what arrow was hit
                 for i in range(4):
                     if buttonList[i]:
@@ -265,7 +260,6 @@ class GameManager(BasicManager):
                     # 2 seconds of invincibilty
                     self.invincibilityTimer = 2
 
-
         # Check for enemy collision for damage purposes
         for enemy in self.rooms[self.currentRoom].enemies:
             enemyCollisionRect = enemy.getCollideRect()
@@ -374,7 +368,6 @@ class GameManager(BasicManager):
         for arrow in self.rooms[self.currentRoom].enemyArrows:
             if arrow.isDead():
                 self.rooms[self.currentRoom].enemyArrows.remove(arrow)
-
 
         # If room is empty, place an upgrade or stairs if it's the last room
         if self.rooms[self.currentRoom].isClear()\

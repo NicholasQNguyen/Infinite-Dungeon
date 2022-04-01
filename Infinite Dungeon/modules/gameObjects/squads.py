@@ -52,5 +52,3 @@ class Squads(object):
             dodgeThisList.append(Tower(Vector2(randint(0, 1008),
                                                randint(0, 504))))
         return dodgeThisList
-
-   

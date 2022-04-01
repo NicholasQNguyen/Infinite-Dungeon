@@ -67,7 +67,9 @@ class CursorMenu(AbstractMenu):
             pygame.K_UP: "up",
             pygame.K_DOWN: "down",
             pygame.K_RIGHT: "right",
-            pygame.K_LEFT: "left"
+            pygame.K_LEFT: "left",
+            "-1": "down",
+            "1": "up"
         }
 
     def addOption(self, key, text, position, center=None):
@@ -115,7 +117,22 @@ class CursorMenu(AbstractMenu):
 
         return nearest
 
-    def handleEvent(self, event):
+    def handleEvent(self, event, js=None):
+
+        # Move with the d-pad
+        if event.type == pygame.JOYHATMOTION:
+            if str(js.get_hat(0)[1]) in self._controls.keys():
+                newCurr = self._findNearestInDirection(
+                          self._controls[str(js.get_hat(0)[1])])
+
+                if newCurr is not None:
+                    self._current = newCurr
+                    self._moveCursor()
+
+        # Press A to select
+        elif event.type == pygame.JOYBUTTONDOWN:
+            if js.get_button(0):
+                return self._current
 
         if event.type == pygame.KEYDOWN:
             if event.key in self._controls.keys():

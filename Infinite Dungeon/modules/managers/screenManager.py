@@ -20,7 +20,8 @@ class ScreenManager(BasicManager):
         # Read the high score csv
         self._highScores = getHighScores()
 
-        self._highScoreManager = HighScoreManager(SCREEN_SIZE, self._highScores)
+        self._highScoreManager = HighScoreManager(SCREEN_SIZE,
+                                                  self._highScores)
 
         self._state = ScreenState()
         self._pausedText = Text(Vector2(0, 0), "Paused", "default16")
@@ -40,6 +41,9 @@ class ScreenManager(BasicManager):
                                  center="both")
         self._mainMenu.addOption("highScore", "High Scores",
                                  SCREEN_SIZE // 2 + Vector2(0, 150),
+                                 center="both")
+        self._mainMenu.addOption("credits", "Credits",
+                                 SCREEN_SIZE // 2 + Vector2(0, 250),
                                  center="both")
 
         self._gameOver = CursorMenu("gameOver.png", fontName="default32")
@@ -69,17 +73,19 @@ class ScreenManager(BasicManager):
         elif self._state == "highScore":
             self._highScoreManager.draw(drawSurf)
 
-    def handleEvent(self, event):
+    def handleEvent(self, event, js=None):
         # Handle screen-changing events first
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_p and self._state == "game":
+        if event.type == pygame.KEYDOWN and \
+           event.key == pygame.K_p and \
+           self._state == "game":
             self._state.manageState("pause", self)
 
         else:
             if self._state == "game" and not self._state.isPaused():
-                self._game.handleEvent(event)
+                self._game.handleEvent(event, js)
 
             elif self._state == "mainMenu":
-                choice = self._mainMenu.handleEvent(event)
+                choice = self._mainMenu.handleEvent(event, js)
 
                 if choice == "start":
                     self._game = GameManager(SCREEN_SIZE)
@@ -90,7 +96,7 @@ class ScreenManager(BasicManager):
                     self._state.manageState("highScore", self)
 
             elif self._state == "gameOver":
-                choice = self._gameOver.handleEvent(event)
+                choice = self._gameOver.handleEvent(event, js)
 
                 if choice == "exit":
                     return "exit"
@@ -108,7 +114,7 @@ class ScreenManager(BasicManager):
                     self._state.manageState("highScore", self)
 
             elif self._state == "highScore":
-                choice = self._highScoreManager.handleEvent(event)
+                choice = self._highScoreManager.handleEvent(event, js)
                 if choice == "mainMenu":
                     self._state.manageState("mainMenu", self)
 

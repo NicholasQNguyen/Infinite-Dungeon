@@ -6,7 +6,7 @@ from .highScoreManager import HighScoreManager
 
 from ..FSMs.screenFSM import ScreenState
 from ..UI.items import Text
-from ..UI.displays import CursorMenu
+from ..UI.displays import CursorMenu, EventMenu
 from ..gameObjects.vector2D import Vector2
 from ..UI.screenInfo import SCREEN_SIZE
 
@@ -54,6 +54,16 @@ class ScreenManager(BasicManager):
                                  SCREEN_SIZE // 2 + Vector2(0, 50),
                                  center="both")
 
+        self._credits = EventMenu("credits.png", fontName="default32")
+        self._credits.addOption("exit1", "Press Enter to Exit",
+                                SCREEN_SIZE // 2 + Vector2(0, 300),
+                                lambda x, y: x.type == pygame.KEYDOWN and x.key == pygame.K_RETURN, center="both")
+        self._credits.addOption("exit2", "Press the A button to Exit",
+                                SCREEN_SIZE // 2 + Vector2(0, 350),
+                                lambda x, y: x.type == pygame.JOYBUTTONDOWN and y.get_button(0), center="both")
+
+
+
     def draw(self, drawSurf):
         if self._state == "game":
             self._game.draw(drawSurf)
@@ -73,12 +83,22 @@ class ScreenManager(BasicManager):
         elif self._state == "highScore":
             self._highScoreManager.draw(drawSurf)
 
+        elif self._state == "credits":
+            self._credits.draw(drawSurf)
+
     def handleEvent(self, event, js=None):
         # Handle screen-changing events first
         if event.type == pygame.KEYDOWN and \
            event.key == pygame.K_p and \
            self._state == "game":
             self._state.manageState("pause", self)
+        elif js is not None and \
+           event.type == pygame.JOYBUTTONDOWN and \
+           self._state == "game":
+            if js.get_button(7):
+                self._state.manageState("pause", self)
+            else:
+                self._game.handleEvent(event, js)
 
         else:
             if self._state == "game" and not self._state.isPaused():
@@ -94,11 +114,13 @@ class ScreenManager(BasicManager):
                     return "exit"
                 elif choice == "highScore":
                     self._state.manageState("highScore", self)
+                elif choice == "credits":
+                    self._state.manageState("credits", self)
 
             elif self._state == "gameOver":
                 choice = self._gameOver.handleEvent(event, js)
 
-                if choice == "exit":
+                if choice == "exit1" or choice == "exit2":
                     return "exit"
                 elif choice == "mainMenu":
                     self._state.manageState("mainMenu", self)
@@ -116,6 +138,11 @@ class ScreenManager(BasicManager):
             elif self._state == "highScore":
                 choice = self._highScoreManager.handleEvent(event, js)
                 if choice == "mainMenu":
+                    self._state.manageState("mainMenu", self)
+
+            elif self._state == "credits":
+                choice = self._credits.handleEvent(event, js)
+                if choice == "exit1" or choice == "exit2":
                     self._state.manageState("mainMenu", self)
 
     def update(self, ticks):

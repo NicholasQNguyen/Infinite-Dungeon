@@ -145,3 +145,26 @@ class CursorMenu(AbstractMenu):
 
             elif event.key == pygame.K_RETURN:
                 return self._current
+
+
+class EventMenu(AbstractMenu):
+    """Menu which uses event lambda functions for selection."""
+
+    def __init__(self, background, fontName="default", color=(255, 255, 255)):
+        super().__init__(background, fontName, color)
+
+        self._eventMap = {}
+
+    def addOption(self, key, text, position, eventLambda, center=None):
+        super().addOption(key, text, position, center)
+
+        self._eventMap[key] = eventLambda
+
+    def draw(self, surface):
+        super().draw(surface)
+
+    def handleEvent(self, event):
+        for key in self._eventMap.keys():
+            function = self._eventMap[key]
+            if function(event):
+                return key

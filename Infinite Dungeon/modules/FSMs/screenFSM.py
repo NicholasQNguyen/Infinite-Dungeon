@@ -35,6 +35,10 @@ class ScreenState(object):
             self._state = "highScore"
             screenManager.transitionState(self._state)
 
+        elif action == "credits":
+            self._state = "credits"
+            screenManager.transitionState(self._state)
+
     def __eq__(self, other):
         return self._state == other
 

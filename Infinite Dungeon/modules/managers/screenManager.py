@@ -54,13 +54,16 @@ class ScreenManager(BasicManager):
                                  SCREEN_SIZE // 2 + Vector2(0, 50),
                                  center="both")
 
-        self._credits = EventMenu("credits.png", fontName="default32")
+        self._credits = EventMenu("credits.png", fontName="default16")
         self._credits.addOption("exit1", "Press Enter to Exit",
                                 SCREEN_SIZE // 2 + Vector2(0, 300),
                                 lambda x, y: x.type == pygame.KEYDOWN and x.key == pygame.K_RETURN, center="both")
         self._credits.addOption("exit2", "Press the A button to Exit",
                                 SCREEN_SIZE // 2 + Vector2(0, 350),
                                 lambda x, y: x.type == pygame.JOYBUTTONDOWN and y.get_button(0), center="both")
+        self._credits.addOption("exit3", "",
+                                Vector2(0, 0),
+                                lambda x, y: x.type == pygame.KEYDOWN and x.key == pygame.K_a)
 
 
 
@@ -120,7 +123,7 @@ class ScreenManager(BasicManager):
             elif self._state == "gameOver":
                 choice = self._gameOver.handleEvent(event, js)
 
-                if choice == "exit1" or choice == "exit2":
+                if choice == "exit1" or choice == "exit2" or choice == "exit3":
                     return "exit"
                 elif choice == "mainMenu":
                     self._state.manageState("mainMenu", self)

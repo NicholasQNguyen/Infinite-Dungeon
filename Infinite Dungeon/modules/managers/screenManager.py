@@ -57,15 +57,19 @@ class ScreenManager(BasicManager):
         self._credits = EventMenu("credits.png", fontName="default16")
         self._credits.addOption("exit1", "Press Enter to Exit",
                                 SCREEN_SIZE // 2 + Vector2(0, 300),
-                                lambda x, y: x.type == pygame.KEYDOWN and x.key == pygame.K_RETURN, center="both")
+                                lambda x, y: x.type == pygame.KEYDOWN and
+                                x.key == pygame.K_RETURN,
+                                center="both")
         self._credits.addOption("exit2", "Press the A button to Exit",
                                 SCREEN_SIZE // 2 + Vector2(0, 350),
-                                lambda x, y: x.type == pygame.JOYBUTTONDOWN and y.get_button(0), center="both")
+                                lambda x, y: x.type == pygame.JOYBUTTONDOWN and
+                                y.get_button(0),
+                                center="both")
         self._credits.addOption("exit3", "",
                                 Vector2(0, 0),
-                                lambda x, y: x.type == pygame.KEYDOWN and x.key == pygame.K_a)
-
-
+                                lambda x, y: x.type == pygame.KEYDOWN and
+                                x.key == pygame.K_a,
+                                center="both")
 
     def draw(self, drawSurf):
         if self._state == "game":
@@ -123,7 +127,7 @@ class ScreenManager(BasicManager):
             elif self._state == "gameOver":
                 choice = self._gameOver.handleEvent(event, js)
 
-                if choice == "exit1" or choice == "exit2" or choice == "exit3":
+                if choice == "exit":
                     return "exit"
                 elif choice == "mainMenu":
                     self._state.manageState("mainMenu", self)
@@ -145,7 +149,7 @@ class ScreenManager(BasicManager):
 
             elif self._state == "credits":
                 choice = self._credits.handleEvent(event, js)
-                if choice == "exit1" or choice == "exit2":
+                if choice == "exit1" or choice == "exit2" or choice == "exit3":
                     self._state.manageState("mainMenu", self)
 
     def update(self, ticks):

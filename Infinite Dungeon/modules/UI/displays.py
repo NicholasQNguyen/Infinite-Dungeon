@@ -163,7 +163,6 @@ class EventMenu(AbstractMenu):
     def draw(self, surface):
         super().draw(surface)
 
-
     def handleEvent(self, event, js=None):
         for key in self._eventMap.keys():
             function = self._eventMap[key]

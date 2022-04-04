@@ -26,7 +26,8 @@ class Atlas(object):
         squads = [Squads.slimeOverload,
                   Squads.golemAttack,
                   Squads.dodgeThis,
-                  Squads.golemAndSlimeOhNo]
+                  Squads.golemAndSlimeOhNo,
+                  ]
 
         # Initialize the upgrades
         upgrades = [DamageUpgrade,
@@ -152,6 +153,8 @@ class Atlas(object):
             # Don't assign to the first room
             if room.getRoomNumber() == 0:
                 pass
+            elif room.getRoomNumber() == 99:
+                room.enemies = Squads.dragon()
             else:
                 room.enemies = choice(squads)()
 

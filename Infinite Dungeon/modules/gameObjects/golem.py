@@ -5,15 +5,15 @@ File: golem.py
 
 Monster that follows the player
 """
-from .alive import Alive
 from ..FSMs.gameObjectFSM import GolemState
+from .chaser import Chaser
 
 GOLEM_HP = 20
 GOLEM_V_SPEED = 100
 GOLEM_DAMAGE = 5
 
 
-class Golem(Alive):
+class Golem(Chaser):
 
     def __init__(self, position):
         super().__init__("golem-walk.png", position, GOLEM_HP)
@@ -44,20 +44,3 @@ class Golem(Alive):
         self._state = GolemState()
 
         self._damage = GOLEM_DAMAGE
-
-    def whereIsTheArcherX(self, archerPosition):
-        if archerPosition[0] > self._position[0]:
-            return "right"
-        elif archerPosition[0] < self._position[0]:
-            return "left"
-
-    def whereIsTheArcherY(self, archerPosition):
-        if archerPosition[1] > self._position[1]:
-            return "down"
-        elif archerPosition[1] < self._position[1]:
-            return "up"
-
-    def changeDirection(self, archerPosition, stopAll=False):
-        actionX = self.whereIsTheArcherX(archerPosition)
-        actionY = self.whereIsTheArcherY(archerPosition)
-        self._state.manageState(actionX, actionY, self, stopAll)

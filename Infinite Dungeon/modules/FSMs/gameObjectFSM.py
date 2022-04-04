@@ -164,3 +164,51 @@ class TowerState(BasicState):
 
     def getFacing(self):
         self._lastFacing = "down"
+
+class DragonState(BasicState):
+
+    def __init__(self, state="up"):
+        self._state = state
+        self._movement = {
+            "up": False,
+            "down": False,
+            "left": False,
+            "right": False
+         }
+
+        self._lastFacing = "down"
+
+    def getFacing(self):
+        return "down"
+
+    def getState(self):
+        return self._state
+
+    def manageState(self, X, Y, obj, stopAll):
+        if stopAll:
+            if self._state != "up":
+                self._state = "up"
+                for direction in self._movement.keys():
+                    self._movement[direction] = False
+
+                obj.transitionState(self._state)
+
+        else:
+            if X in self._movement.keys():
+                if X == "right":
+                    self._movement["right"] = True
+                    self._movement["left"] = False
+                else:
+                    self._movement["right"] = False
+                    self._movement["left"] = True
+
+            if Y in self._movement.keys():
+                if self._state == "standing":
+                    self._state = "up"
+
+                if Y == "up":
+                    self._movement["up"] = True
+                    self._movement["down"] = False
+                else:
+                    self._movement["up"] = False
+                    self._movement["down"] = True

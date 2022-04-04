@@ -10,6 +10,7 @@ from random import randint
 from .slime import Slime
 from .golem import Golem
 from .tower import Tower
+from .dragon import Dragon
 from .vector2D import Vector2
 
 
@@ -52,3 +53,8 @@ class Squads(object):
             dodgeThisList.append(Tower(Vector2(randint(0, 800),
                                                randint(0, 504))))
         return dodgeThisList
+
+    @classmethod
+    def dragon(cls):
+        return [Dragon(Vector2(randint(200, 808),
+                              randint(500, 1000)))]

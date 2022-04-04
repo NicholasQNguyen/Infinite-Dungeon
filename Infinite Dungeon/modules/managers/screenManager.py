@@ -100,8 +100,8 @@ class ScreenManager(BasicManager):
            self._state == "game":
             self._state.manageState("pause", self)
         elif js is not None and \
-           event.type == pygame.JOYBUTTONDOWN and \
-           self._state == "game":
+             event.type == pygame.JOYBUTTONDOWN and \
+             self._state == "game":
             if js.get_button(7):
                 self._state.manageState("pause", self)
             else:

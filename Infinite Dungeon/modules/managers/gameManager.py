@@ -11,6 +11,7 @@ from modules.gameObjects.slime import Slime
 from modules.gameObjects.atlas import Atlas
 from modules.gameObjects.golem import Golem
 from modules.gameObjects.tower import Tower
+from modules.gameObjects.dragon import Dragon
 from modules.gameObjects.upgrade import DamageUpgrade,\
                                         SpeedUpgrade,\
                                         ProjectileSpeedUpgrade
@@ -144,6 +145,8 @@ class GameManager(BasicManager):
         for enemy in self.rooms[self.currentRoom].enemies:
             if isinstance(enemy, Golem):
                 enemy.changeDirection(deepcopy(self.archer.getPosition()))
+            elif isinstance(enemy, Dragon):
+                enemy.changeDirection(deepcopy(self.archer.getPosition()))
 
         for arrow in self.rooms[self.currentRoom].arrows:
             arrow.update(seconds)
@@ -157,6 +160,8 @@ class GameManager(BasicManager):
             if isinstance(enemy, Slime):
                 enemy.update(seconds)
             elif isinstance(enemy, Golem):
+                enemy.update(seconds)
+            elif isinstance(enemy, Dragon):
                 enemy.update(seconds)
 
         self.fireTimer -= seconds
@@ -176,6 +181,10 @@ class GameManager(BasicManager):
                 if isinstance(enemy, Tower):
                     enemy.fire(deepcopy(self.archer.getPosition()),
                                self.rooms[self.currentRoom].enemyArrows)
+                elif isinstance(enemy, Dragon):
+                    enemy.fire(deepcopy(self.archer.getPosition()),
+                               self.rooms[self.currentRoom].enemyArrows)
+
             self.fireTimer = 2
 
         # Check if the slimes are going beyond the borders
@@ -250,7 +259,7 @@ class GameManager(BasicManager):
             if self.archerCollisionRect.colliderect(rockCollisionRect):
                 self.archer.collide(rock)
             for enemy in self.rooms[self.currentRoom].enemies:
-                if isinstance(enemy, Golem):
+                if isinstance(enemy, Golem) or isinstance (enemy, Dragon):
                     if enemy.getCollideRect().colliderect(rockCollisionRect):
                         enemy.collide(rock)
 

@@ -32,15 +32,15 @@ class Squads(object):
     def golemAttack(cls):
         golemAttackList = []
         for i in range(3):
-            golemAttackList.append(Golem(Vector2(randint(200, 808),
-                                                 randint(200, 808))))
+            golemAttackList.append(Golem(Vector2(randint(500, 808),
+                                                 randint(0, 508))))
         return golemAttackList
 
     @classmethod
     def golemAndSlimeOhNo(cls):
         golemAndSlimeOhNoList = []
-        golemAndSlimeOhNoList.append(Golem(Vector2(randint(200, 808),
-                                                   randint(200, 808))))
+        golemAndSlimeOhNoList.append(Golem(Vector2(randint(500, 808),
+                                                   randint(0, 508))))
         for i in range(5):
             golemAndSlimeOhNoList.append(Slime(Vector2(randint(0, 504),
                                                        randint(0, 504))))
@@ -57,4 +57,4 @@ class Squads(object):
     @classmethod
     def dragon(cls):
         return [Dragon(Vector2(randint(200, 808),
-                              randint(500, 1000)))]
+                              randint(0, 500)))]

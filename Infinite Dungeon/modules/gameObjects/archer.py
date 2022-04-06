@@ -6,7 +6,6 @@ File: archer.py
 Class for the player character
 """
 import pygame
-
 from .alive import Alive
 from .items import FollowRectBarItem
 from .vector2D import Vector2
@@ -14,7 +13,6 @@ from .vector2D import Vector2
 from ..FSMs.gameObjectFSM import ArcherState
 from ..managers.frameManager import FrameManager
 from ..managers.itemManager import BasicItemManager
-
 
 ARCHER_HP = 50
 # ARCHER_HP = 5
@@ -147,3 +145,7 @@ class Archer(Alive):
 
     def getStats(self):
         return self._stats
+
+    def getCollideRect(self):
+        rect = self._position + pygame.Rect(self._image.get_rect())
+        return rect.inflate(-43, -42)

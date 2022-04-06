@@ -187,3 +187,7 @@ class Vector2(object):
 
     def __repr__(self):
         return "Vector2({:.2f}, {:.2f})".format(self.x, self.y)
+
+    def __neg__(self):
+        clone = Vector2(-self.x, -self.y)
+        return clone

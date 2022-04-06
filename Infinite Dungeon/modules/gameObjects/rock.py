@@ -18,4 +18,5 @@ class Rock(Drawable):
 
     def getCollideRect(self):
         """Returns the collision area of the object"""
-        return pygame.Rect(list(self._position + Vector2(20, 15)), (10, 15))
+        rect = self._position + pygame.Rect(self._image.get_rect())
+        return rect

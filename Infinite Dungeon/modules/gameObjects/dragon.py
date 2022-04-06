@@ -5,6 +5,7 @@ file: dragon.py
 
 Boss that fires based on where the archer is.
 """
+import pygame
 from .chaser import Chaser
 from ..FSMs.gameObjectFSM import DragonState
 from .enemyProjectile import EnemyProjectile
@@ -42,3 +43,7 @@ class Dragon(Chaser):
         directionVector = (archerPosition - self.getPosition()).normalize() * 5
         newArrow = EnemyProjectile(self.getPosition(), directionVector)
         arrowList.append(newArrow)
+
+    def getCollideRect(self):
+        rect = self._position + pygame.Rect(self._image.get_rect())
+        return rect.inflate(-28, -28)

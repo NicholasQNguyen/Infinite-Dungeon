@@ -165,6 +165,7 @@ class TowerState(BasicState):
     def getFacing(self):
         self._lastFacing = "down"
 
+
 class DragonState(BasicState):
 
     def __init__(self, state="up"):

@@ -259,7 +259,7 @@ class GameManager(BasicManager):
             if self.archerCollisionRect.colliderect(rockCollisionRect):
                 self.archer.collide(rock)
             for enemy in self.rooms[self.currentRoom].enemies:
-                if isinstance(enemy, Golem) or isinstance (enemy, Dragon):
+                if isinstance(enemy, Golem) or isinstance(enemy, Dragon):
                     if enemy.getCollideRect().colliderect(rockCollisionRect):
                         enemy.collide(rock)
 

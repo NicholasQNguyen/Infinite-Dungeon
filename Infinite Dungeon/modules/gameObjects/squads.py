@@ -57,4 +57,4 @@ class Squads(object):
     @classmethod
     def dragon(cls):
         return [Dragon(Vector2(randint(200, 808),
-                              randint(0, 500)))]
+                               randint(0, 500)))]

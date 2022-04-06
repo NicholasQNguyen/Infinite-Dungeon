@@ -55,8 +55,9 @@ class Drawable(object):
         surface.blit(blitImage, list(self._position -
                                      Drawable.WINDOW_OFFSET))
 
-        pygame.draw.rect(surface, (0, 0, 255), 
-                         Drawable.WINDOW_OFFSET + self.getCollideRect(), 2)
+        # Tester code to show hitboxes
+        # pygame.draw.rect(surface, (0, 0, 255),
+        #                  Drawable.WINDOW_OFFSET + self.getCollideRect(), 2)
 
     def setImage(self, surface):
         self._image = surface

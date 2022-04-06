@@ -1,9 +1,8 @@
-
 from .alive import Alive
 
-class Chaser(Alive):
 
-    def __init__(self,image, position, hp):
+class Chaser(Alive):
+    def __init__(self, image, position, hp):
         super().__init__(image, position, hp)
 
     def whereIsTheArcherX(self, archerPosition):

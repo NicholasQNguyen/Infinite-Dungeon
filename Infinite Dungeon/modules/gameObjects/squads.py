@@ -55,6 +55,28 @@ class Squads(object):
         return dodgeThisList
 
     @classmethod
+    def theChase(cls):
+        theChaseList = []
+        theChaseList.append(Golem(Vector2(randint(500, 808),
+                                          randint(0, 508))))
+        for i in range(3):
+            theChaseList.append(Tower(Vector2(randint(0, 800),
+                                               randint(0, 504))))
+        return theChaseList
+
+    @classmethod
+    def shooterAndBodyguards(cls):
+        shooterAndBodyguardsList = []
+        for i in range(3):
+            shooterAndBodyguardsList.append(Tower(Vector2(randint(0, 800),
+                                                          randint(0, 504))))
+        for i in range(5):
+            shooterAndBodyguardsList.append(Slime(Vector2(randint(0, 504),
+                                                          randint(0, 504))))
+        return shooterAndBodyguardsList
+
+
+    @classmethod
     def dragon(cls):
         return [Dragon(Vector2(randint(200, 808),
                                randint(0, 500)))]

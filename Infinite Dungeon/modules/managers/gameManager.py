@@ -1,5 +1,6 @@
 import pygame
 from copy import deepcopy
+from random import randint
 
 from .basicManager import BasicManager
 
@@ -54,13 +55,14 @@ class GameManager(BasicManager):
                                      "default16")
         self.drawUpgradeText = False
         self.currentUpgradeText = None
+        self.hasTower = False
 
         self.arrowCollisionRects = []
         self.enemyArrowCollisionRects = []
         self.seconds = 0
         self.slimeTimer = 5
         self.invincibilityTimer = 0
-        self.fireTimer = 3
+        self.fireTimer = 5
 
     def draw(self, drawSurf):
 
@@ -143,9 +145,7 @@ class GameManager(BasicManager):
         self.archer.getStats().update(seconds)
 
         for enemy in self.rooms[self.currentRoom].enemies:
-            if isinstance(enemy, Golem):
-                enemy.changeDirection(deepcopy(self.archer.getPosition()))
-            elif isinstance(enemy, Dragon):
+            if isinstance(enemy, Golem) or isinstance(enemy, Dragon):
                 enemy.changeDirection(deepcopy(self.archer.getPosition()))
 
         for arrow in self.rooms[self.currentRoom].arrows:
@@ -157,12 +157,7 @@ class GameManager(BasicManager):
             self.enemyArrowCollisionRects.append(arrow.getCollideRect())
 
         for enemy in self.rooms[self.currentRoom].enemies:
-            if isinstance(enemy, Slime):
-                enemy.update(seconds)
-            elif isinstance(enemy, Golem):
-                enemy.update(seconds)
-            elif isinstance(enemy, Dragon):
-                enemy.update(seconds)
+            enemy.update(seconds)
 
         self.fireTimer -= seconds
         self.slimeTimer -= seconds
@@ -178,14 +173,11 @@ class GameManager(BasicManager):
         # Fire an arrow from a tower every 2 seconds
         if self.fireTimer <= 0:
             for enemy in self.rooms[self.currentRoom].enemies:
-                if isinstance(enemy, Tower):
-                    enemy.fire(deepcopy(self.archer.getPosition()),
-                               self.rooms[self.currentRoom].enemyArrows)
-                elif isinstance(enemy, Dragon):
+                if isinstance(enemy, Tower) or isinstance(enemy, Dragon):
                     enemy.fire(deepcopy(self.archer.getPosition()),
                                self.rooms[self.currentRoom].enemyArrows)
 
-            self.fireTimer = 2
+            self.fireTimer = 3
 
         # Check if the slimes are going beyond the borders
         # and bounce them back if so
@@ -340,6 +332,7 @@ class GameManager(BasicManager):
                 self.archer.setPosition(self.BEGINNING)
                 self.drawClearText = False
                 self.floorsCleared += 1
+                self.hasTower = False
                 self.clearText.setText("You have cleared " +
                                        str(self.floorsCleared) +
                                        " floors!")
@@ -392,6 +385,14 @@ class GameManager(BasicManager):
                 self.drawClearText = True
             else:
                 self.rooms[self.currentRoom].setHasUpgrade(True)
+
+        # Add one tower to the last room per floor cleared
+        if self.currentRoom == -1 and not self.hasTower and not self.rooms[self.currentRoom].isClear():
+            for i in range(self.floorsCleared):
+                self.rooms[self.currentRoom].enemies.append(Tower(Vector2(randint(0, 800),
+                                                                          randint(0, 504))))
+            self.hasTower = True
+ 
 
         Drawable.updateWindowOffset(
                  self.archer, screenSize, GameManager.WORLD_SIZE)

@@ -27,6 +27,8 @@ class Atlas(object):
                   Squads.golemAttack,
                   Squads.dodgeThis,
                   Squads.golemAndSlimeOhNo,
+                  Squads.theChase,
+                  Squads.shooterAndBodyguards
                   ]
 
         # Initialize the upgrades

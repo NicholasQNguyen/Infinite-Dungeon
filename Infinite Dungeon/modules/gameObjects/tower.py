@@ -32,3 +32,6 @@ class Tower(Alive):
         directionVector = (archerPosition - self.getPosition()).normalize() * 5
         newArrow = EnemyProjectile(self.getPosition(), directionVector)
         arrowList.append(newArrow)
+
+    def update(self, seconds):
+        pass

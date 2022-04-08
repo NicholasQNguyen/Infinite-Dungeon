@@ -15,9 +15,7 @@ from ..managers.frameManager import FrameManager
 from ..managers.itemManager import BasicItemManager
 
 ARCHER_HP = 50
-# ARCHER_HP = 5
 ARCHER_V_SPEED = 150
-# ARCHER_V_SPEED = 550
 
 
 class Archer(Alive):

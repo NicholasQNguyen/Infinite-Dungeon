@@ -56,6 +56,7 @@ class GameManager(BasicManager):
         self.drawUpgradeText = False
         self.currentUpgradeText = None
         self.hasTower = False
+        self.extraDragonCount = False
 
         self.arrowCollisionRects = []
         self.enemyArrowCollisionRects = []
@@ -285,6 +286,20 @@ class GameManager(BasicManager):
                         if isinstance(enemy, Slime):
                             enemy.changeDirection()
 
+        # Add one tower to the last room per floor cleared
+        if self.currentRoom == -1 and not self.hasTower and not self.rooms[self.currentRoom].isClear():
+            for i in range(self.floorsCleared):
+                self.rooms[self.currentRoom].enemies.append(Tower(Vector2(randint(0, 800),
+                                                                          randint(0, 504))))
+            # Add extra dragons for every 3 floors
+            if self.floorsCleared % 3 == 0:
+                self.extraDragonCount += 1
+            if self.floorsCleared >= 3:
+                for i in range(self.extraDragonCount):
+                    self.rooms[self.currentRoom].enemies.append(Dragon(Vector2(randint(0, 800),
+                                                                               randint(0, 504))))
+            self.hasTower = True
+
         # Check to see if we entered a door
         for door in self.rooms[self.currentRoom].doors:
             doorCollisionRect = door.getCollideRect()
@@ -385,14 +400,6 @@ class GameManager(BasicManager):
                 self.drawClearText = True
             else:
                 self.rooms[self.currentRoom].setHasUpgrade(True)
-
-        # Add one tower to the last room per floor cleared
-        if self.currentRoom == -1 and not self.hasTower and not self.rooms[self.currentRoom].isClear():
-            for i in range(self.floorsCleared):
-                self.rooms[self.currentRoom].enemies.append(Tower(Vector2(randint(0, 800),
-                                                                          randint(0, 504))))
-            self.hasTower = True
- 
 
         Drawable.updateWindowOffset(
                  self.archer, screenSize, GameManager.WORLD_SIZE)

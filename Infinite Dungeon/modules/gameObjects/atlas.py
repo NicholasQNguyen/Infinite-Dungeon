@@ -53,7 +53,7 @@ class Atlas(object):
         placerIndex1 = DIMENSION - 1
         placerIndex2 = 0
 
-        firstRoom = Room("firstRoom.png", 0, 1)
+        firstRoom = Room("basicRoom.png", 0, 1)
         lastRoom = Room("lastRoom.png", 99)
 
         # Put a room in the bottom left and top right of the grid

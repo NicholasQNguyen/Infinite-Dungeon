@@ -14,3 +14,6 @@ controller with a dpad and 4 buttons)
 How to start:
 Run main.py
 
+Known Bugs:
+If you play with a controller, if you hit a button while holding down
+another, you will shoot 1 arrow at superspeed. It's kinda cool.
